@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #F6F7F9;
+    color: #16233A;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'tnum' 1; /* tabular numbers for KPI alignment */
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* tabular numerals for KPI/stat figures */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* --- Leaflet overrides to match dashboard theme --- */
+.leaflet-container {
+  background: #0d1b2f;
+  font-family: inherit;
+  outline: none;
+}
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  color: #16233a;
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 0.9rem;
+  box-shadow: 0 10px 40px rgba(16, 35, 58, 0.25);
+}
+.leaflet-popup-content {
+  margin: 0.75rem 0.9rem;
+}
+/* hide default leaflet attribution flag visually but keep accessible */
+.leaflet-control-attribution {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.7);
+}

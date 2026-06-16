@@ -1,0 +1,68 @@
+// Central icon mapper — render lucide icons from string names so data files can
+// reference icons without importing components. Usage: <Icon name="Wheat" className="..." />
+import {
+  Wheat,
+  Banknote,
+  HeartPulse,
+  GraduationCap,
+  Sprout,
+  Swords,
+  CloudRainWind,
+  TrendingDown,
+  TrendingUp,
+  Users,
+  Package,
+  Wallet,
+  MapPin,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Camera,
+  Image as ImageIcon,
+  Globe,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  CircleDot,
+  Layers,
+  HandHeart,
+  Sparkles,
+  Info,
+  HelpCircle,
+} from 'lucide-react'
+
+export const ICONS = {
+  Wheat,
+  Banknote,
+  HeartPulse,
+  GraduationCap,
+  Sprout,
+  Swords,
+  CloudRainWind,
+  TrendingDown,
+  TrendingUp,
+  Users,
+  Package,
+  Wallet,
+  MapPin,
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Camera,
+  ImageIcon,
+  Globe,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  CircleDot,
+  Layers,
+  HandHeart,
+  Sparkles,
+  Info,
+  HelpCircle,
+}
+
+export function Icon({ name, ...props }) {
+  const Cmp = ICONS[name] || HelpCircle
+  return <Cmp {...props} />
+}
