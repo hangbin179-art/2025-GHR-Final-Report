@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   FIELD DISPATCH — 측량하는 현장 디스패치
+   따뜻한 페이퍼-크림 지면 위에 잉크로 조판된 발행물.
+   둥근 카드 / 그림자 / 그라데이션 글로우 없음. 1px 잉크 hairline + 여백 + 명도 대비로만 위계.
+   ============================================================ */
+
 @layer base {
   :root {
     color-scheme: light;
@@ -10,17 +16,17 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: #F6F7F9;
-    color: #16233A;
+    background-color: #fbfaf7; /* paper.DEFAULT — warm newsprint cream */
+    color: #16233a; /* ink */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'tnum' 1; /* tabular numbers for KPI alignment */
+    font-feature-settings: 'tnum' 1; /* tabular numbers for figure alignment */
   }
   h1,
   h2,
   h3,
   h4 {
-    @apply tracking-tight;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -32,11 +38,82 @@
   .tnum {
     font-variant-numeric: tabular-nums;
   }
+
+  /* Giant display figures (Anton) — the two-pole scale's loud end */
+  .num-display {
+    font-family: 'Anton', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 0.92;
+    letter-spacing: 0; /* keep Anton's native density — never track out */
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+  /* Mono data labels / footnotes — the quiet end */
+  .mono-label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+  .mono-label--caps {
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  /* warm hairline rule (ink on paper, not gray) */
+  .ink-rule {
+    border-color: #d8d2c6;
+  }
+  /* orange baseline axis under a giant figure ("measured value on a scale") */
+  .num-axis {
+    box-shadow: inset 0 -3px 0 -2px #f47920;
+  }
+  /* academic footnote superscript index */
+  .footnote-idx {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.62em;
+    vertical-align: super;
+    line-height: 0;
+    color: #f47920;
+    font-weight: 600;
+  }
 }
 
-/* --- Leaflet overrides to match dashboard theme --- */
+@layer components {
+  /* === SIGNATURE: solid orange concentric rings (heavy stroke, bleed off-page) === */
+  .ring-svg {
+    overflow: visible;
+    pointer-events: none;
+  }
+  .ring-stroke {
+    fill: none;
+    stroke: #f47920;
+    /* width set inline (16–40px) — NEVER a 1.5px hairline for the signature ring */
+    stroke-linecap: butt;
+  }
+  .ring-disk {
+    fill: #f47920;
+  } /* innermost filled disk — target center */
+
+  /* progress arc gauge: % via stroke-dasharray; 113.2% overshoots a full turn */
+  .ring-gauge-track {
+    fill: none;
+    stroke: #d8d2c6;
+  }
+  .ring-gauge-fill {
+    fill: none;
+    stroke: #f47920;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.6s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ring-gauge-fill {
+      transition: none;
+    }
+  }
+}
+
+/* === Leaflet: dark → paper-tone (function preserved, color only) === */
 .leaflet-container {
-  background: #0d1b2f;
+  background: #f0ebe0; /* OCEAN → paper-tone sea */
   font-family: inherit;
   outline: none;
 }
@@ -45,14 +122,23 @@
   color: #16233a;
 }
 .leaflet-popup-content-wrapper {
-  border-radius: 0.9rem;
-  box-shadow: 0 10px 40px rgba(16, 35, 58, 0.25);
+  border-radius: 0; /* square newsprint tone */
+  box-shadow: none;
+  border: 1px solid #d8d2c6;
 }
 .leaflet-popup-content {
-  margin: 0.75rem 0.9rem;
+  margin: 0.6rem 0.8rem;
 }
-/* hide default leaflet attribution flag visually but keep accessible */
+.leaflet-popup-tip {
+  box-shadow: none;
+  border: 1px solid #d8d2c6;
+}
 .leaflet-control-attribution {
   font-size: 10px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(251, 250, 247, 0.8);
+}
+/* marker divIcon container: strip default box */
+.impact-map-marker {
+  background: none;
+  border: none;
 }

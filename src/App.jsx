@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react'
 import { PROJECTS, GLOBAL_KPIS } from './data/projects.js'
 import { num, krwThousandToUsd, multiple } from './lib/format.js'
-import { Icon } from './lib/icons.jsx'
 import { Section, SectionHeading } from './components/ui/Section.jsx'
 import Hero from './components/Hero.jsx'
 import CausesSection from './components/CausesSection.jsx'
@@ -28,33 +27,34 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-canvas font-sans text-ink">
+    <div className="min-h-screen bg-paper font-sans text-ink">
       <Hero />
       <CausesSection />
       <InterventionsSection />
 
-      {/* ---------------- Section 4: Interactive Impact Map ---------------- */}
-      <Section id="impact-map" className="bg-canvas">
+      {/* ──────────────── Section 03: Interactive Impact Map ──────────────── */}
+      <Section id="impact-map" py="wide">
         <SectionHeading
-          eyebrow="IMPACT MAP · 사업 현장"
+          code="03 / 03 — IMPACT MAP"
           title="대화형 성과 지도"
-          description="지도의 마커 또는 아래 사업 지역을 선택하면 해당 사업의 상세 성과가 우측 패널에 표시됩니다. 13개국 20개 사업의 수혜자·식량·현금·예산 레버리지를 한눈에 확인하세요."
+          description="지도의 표식 또는 아래 사업 지역 색인을 선택하면 해당 사업의 상세 성과가 우측 도면에 펼쳐집니다. 13개국 20개 사업의 수혜자·식량·현금·예산 레버리지를 한 지면에서 확인하세요."
         />
 
-        <div className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12">
-          {/* Map + quick selector */}
+        <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-8 lg:grid-cols-12">
+          {/* Map + project index */}
           <div className="lg:col-span-7">
             <ImpactMap projects={PROJECTS} selectedId={selectedId} onSelect={handleSelect} />
 
-            {/* Quick region selector — easier than hunting small markers */}
-            <div className="mt-5">
-              <p className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-ink-muted">
-                <Icon name="MapPin" className="h-4 w-4 text-wv-orange" />
-                사업 지역 바로가기
-                <span className="font-normal text-ink-muted/70">({PROJECTS.length}개 사업)</span>
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {PROJECTS.map((p) => {
+            {/* Project index — square mono chips, hairline, no rounded pills */}
+            <div className="mt-6">
+              <div className="flex items-baseline justify-between border-b border-ink-line pb-2">
+                <span className="mono-label mono-label--caps text-ink-muted">
+                  Project Index · 사업 지역 바로가기
+                </span>
+                <span className="mono-label tnum text-ink-muted">{PROJECTS.length} sites</span>
+              </div>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {PROJECTS.map((p, i) => {
                   const active = p.id === selectedId
                   return (
                     <button
@@ -62,17 +62,27 @@ export default function App() {
                       type="button"
                       onClick={() => handleSelect(p.id)}
                       aria-pressed={active}
+                      title={`${p.country} · ${p.region}`}
                       className={[
-                        'rounded-full border px-3 py-1.5 text-xs font-medium transition',
-                        'focus:outline-none focus-visible:ring-2 focus-visible:ring-wv-orange/60',
+                        'group flex items-baseline gap-1.5 border px-3 py-1.5 text-left transition-colors',
+                        'focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wv-orange',
                         active
-                          ? 'border-wv-orange bg-wv-orange text-white shadow-sm'
-                          : 'border-ink/10 bg-white text-ink-soft hover:border-wv-orange/50 hover:text-wv-orange',
+                          ? 'border-wv-orange bg-wv-orange text-paper'
+                          : 'border-ink-line text-ink-soft hover:border-wv-orange hover:text-wv-orange',
                       ].join(' ')}
-                      title={`${p.country} ${p.region}`}
                     >
-                      <span className="font-semibold">{p.country}</span>
-                      <span className={active ? 'text-white/80' : 'text-ink-muted'}> · {p.region}</span>
+                      <span className="font-mono text-[10px] tabular-nums opacity-60">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                      <span className="font-sans text-[13px] font-bold">{p.country}</span>
+                      <span
+                        className={[
+                          'font-sans text-[12px]',
+                          active ? 'text-paper/75' : 'text-ink-muted',
+                        ].join(' ')}
+                      >
+                        · {p.region}
+                      </span>
                     </button>
                   )
                 })}
@@ -80,9 +90,9 @@ export default function App() {
             </div>
           </div>
 
-          {/* Detail panel */}
+          {/* Detail dossier */}
           <div id="detail-panel" className="lg:col-span-5">
-            <div className="lg:sticky lg:top-6">
+            <div className="lg:sticky lg:top-4">
               <DetailPanel project={selected} onClose={() => setSelectedId(null)} />
             </div>
           </div>
@@ -94,42 +104,102 @@ export default function App() {
   )
 }
 
+// ── Footer — the one full ink plane: the orange ring closes into a full circle
+//    (the 41× reverberation completing), source/contact set as a mono colophon.
 function Footer() {
   return (
-    <footer className="bg-ink text-white/80">
-      <div className="mx-auto max-w-7xl px-5 py-12 md:px-8">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          <div>
-            <p className="text-lg font-extrabold text-white">WORLD VISION <span className="text-wv-orange">×</span> WFP</p>
-            <p className="mt-2 text-sm leading-relaxed text-white/60">
-              2025 글로벌 식량위기 대응사업 (다자기구협력사업)<br />
+    <footer className="relative overflow-hidden bg-ink-press text-paper/80">
+      {/* Closing ring — solid orange concentric circles bleeding from bottom-right */}
+      <svg
+        className="ring-svg pointer-events-none absolute -bottom-24 -right-20 h-[clamp(260px,32vw,440px)] w-[clamp(260px,32vw,440px)]"
+        viewBox="0 0 440 440"
+        fill="none"
+        aria-hidden="true"
+      >
+        {[
+          { r: 60, w: 30 },
+          { r: 122, w: 26 },
+          { r: 190, w: 22 },
+          { r: 264, w: 18 },
+        ].map((ring) => (
+          <circle key={ring.r} className="ring-stroke" cx="440" cy="440" r={ring.r} strokeWidth={ring.w} />
+        ))}
+        <circle className="ring-disk" cx="440" cy="440" r="26" />
+      </svg>
+
+      <div className="relative mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-20">
+        <div className="grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-12">
+          {/* Masthead block */}
+          <div className="md:col-span-5">
+            <p className="flex items-center gap-2.5">
+              <span
+                className="flex h-7 w-8 items-center justify-center rounded-md bg-wv-orange text-[11px] font-black leading-none text-paper"
+                aria-hidden="true"
+              >
+                WV
+              </span>
+              <span className="font-display text-xl tracking-wide text-paper">WORLD VISION</span>
+              <span className="font-sans text-paper/40">✕</span>
+              <span className="font-display text-xl tracking-wide text-paper/80">WFP</span>
+            </p>
+            <p className="mt-4 max-w-sm font-sans text-sm leading-relaxed text-paper/55">
+              2025 글로벌 식량위기 대응사업 (다자기구협력사업)
+              <br />
               월드비전 인도적지원팀
             </p>
-          </div>
-
-          <div className="md:col-span-1">
-            <p className="text-sm font-semibold text-white">사업 규모 요약</p>
-            <ul className="mt-2 space-y-1 text-sm text-white/70">
-              <li>· {GLOBAL_KPIS.countries}개국 / {GLOBAL_KPIS.projects}개 사업 / 총 수혜자 {num(GLOBAL_KPIS.beneficiaries)}명</li>
-              <li>· 월드비전 지원 → WFP 지원금 약 {multiple(GLOBAL_KPIS.leverage)} ({krwThousandToUsd(GLOBAL_KPIS.wfpGrant)})</li>
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-sm font-semibold text-white">안내</p>
-            <p className="mt-2 text-xs leading-relaxed text-white/55">
-              본 대시보드의 수치는 제안서(2025.03) 및 중간보고서(2025.12)를 기준으로 하며,
-              최종 실적과 재무보고는 2026년 결과보고에서 확정됩니다. 현장 사진은 추후 데이터로 교체될 예정입니다.
+            <p className="mono-label mono-label--caps mt-6 text-paper/40">
+              Field Dispatch · No.2025-12
             </p>
-            <p className="mt-3 text-xs text-white/55">
-              문의 · 인도적지원팀 조항빈 대리<br />
-              출처 · Hunger Hotspots (WFP &amp; FAO, 2025)
+          </div>
+
+          {/* Scale summary — mono ledger */}
+          <div className="md:col-span-4">
+            <p className="mono-label mono-label--caps border-b border-paper/15 pb-2 text-paper/45">
+              Programme at a glance
+            </p>
+            <dl className="mt-3 flex flex-col gap-2 font-mono text-[12px] leading-relaxed text-paper/70">
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-paper/45">Countries / Projects</dt>
+                <dd className="tnum text-paper">
+                  {GLOBAL_KPIS.countries} / {GLOBAL_KPIS.projects}
+                </dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-paper/45">Beneficiaries</dt>
+                <dd className="tnum text-paper">{num(GLOBAL_KPIS.beneficiaries)}명</dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-3">
+                <dt className="text-paper/45">Leverage (WV→WFP)</dt>
+                <dd className="tnum text-paper">
+                  <span className="text-wv-orange">{multiple(GLOBAL_KPIS.leverage)}</span>{' '}
+                  · {krwThousandToUsd(GLOBAL_KPIS.wfpGrant)}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* Colophon — source / contact / notice */}
+          <div className="md:col-span-3">
+            <p className="mono-label mono-label--caps border-b border-paper/15 pb-2 text-paper/45">
+              Sources & notice
+            </p>
+            <p className="mt-3 font-mono text-[11px] leading-relaxed text-paper/55">
+              수치는 제안서(2025.03)·중간보고서(2025.12) 기준이며, 최종 실적·재무보고는 2026
+              결과보고에서 확정됩니다. 현장 사진은 추후 교체 예정입니다.
+            </p>
+            <p className="mt-3 font-mono text-[11px] leading-relaxed text-paper/55">
+              <span className="footnote-idx">출처</span> Hunger Hotspots (WFP &amp; FAO, 2025)
+              <br />
+              <span className="footnote-idx">문의</span> 인도적지원팀 조항빈 대리
             </p>
           </div>
         </div>
 
-        <div className="mt-10 border-t border-white/10 pt-6 text-xs text-white/40">
-          © 2025 World Vision Korea · 본 대시보드는 마케팅·후원자 커뮤니케이션 지원을 위한 내부 시각화 자료입니다.
+        <div className="mt-12 border-t border-paper/15 pt-5">
+          <p className="font-mono text-[10px] leading-relaxed text-paper/35">
+            © 2025 World Vision Korea · 본 대시보드는 마케팅·후원자 커뮤니케이션 지원을 위한 내부
+            시각화 자료입니다.
+          </p>
         </div>
       </div>
     </footer>
