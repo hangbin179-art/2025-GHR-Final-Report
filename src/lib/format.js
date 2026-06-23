@@ -44,6 +44,22 @@ export function krwThousandToUsd(value) {
   return `$${nf.format(Math.round(usd))}`
 }
 
+/** raw USD compact, e.g. 16038579 -> "$16.0M", 558117 -> "$558K" */
+export function usd(value) {
+  if (value == null || Number.isNaN(value)) return '—'
+  const v = Math.abs(value)
+  if (v >= 1e6) return `$${(value / 1e6).toFixed(1)}M`
+  if (v >= 1e3) return `$${(value / 1e3).toFixed(0)}K`
+  return `$${nf.format(Math.round(value))}`
+}
+
+/** raw 원(KRW) -> 억원 string, e.g. 6790954000 -> "67.9억원" */
+export function wonToEok(value) {
+  if (value == null || Number.isNaN(value)) return '—'
+  const eok = value / 1e8
+  return `${eok.toFixed(eok >= 100 ? 0 : 1)}억원`
+}
+
 /** tonnes, e.g. 21133 -> "21,133톤", 1.72 -> "1.72톤" */
 export function tons(value) {
   if (value == null || Number.isNaN(value)) return '—'

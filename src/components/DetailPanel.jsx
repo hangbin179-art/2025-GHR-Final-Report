@@ -1,4 +1,4 @@
-import { ACTIVITY_KEYS, leverageOf } from '../data/projects.js'
+import { ACTIVITY_KEYS, leverageOf, PROJECT_NARRATIVES } from '../data/projects.js'
 import { ACTIVITY_META } from '../data/content.js'
 import {
   num,
@@ -135,7 +135,7 @@ export default function DetailPanel({ project, onClose }) {
               좌측 도면에서 사업국을 선택하십시오
             </p>
             <p className="mt-3 font-mono text-[11px] leading-relaxed text-ink-muted">
-              ← 지도 표식을 선택하면 수혜자 규모 · 수행 활동 · 상반기 진척률 · 현장 기록을
+              ← 지도 표식을 선택하면 수혜자 규모 · 수행 활동 · 누적 결과 실적 · 현장 기록을
               이 도면에 펼쳐 표시합니다.
             </p>
           </div>
@@ -145,6 +145,7 @@ export default function DetailPanel({ project, onClose }) {
   }
 
   const lev = leverageOf(project)
+  const narrative = PROJECT_NARRATIVES[project.id] || null
   const progress = project.progress || {}
   const hasFoodPct = typeof progress.foodPct === 'number'
   const hasCashPct = typeof progress.cashPct === 'number'
@@ -158,7 +159,7 @@ export default function DetailPanel({ project, onClose }) {
   return (
     <PanelCard>
       {/* keyed wrapper so content transitions once whenever the project changes */}
-      <div key={project.id} className="flex flex-1 flex-col overflow-y-auto">
+      <div key={project.id} className="flex flex-1 flex-col overflow-y-auto panel-scroll">
         {/* ── Header — ink plane, one of the few dark surfaces ─────────────── */}
         <div className="relative overflow-hidden border-b border-ink-line bg-ink-press px-5 pb-6 pt-5 text-paper sm:px-6">
           {/* corner ring bleeding off the dark header */}
@@ -294,11 +295,11 @@ export default function DetailPanel({ project, onClose }) {
             </ul>
           </section>
 
-          {/* — Interim progress: bars retired → semicircle arc gauges — */}
+          {/* — Cumulative result: bars retired → semicircle arc gauges — */}
           {showProgress && (
             <section className="mt-8 border-t border-ink-line pt-5">
               <h3 className="mono-label mono-label--caps text-ink-muted">
-                Interim 2025 H1 · 상반기 진척률
+                Cumulative Result · 누적 결과 실적
               </h3>
               <div className="mt-4 space-y-5">
                 {hasFoodPct && (
@@ -310,12 +311,18 @@ export default function DetailPanel({ project, onClose }) {
                         ? `실적 ${tons(progress.foodActualTons)} / 계획 ${tons(project.foodTons)}`
                         : undefined
                     }
+                    note={progress.foodPct > 100 ? '계획 초과' : null}
                   />
                 )}
                 {hasCashPct && (
                   <ArcGauge
                     value={progress.cashPct}
-                    label="현금 배분"
+                    label="현금/교환권"
+                    sub={
+                      progress.cashActualKRW
+                        ? `실적 ${(progress.cashActualKRW / 1e8).toFixed(1)}억원`
+                        : undefined
+                    }
                     note={progress.cashPct > 100 ? '계획 초과' : null}
                   />
                 )}
@@ -347,6 +354,31 @@ export default function DetailPanel({ project, onClose }) {
                 {project.note}
               </p>
             </div>
+          )}
+
+          {/* — Field narrative: context + result, distilled from EOP/Quarterly/
+                Success Story docs. Left orange rule, quiet body. — */}
+          {narrative && (
+            <section className="mt-8 border-t border-ink-line pt-5">
+              <h3 className="mono-label mono-label--caps text-ink-muted">
+                Field Narrative · 현장 기록
+              </h3>
+              <div className="mt-3 border-l-2 border-wv-orange pl-3.5">
+                {narrative.context && (
+                  <p className="font-sans text-[13px] leading-relaxed text-ink-soft [word-break:keep-all]">
+                    {narrative.context}
+                  </p>
+                )}
+                {narrative.result && (
+                  <p className="mt-2.5 font-sans text-[13px] font-medium leading-relaxed text-ink [word-break:keep-all]">
+                    {narrative.result}
+                  </p>
+                )}
+              </div>
+              <p className="mono-label mt-2.5 text-ink-muted">
+                출처 · 결과보고(EOP/Quarterly/Success Story)
+              </p>
+            </section>
           )}
 
           {/* — Photos: delegated to PhotoGallery (props/call shape preserved) — */}

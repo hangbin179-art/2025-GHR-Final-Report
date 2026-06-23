@@ -1,276 +1,218 @@
-import { useRef, useState } from 'react'
-import { INTERVENTIONS } from '../data/content.js'
-import { Icon } from '../lib/icons.jsx'
-import { Section, SectionHeading } from './ui/Section.jsx'
+import ProjectTable from './ProjectTable.jsx'
+import DistributionCharts from './DistributionCharts.jsx'
+import NarrativePrograms, { PhotoSlot, Quote } from './NarrativePrograms.jsx'
 
-// A stat value is "latin" (Anton-safe) only when it has NO Hangul. Anton has no
-// Korean glyphs, so Korean stat values (e.g. "효율 + 효과", "자립") MUST render in
-// font-sans. Numeric/latin values ("2,100", "+9%", "SAM · MAM") go in .num-display.
-const HANGUL = /[ㄱ-힝]/
+const TEAL = '#0E7C7B'
+const RED = '#C8102E'
 
-// Comma-only orange split-span — breaks the fill discipline ONLY on the
-// thousands commas (e.g. "2,100" -> 2<o>,</o>100). Mirrors Hero.jsx.
-function CommaSplit({ value }) {
-  const parts = String(value).split(',')
+/* 01–03 활동 하단 현장 스토리 블록 */
+function FieldStory({ accent, eyebrow, caption, quote, quoteSource, children }) {
   return (
-    <>
-      {parts.map((part, i) => (
-        <span key={i}>
-          {i > 0 && <span className="text-wv-orange">,</span>}
-          {part}
-        </span>
-      ))}
-    </>
-  )
-}
-
-// The detail stat. Latin/numeral values become a giant Anton figure on bare
-// paper (no tinted box) sitting over a 1px quarter-arc in the activity's own
-// data color. Korean values stay in heavy Pretendard so glyphs don't break.
-function DetailStat({ stat, color }) {
-  const isLatin = !HANGUL.test(stat.value)
-  return (
-    <div className="relative">
-      {/* activity-color 1px quarter arc — data encoding, NOT the orange signature ring.
-          Thin 1.5px stroke, knife-cut off the top-right, sweeping a quarter turn. */}
-      <svg
-        className="ring-svg pointer-events-none absolute -right-6 -top-10 h-56 w-56 md:-right-10 md:h-72 md:w-72"
-        viewBox="0 0 240 240"
-        fill="none"
-        aria-hidden="true"
-      >
-        {/* outer quarter arc (top-right quadrant) */}
-        <path
-          d="M 240 120 A 120 120 0 0 0 120 0"
-          fill="none"
-          stroke={color}
-          strokeWidth="1.5"
-        />
-        {/* inner quarter arc + a single colour dot at the radius — quiet survey ticks */}
-        <path
-          d="M 240 168 A 72 72 0 0 0 168 96"
-          fill="none"
-          stroke={color}
-          strokeWidth="1.5"
-          opacity="0.65"
-        />
-        <circle cx="170" cy="70" r="3" fill={color} />
-      </svg>
-
-      <p className="mono-label mono-label--caps relative text-ink-muted">측정값 · Metric</p>
-
-      {isLatin ? (
-        <div className="num-axis relative mt-4 inline-block w-fit pb-2">
-          <span className="num-display block leading-[0.86] text-ink text-[clamp(72px,15vw,148px)]">
-            <CommaSplit value={stat.value} />
-          </span>
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: '120px 1fr',
+      gap: 48,
+      marginTop: 36,
+      paddingTop: 32,
+      borderTop: '1px solid var(--field-100)',
+    }}>
+      <div />
+      <div style={{ display: 'grid', gridTemplateColumns: '0.8fr 1fr', gap: 40, alignItems: 'start' }}>
+        <PhotoSlot accent={accent} ratio="4/3" caption={caption} />
+        <div>
+          <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: accent, margin: '0 0 12px' }}>
+            {eyebrow}
+          </p>
+          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 15, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
+            {children}
+          </p>
+          {quote && <Quote accent={accent} text={quote} source={quoteSource} />}
         </div>
-      ) : (
-        // Korean stat: heavy Pretendard, two-pole loud end (no Anton — no glyphs).
-        <p className="num-axis relative mt-4 inline-block w-fit pb-2 font-sans font-black leading-[1.04] tracking-[-0.03em] text-ink text-[clamp(40px,7vw,72px)]">
-          {stat.value}
-        </p>
-      )}
-
-      <div className="relative mt-5 flex items-baseline gap-2.5">
-        {stat.unit && (
-          <span className="font-display leading-none text-ink text-[clamp(22px,3vw,32px)]">
-            {stat.unit}
-          </span>
-        )}
-        <span className="max-w-[26ch] font-sans text-[15px] leading-snug text-ink-soft">
-          {stat.label}
-        </span>
       </div>
     </div>
   )
 }
 
+const ROW = {
+  display: 'grid',
+  gridTemplateColumns: '120px 1fr 1fr',
+  gap: 48,
+  alignItems: 'start',
+}
+
 export default function InterventionsSection() {
-  const [active, setActive] = useState(0)
-  const current = INTERVENTIONS[active]
-  const { color } = current
-  const tabRefs = useRef([])
-
-  // Roving-tabindex keyboard model for a vertical tablist (WAI-ARIA APG):
-  // Up/Down move + select, Home/End jump to ends, focus follows selection.
-  const onKeyDown = (e) => {
-    const last = INTERVENTIONS.length - 1
-    let next = null
-    switch (e.key) {
-      case 'ArrowDown':
-      case 'ArrowRight':
-        next = active === last ? 0 : active + 1
-        break
-      case 'ArrowUp':
-      case 'ArrowLeft':
-        next = active === 0 ? last : active - 1
-        break
-      case 'Home':
-        next = 0
-        break
-      case 'End':
-        next = last
-        break
-      default:
-        return
-    }
-    e.preventDefault()
-    setActive(next)
-    tabRefs.current[next]?.focus()
-  }
-
   return (
-    <Section id="interventions">
-      <SectionHeading
-        code="02 / 03 — WHAT"
-        watermark="ACTIONS"
-        title="식량위기에 대응하는 5대 핵심 활동"
-        description="현장의 상황에 따라 가장 효과적인 방식을 조합합니다. 왼쪽 목록에서 활동을 선택하면 세부 내용을 확인할 수 있습니다."
-      />
+    <section id="sec-what" style={{
+      background: '#fff',
+      borderTop: '1px solid var(--field-200)',
+      borderBottom: '1px solid var(--field-200)',
+    }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '120px 64px' }}>
 
-      {/* Asymmetric split: a left index rail (5/12) + a wide detail column (7/12).
-          NOT an even 3/2 grid, NOT rounded pill tabs. */}
-      <div className="mt-14 grid grid-cols-1 gap-x-12 gap-y-12 md:grid-cols-12">
-        {/* ── LEFT: vertical 01–05 index. Selected row = bold ink + orange rule;
-            the rest sit quiet in ink-muted. This IS the tablist. ──────────── */}
-        <div className="md:col-span-5">
-          <p className="mono-label mono-label--caps mb-5 text-ink-muted">
-            Activities · 01—05
-          </p>
-          <ul
-            role="tablist"
-            aria-orientation="vertical"
-            aria-label="핵심 사업 활동"
-            className="flex flex-col"
-          >
-            {INTERVENTIONS.map((item, i) => {
-              const selected = i === active
-              return (
-                <li key={item.key} role="presentation" className="border-t border-ink-line last:border-b">
-                  <button
-                    type="button"
-                    role="tab"
-                    ref={(el) => (tabRefs.current[i] = el)}
-                    id={`intervention-tab-${item.key}`}
-                    aria-selected={selected}
-                    aria-controls={`intervention-panel-${item.key}`}
-                    tabIndex={selected ? 0 : -1}
-                    onClick={() => setActive(i)}
-                    onKeyDown={onKeyDown}
-                    className="group flex w-full items-baseline gap-4 py-5 text-left focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-wv-orange md:gap-5"
-                  >
-                    {/* Anton index numeral — loud when selected, faint when not */}
-                    <span
-                      className={[
-                        'num-display shrink-0 leading-none text-[clamp(28px,4vw,40px)] transition-colors duration-200 motion-reduce:transition-none',
-                        selected ? 'text-ink' : 'text-ink-line group-hover:text-ink-muted',
-                      ].join(' ')}
-                    >
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
-
-                    <span className="min-w-0 flex-1">
-                      {/* Korean activity name — font-sans always. Selected = black +
-                          orange underline; unselected = muted, no underline. */}
-                      <span
-                        className={[
-                          'block font-sans leading-snug tracking-[-0.01em] transition-colors duration-200 text-[clamp(18px,2.2vw,22px)] motion-reduce:transition-none',
-                          selected
-                            ? 'font-black text-ink underline decoration-wv-orange decoration-[3px] underline-offset-[6px]'
-                            : 'font-bold text-ink-muted group-hover:text-ink-soft',
-                        ].join(' ')}
-                      >
-                        {item.label}
-                      </span>
-                      {/* Latin label — mono caps, the quiet pole */}
-                      <span
-                        className={[
-                          'mono-label mono-label--caps mt-1.5 block transition-colors duration-200 motion-reduce:transition-none',
-                          selected ? 'text-ink-soft' : 'text-ink-muted',
-                        ].join(' ')}
-                      >
-                        {item.labelEn}
-                      </span>
-                    </span>
-
-                    {/* tiny activity-color dot marking the selected row, far right */}
-                    <span
-                      aria-hidden="true"
-                      className="mt-2 h-2.5 w-2.5 shrink-0 rounded-full transition-opacity duration-200 motion-reduce:transition-none"
-                      style={{
-                        backgroundColor: item.color,
-                        opacity: selected ? 1 : 0,
-                      }}
-                    />
-                  </button>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-
-        {/* ── RIGHT: detail panel. Giant stat on bare paper + activity arc;
-            summary; em-dash bullets. Number crossfades on switch (key). ──── */}
-        <div className="relative overflow-hidden md:col-span-7 md:pl-10 md:border-l md:border-ink-line">
-          <div
-            key={current.key}
-            role="tabpanel"
-            id={`intervention-panel-${current.key}`}
-            aria-labelledby={`intervention-tab-${current.key}`}
-            tabIndex={0}
-            className="ix-panel focus:outline-none"
-          >
-            {/* Big stat — single, on paper, no tinted box */}
-            <DetailStat stat={current.stat} color={color} />
-
-            {/* Summary — body, generous measure */}
-            <p className="relative mt-12 max-w-xl font-sans text-[17px] leading-[1.8] text-ink-soft">
-              {current.summary}
+        {/* Section header — 3-col editorial grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 760px 1fr', gap: 0, marginBottom: 80 }}>
+          <div style={{ alignSelf: 'start' }}>
+            <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--orange)', margin: '0 0 12px' }}>
+              Chapter III
             </p>
-
-            {/* Bullets — orange em-dash + hairline indent, NO tinted check circles.
-                A small activity-color dot precedes the em-dash as a data tick. */}
-            <ul className="mt-8 max-w-xl border-t border-ink-line">
-              {current.bullets.map((b, i) => (
-                <li
-                  key={i}
-                  className="flex items-baseline gap-3 border-b border-ink-line py-4 font-sans text-[15px] leading-relaxed text-ink-soft"
-                >
-                  <span
-                    aria-hidden="true"
-                    className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full"
-                    style={{ backgroundColor: color }}
-                  />
-                  <span aria-hidden="true" className="shrink-0 font-display text-wv-orange leading-none">
-                    —
-                  </span>
-                  <span className="min-w-0">{b}</span>
-                </li>
-              ))}
-            </ul>
-
-            {/* Footnote — source / basis date, mono, academic */}
-            <p className="mt-8 max-w-xl border-t border-ink-line pt-4 font-mono text-[11px] leading-relaxed text-ink-muted">
-              <span className="footnote-idx">{active + 1}</span> 활동 기준·수치는 사업 설계
-              기준값입니다. 출처: 2025 글로벌 식량위기 대응사업(WFP &amp; FAO 2025)
-              제안서(2025.03) · 중간보고서(2025.12).
+            <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, fontWeight: 700, color: 'var(--grey-600)', margin: 0 }}>
+              WHAT · 배분된 것들
             </p>
           </div>
+          <div>
+            <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 54, lineHeight: 1.15, letterSpacing: '-0.025em', color: 'var(--midnight)', margin: 0, wordBreak: 'keep-all' }}>
+              실제로 무엇이,<br />얼마나 전달되었나.
+            </h2>
+            <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 18, lineHeight: 1.85, color: 'var(--grey-800)', margin: '36px 0 0', wordBreak: 'keep-all', maxWidth: '46ch' }}>
+              수혜자 수가 아니라 — 현장에 도착한 식량의 무게, 가정의 손에 닿은 현금,
+              그리고 아이의 입에 들어간 영양치료식의 양으로 보여드립니다.
+              20개 사업, 13개국 누적입니다.
+            </p>
+          </div>
+          <div />
         </div>
-      </div>
 
-      {/* Number/arc crossfade on tab switch (1 transition only; honors reduced motion). */}
-      <style>{`
-        .ix-panel { animation: ix-cross 0.45s ease-out both; }
-        @keyframes ix-cross {
-          from { opacity: 0; transform: translateY(6px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .ix-panel { animation: none; }
-        }
-      `}</style>
-    </Section>
+        {/* Editorial rows + field stories */}
+        <div style={{ borderTop: '2px solid var(--midnight)' }}>
+
+          {/* 01 — 일반식량 */}
+          <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
+            <div style={ROW}>
+              <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: 'var(--orange)', margin: 0, letterSpacing: '-0.04em' }}>01</p>
+              <div>
+                <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>일반식량 배분</h3>
+                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>In-kind Food Distribution</p>
+                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
+                  분쟁·기후·경제 충격으로 식량을 잃은 가정에 수수·콩·옥수수·식용유 등 현물 식량을
+                  정기 배분합니다. 1인 최소 2,100kcal 기준으로 구성하며, 14개 사업에 걸쳐 총
+                  10,235.1톤이 배분되었습니다.
+                </p>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <p className="num tnum" style={{ fontSize: 72, color: 'var(--orange)', margin: 0, lineHeight: 0.85 }}>
+                  10,235<span style={{ fontSize: 28, color: 'var(--grey-500)', marginLeft: 4, fontWeight: 500, letterSpacing: 0 }}>톤</span>
+                </p>
+                <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>
+                  tonnes distributed
+                </p>
+                <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--field-200)' }}>
+                  <p className="num tnum" style={{ fontSize: 32, color: 'var(--grey-700)', margin: 0 }}>$16.0M</p>
+                  <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '6px 0 0' }}>
+                    commodity value (USD)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <FieldStory
+              accent="var(--orange)"
+              eyebrow="Field Story · 수단 남코르도판"
+              caption="사진 캡션 · 아부주바이하 캠프의 식량 배분 현장. 추후 현장 사진으로 교체 예정."
+              quote="아이들이 더는 굶지 않게 되자, 비로소 내일을 계획할 수 있었습니다."
+              quoteSource="하와 이스마일 · 아부주바이하 캠프, 네 자녀의 어머니"
+            >
+              분쟁으로 남코르도판 아부주바이하로 피난한 <strong style={{ color: 'var(--midnight)' }}>하와 이스마일(32세)</strong>은
+              네 자녀를 키우는 어머니입니다. 2025년 8~9월, WFP와 월드비전은 이곳 9,829명에게 수수·렌틸·식용유·소금을
+              배분했습니다. 식량 지원으로 끼니 걱정을 던 하와는 시장 여성들에게서 <strong style={{ color: 'var(--orange)' }}>비누
+              만드는 법</strong>을 배워 작은 사업을 시작했고, 지금은 다른 피난 여성들을 고용해 함께 생계를 꾸립니다.
+            </FieldStory>
+          </article>
+
+          {/* 02 — 현금/교환권 */}
+          <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
+            <div style={ROW}>
+              <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: TEAL, margin: 0, letterSpacing: '-0.04em' }}>02</p>
+              <div>
+                <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>현금 / 교환권 배분</h3>
+                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Cash &amp; Voucher Assistance</p>
+                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
+                  시장이 작동하는 지역에서 현금이나 교환권을 지급해 수혜 가정이 직접 식량을 구매합니다.
+                  운송·보관 비용을 줄이고 수혜자에게 선택권을 돌려주는 방식으로, 10개 사업이 현금
+                  또는 교환권 요소를 포함합니다.
+                </p>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <p className="num tnum" style={{ fontSize: 72, color: TEAL, margin: 0, lineHeight: 0.85 }}>$5.1M</p>
+                <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>
+                  cash &amp; voucher (USD)
+                </p>
+                <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--field-200)' }}>
+                  <p className="num" style={{ fontSize: 32, color: TEAL, margin: 0 }}>
+                    10<span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 16, marginLeft: 4 }}>개 사업</span>
+                  </p>
+                  <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, fontWeight: 600, color: 'var(--grey-600)', margin: '6px 0 0' }}>현금/교환권 배분 포함</p>
+                </div>
+              </div>
+            </div>
+
+            <FieldStory
+              accent={TEAL}
+              eyebrow="Field Story · 방글라데시 콕스바자르"
+              caption="사진 캡션 · 콕스바자르 캠프의 전자바우처(E-Voucher) 매장. 추후 현장 사진으로 교체 예정."
+              quote="늘 아이들을 어떻게 먹일지 걱정뿐이었습니다. 하지만 WFP가 우리에게 다시 희망을 주었습니다."
+              quoteSource="딜 바하르 · 콕스바자르 캠프, 세 자녀의 어머니"
+            >
+              미얀마의 폭력을 피해 방글라데시로 온 로힝야 난민 <strong style={{ color: 'var(--midnight)' }}>딜 바하르(30세)</strong>는
+              캠프에서 남편을 잃고 세 아이를 홀로 키웁니다. 현물 배급이 <strong style={{ color: TEAL }}>전자바우처(E-Voucher)</strong>로
+              전환되면서, 그녀는 매달 정해진 한도 안에서 원하는 식품을 직접 골라 살 수 있게 됐습니다. 여성 가구주를 위한
+              신선식품 바우처로 채소·생선·닭고기까지 구매해 균형 잡힌 식단을 차립니다.
+            </FieldStory>
+          </article>
+
+          {/* 03 — 영양 치료식 */}
+          <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
+            <div style={ROW}>
+              <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: RED, margin: 0, letterSpacing: '-0.04em' }}>03</p>
+              <div>
+                <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>영양실조 치료식 배분</h3>
+                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Therapeutic Food · RUTF / RUSF</p>
+                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
+                  5세 미만 아동·임산부·수유부에게 플럼피넛(RUTF)·중등도 치료식(RUSF)을 배분합니다.
+                  MUAC 테이프로 SAM/MAM을 진단한 후 지급하며, 마을 어머니 자조그룹이 추적 관리합니다.
+                  9개 사업에서 999.5톤이 배분되었습니다.
+                </p>
+              </div>
+              <div style={{ textAlign: 'right' }}>
+                <p className="num tnum" style={{ fontSize: 72, color: RED, margin: 0, lineHeight: 0.85 }}>
+                  999.5<span style={{ fontSize: 28, color: 'var(--grey-500)', marginLeft: 4, fontWeight: 500, letterSpacing: 0 }}>톤</span>
+                </p>
+                <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>
+                  therapeutic food
+                </p>
+                <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--field-200)' }}>
+                  <p className="num" style={{ fontSize: 32, color: RED, margin: 0 }}>
+                    9<span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 16, marginLeft: 4 }}>개 사업</span>
+                  </p>
+                  <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, fontWeight: 600, color: 'var(--grey-600)', margin: '6px 0 0' }}>영양 치료식 배분 포함</p>
+                </div>
+              </div>
+            </div>
+
+            <FieldStory
+              accent={RED}
+              eyebrow="Field Story · 에티오피아 티그라이"
+              caption="사진 캡션 · 티그라이 TSFP 영양식 배분 및 상담 현장. 추후 현장 사진으로 교체 예정."
+              quote="제대로 먹지 못해 아기 건강이 늘 걱정이었어요. 이제는 더 건강해졌고, 아이를 돌보는 데 자신감이 생겼습니다."
+              quoteSource="티르하스 체가이 · 티그라이 아디하위 IDP 캠프, 수유모"
+            >
+              2년간의 봉쇄로 영양 위기에 놓인 에티오피아 티그라이에서, WFP의 <strong style={{ color: 'var(--midnight)' }}>표적보충영양사업(TSFP)</strong>은
+              76개 배분소를 통해 19,122명 — 5세 미만 아동 12,906명과 임산부·수유부 6,216명 — 에게 영양식을 전달했습니다.
+              수유모 <strong style={{ color: 'var(--midnight)' }}>티르하스 체가이(20세)</strong>는 중등도 영양실조(MUAC 22.7cm)로
+              입소해, 격주로 받은 <strong style={{ color: RED }}>영양강화식(CSB++)</strong>과 모유수유·위생 상담을 통해 한 달 만에
+              23.3cm로 회복하고 퇴소했습니다.
+            </FieldStory>
+          </article>
+        </div>
+
+        {/* 04 학교 급식 · 05 생계 역량 강화 — 사업 내러티브 */}
+        <NarrativePrograms />
+
+        {/* 국가별 배분 현황 표 */}
+        <ProjectTable />
+
+        {/* 국가별 막대 차트 */}
+        <DistributionCharts />
+      </div>
+    </section>
   )
 }

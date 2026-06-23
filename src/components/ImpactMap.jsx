@@ -1,248 +1,182 @@
-// ===========================================================================
-// ImpactMap — main interactive world map for the WV x WFP food-crisis dashboard.
-//
-// Self-contained basemap: country polygons are rendered from a bundled GeoJSON
-// (data/world-110m.json) — no external tile CDN, so the map works on any
-// network (incl. locked-down corporate networks) and offline. The 13 project
-// countries are OUTLINED (not flooded) in orange; one custom marker per project
-// sits on top. Markers use L.divIcon (avoids default-icon bundler breakage),
-// are sized lightly by beneficiary count (sqrt), and the selected marker gets a
-// static concentric solid-orange "survey ring" — the WV FIELD DISPATCH
-// signature, not a pulsing halo.
-//
-// FIELD DISPATCH skin (function preserved, color only): the dark slate sea →
-// warm paper tone, land → paper-cream plate with a 0.5px ink hairline, project
-// countries → 0.16 fill + a 1.25px orange outline (a surveyed boundary, not a
-// flood fill). The floating legend is a square paper plate with a 1px ink
-// hairline; the 5 activity categories are encoded as thin arc/dot samples
-// (line/dot only — no tinted pills, no fill swatches).
-// ===========================================================================
-
-import { useMemo } from 'react'
-import { MapContainer, GeoJSON, Marker, Tooltip } from 'react-leaflet'
+import { useEffect, useRef } from 'react'
 import L from 'leaflet'
-import { ACTIVITY_KEYS, PROJECT_ISO3 } from '../data/projects.js'
-import { ACTIVITY_META } from '../data/content.js'
-import { num } from '../lib/format.js'
-import worldGeo from '../data/world-110m.json'
+import 'leaflet/dist/leaflet.css'
+import CountryGrid from './CountryGrid.jsx'
 
-// Design tokens (mirrored as literals because Leaflet builds marker markup as
-// an HTML string outside React's Tailwind-scanned tree).
-const WV_ORANGE = '#F47920'
-const PAPER = '#FBFAF7' // warm newsprint cream (NOT pure white) — marker legibility halo
-const INK_LINE = '#D8D2C6' // warm 1px hairline
-// Sea: dark slate → warm paper tone. (Mirrors .leaflet-container in index.css;
-// set here too because MapContainer's inline `background` would otherwise win.)
-const SEA = '#F0EBE0'
-
-// Basemap styling. Base layer = all land as a paper-cream plate with a hairline
-// edge. Highlight layer = project countries, drawn as an OUTLINE (a surveyed
-// boundary) — a faint 0.16 fill so the marker still reads, plus a 1.25px orange
-// stroke. ("윤곽 > 면" — outline beats flood-fill.)
-const baseLandStyle = { fillColor: '#E7E0D2', fillOpacity: 1, color: INK_LINE, weight: 0.5 }
-const highlightStyle = { fillColor: WV_ORANGE, fillOpacity: 0.16, color: WV_ORANGE, weight: 1.25 }
-const isProjectCountry = (feature) => PROJECT_ISO3.includes(feature.id)
-
-// Map beneficiary count -> a small pin core diameter (px). Kept in a tight range
-// so every marker stays comfortably clickable regardless of project size.
-function pinSize(beneficiaries) {
-  const b = Number(beneficiaries) || 0
-  const min = 16
-  const max = 30
-  // The dataset spans ~3k to ~64k beneficiaries; scale across that band.
-  const lo = 3000
-  const hi = 64000
-  const t = Math.max(0, Math.min(1, (b - lo) / (hi - lo)))
-  return Math.round(min + (max - min) * Math.sqrt(t))
+// Marker size formula from Direction A reference
+function sizeFor(food, ther, cash) {
+  const tons = Math.max(food, ther, cash > 0 ? 40 : 0)
+  const min = 20, max = 3088
+  const t = Math.sqrt(Math.max(0, (tons - min)) / (max - min))
+  return Math.round(14 + t * 42)
 }
 
-// Build the divIcon HTML for a project marker. `selected` swaps the quiet pin
-// for the FIELD DISPATCH instrument: a filled orange disk ringed by static,
-// solid concentric survey strokes (no infinite pulse). Both states are drawn as
-// inline SVG so the heavy solid stroke survives Leaflet's HTML-string render.
-function buildIcon(project, selected) {
-  // Core disk diameter carries the beneficiary scale (sqrt) in BOTH states.
-  const core = pinSize(project.beneficiaries)
-  const coreR = core / 2
+function fmtUsd(n) {
+  if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M'
+  return '$' + (n / 1000).toFixed(0) + 'K'
+}
 
-  // A thin paper ring separates the disk from the tinted land beneath it
-  // (legibility — a 2px cream stroke, not a glow/blur).
-  const paperRingW = 2
+const PROJECTS = [
+  { country: '수단', countryEn: 'Sudan', site: 'South Darfur (IFA)', lat: 11.00, lng: 24.90, food: 2276.3, ther: 15.3, cash: 0, val: 3121934, pbas: '223711' },
+  { country: '수단', countryEn: 'Sudan', site: 'South Kordofan', lat: 12.20, lng: 30.20, food: 1025.7, ther: 17.4, cash: 324429, val: 1010325, pbas: '223710' },
+  { country: '수단', countryEn: 'Sudan', site: 'South Darfur (Nutr.)', lat: 11.10, lng: 24.95, food: 20.1, ther: 20.1, cash: 0, val: 82059, pbas: '223745' },
+  { country: '수단', countryEn: 'Sudan', site: 'White Nile', lat: 13.05, lng: 32.55, food: 0, ther: 0, cash: 0, val: 0, pbas: '223856' },
+  { country: '콩고민주공화국', countryEn: 'DR Congo', site: 'South Kivu', lat: -2.50, lng: 28.90, food: 3088.2, ther: 74.9, cash: 0, val: 5050526, pbas: '223847' },
+  { country: '콩고민주공화국', countryEn: 'DR Congo', site: 'Tanganyika', lat: -6.00, lng: 29.70, food: 632.6, ther: 0, cash: 0, val: 1093743, pbas: '223796' },
+  { country: '콩고민주공화국', countryEn: 'DR Congo', site: 'Kasai · Luiza', lat: -5.90, lng: 22.40, food: 76.2, ther: 76.2, cash: 0, val: 344228, pbas: '224041' },
+  { country: '남수단', countryEn: 'South Sudan', site: 'Fashoda · Panyikang', lat: 10.00, lng: 32.00, food: 301.1, ther: 0.5, cash: 397930, val: 518775, pbas: '223756' },
+  { country: '남수단', countryEn: 'South Sudan', site: 'Renk · Manyo', lat: 11.75, lng: 32.80, food: 81.2, ther: 0, cash: 0, val: 136515, pbas: '223758' },
+  { country: '남수단', countryEn: 'South Sudan', site: 'Juba · Yambio', lat: 4.85, lng: 31.60, food: 29.6, ther: 0, cash: 141103, val: 253929, pbas: '223753' },
+  { country: '아프가니스탄', countryEn: 'Afghanistan', site: 'Ghor · Badghis', lat: 34.50, lng: 65.30, food: 829.3, ther: 65.7, cash: 173877, val: 446505, pbas: '223255' },
+  { country: '에티오피아', countryEn: 'Ethiopia', site: 'Tigray · Afar · Amhara', lat: 13.50, lng: 39.50, food: 695.8, ther: 695.8, cash: 0, val: 2416084, pbas: '223707' },
+  { country: '우간다', countryEn: 'Uganda', site: 'Bidibidi · Lobule', lat: 3.42, lng: 31.40, food: 505.0, ther: 33.6, cash: 558117, val: 679772, pbas: '223766' },
+  { country: '베네수엘라', countryEn: 'Venezuela', site: 'Zulia · Falcón +2', lat: 10.40, lng: -72.00, food: 475.5, ther: 0, cash: 0, val: 605800, pbas: '223806' },
+  { country: '차드', countryEn: 'Chad', site: 'Farchana +5', lat: 13.60, lng: 22.00, food: 198.5, ther: 0, cash: 15941, val: 278368, pbas: '223850' },
+  { country: '방글라데시', countryEn: 'Bangladesh', site: "Cox's Bazar", lat: 21.43, lng: 92.00, food: 0, ther: 0, cash: 1885961, val: 17, pbas: '223748' },
+  { country: '콜롬비아', countryEn: 'Colombia', site: 'Valle del Cauca', lat: 3.40, lng: -76.50, food: 0, ther: 0, cash: 1456689, val: 0, pbas: '223799' },
+  { country: '중앙아프리카공화국', countryEn: 'CAR', site: 'Bambari · Bouar', lat: 5.70, lng: 20.70, food: 0, ther: 0, cash: 87318, val: 0, pbas: '223999' },
+  { country: '미얀마', countryEn: 'Myanmar', site: 'Northern Shan', lat: 22.50, lng: 97.50, food: 0, ther: 0, cash: 64616, val: 0, pbas: '223982' },
+  { country: '케냐', countryEn: 'Kenya', site: 'Makueni · Kitui', lat: -1.80, lng: 37.60, food: 0, ther: 0, cash: 0, val: 0, pbas: '223864' },
+]
 
-  if (!selected) {
-    // Quiet pin: solid orange disk + a 2px paper separator ring.
-    const pad = paperRingW + 2
-    const box = core + pad * 2
-    const c = box / 2
-    const half = box / 2
-    const html = `
-      <div style="width:${box}px;height:${box}px;">
-        <svg width="${box}" height="${box}" viewBox="0 0 ${box} ${box}" style="display:block;overflow:visible;">
-          <circle cx="${c}" cy="${c}" r="${coreR + paperRingW / 2}"
-                  fill="none" stroke="${PAPER}" stroke-width="${paperRingW}"></circle>
-          <circle cx="${c}" cy="${c}" r="${coreR}" fill="${WV_ORANGE}"></circle>
-        </svg>
-      </div>`
-    return L.divIcon({
-      html,
-      className: 'impact-map-marker', // strip leaflet's default white box
-      iconSize: [box, box],
-      iconAnchor: [half, half],
-      tooltipAnchor: [0, -half + 2],
+export default function ImpactMap() {
+  const mapRef = useRef(null)
+  const instanceRef = useRef(null)
+
+  useEffect(() => {
+    if (instanceRef.current) return
+    const el = mapRef.current
+    if (!el) return
+
+    const map = L.map(el, {
+      center: [12, 28],
+      zoom: 3,
+      minZoom: 2,
+      maxZoom: 8,
+      scrollWheelZoom: false,
+      attributionControl: true,
+      worldCopyJump: true,
     })
-  }
+    instanceRef.current = map
 
-  // Selected pin = survey instrument. Filled disk at center, then 3 concentric
-  // SOLID orange strokes stepping outward (heavy, not hairline). Radius is
-  // anchored to the same beneficiary-scaled core so larger projects read larger.
-  const ringW = [6, 4, 3] // solid stroke widths, heavy → light outward
-  const gap = 5 // ring-to-ring breathing
-  // Innermost survey ring sits just outside the paper separator.
-  const r1 = coreR + paperRingW + gap + ringW[0] / 2
-  const r2 = r1 + ringW[0] / 2 + gap + ringW[1] / 2
-  const r3 = r2 + ringW[1] / 2 + gap + ringW[2] / 2
-  const outer = r3 + ringW[2] / 2
-  const box = Math.ceil(outer * 2) + 2
-  const c = box / 2
-  const half = box / 2
+    // CartoDB Positron — light base (no labels)
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png',
+      {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19,
+      }
+    ).addTo(map)
+    // Labels layer on top
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png',
+      { subdomains: 'abcd', maxZoom: 19, pane: 'shadowPane' }
+    ).addTo(map)
 
-  const html = `
-    <div style="width:${box}px;height:${box}px;">
-      <svg width="${box}" height="${box}" viewBox="0 0 ${box} ${box}" style="display:block;overflow:visible;">
-        <circle cx="${c}" cy="${c}" r="${r3}" fill="none" stroke="${WV_ORANGE}" stroke-width="${ringW[2]}"></circle>
-        <circle cx="${c}" cy="${c}" r="${r2}" fill="none" stroke="${WV_ORANGE}" stroke-width="${ringW[1]}"></circle>
-        <circle cx="${c}" cy="${c}" r="${r1}" fill="none" stroke="${WV_ORANGE}" stroke-width="${ringW[0]}"></circle>
-        <circle cx="${c}" cy="${c}" r="${coreR + paperRingW / 2}" fill="none" stroke="${PAPER}" stroke-width="${paperRingW}"></circle>
-        <circle cx="${c}" cy="${c}" r="${coreR}" fill="${WV_ORANGE}"></circle>
-      </svg>
-    </div>`
+    PROJECTS.forEach((p) => {
+      const size = sizeFor(p.food, p.ther, p.cash)
+      const labelFont = Math.max(8, Math.round(size * 0.30))
+      let label
+      if (p.food > 0) label = p.food >= 1000 ? (p.food / 1000).toFixed(1) + 'k' : p.food + 't'
+      else if (p.cash > 0) label = '$' + (p.cash / 1000000).toFixed(1) + 'M'
+      else label = '—'
 
-  return L.divIcon({
-    html,
-    className: 'impact-map-marker',
-    iconSize: [box, box],
-    iconAnchor: [half, half],
-    tooltipAnchor: [0, -half + 2],
-  })
-}
+      const icon = L.divIcon({
+        className: '',
+        html: `<div class="wv-marker" style="width:${size}px;height:${size}px;font-size:${labelFont}px;">${label}</div>`,
+        iconSize: [size, size],
+        iconAnchor: [size / 2, size / 2],
+      })
 
-// Tiny line/dot category sample for the legend (the data 5-colour scale is
-// encoded as a thin arc + dot — NEVER a filled swatch/tinted pill).
-function CategorySample({ color }) {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" className="shrink-0" aria-hidden="true">
-      <path d="M3 9 A6 6 0 0 1 15 9" fill="none" stroke={color} strokeWidth="1.25" strokeLinecap="round" />
-      <circle cx="9" cy="9" r="1.9" fill={color} />
-    </svg>
-  )
-}
+      const rows = []
+      if (p.food > 0) rows.push(`<div class="pop-row"><span>일반식량</span><strong>${p.food.toLocaleString()} 톤</strong></div>`)
+      if (p.val > 100) rows.push(`<div class="pop-row"><span>식량 가액</span><strong>${fmtUsd(p.val)}</strong></div>`)
+      if (p.cash > 0) rows.push(`<div class="pop-row"><span>현금·바우처</span><strong style="color:#0E7C7B">${fmtUsd(p.cash)}</strong></div>`)
+      if (p.ther > 0) rows.push(`<div class="pop-row"><span>치료식</span><strong style="color:#C8102E">${p.ther.toFixed(1)} 톤</strong></div>`)
 
-export default function ImpactMap({ projects = [], selectedId = null, onSelect }) {
-  // Precompute the icon per project so it's stable across renders (no
-  // Date.now()/Math.random()); recompute only when selection or the projects
-  // list changes.
-  const markers = useMemo(
-    () =>
-      projects
-        .filter((p) => Array.isArray(p.coords) && p.coords.length === 2)
-        .map((p) => {
-          const selected = p.id === selectedId
-          return {
-            project: p,
-            selected,
-            icon: buildIcon(p, selected),
-          }
-        }),
-    [projects, selectedId]
-  )
+      L.marker([p.lat, p.lng], { icon }).bindPopup(
+        `<p class="pop-eyebrow">${p.countryEn} · ${p.site}</p>
+         <p class="pop-name">${p.country}</p>
+         <div class="pop-rows">${rows.join('') || '<div class="pop-row"><span>배분 실적</span><strong>집행 준비 중</strong></div>'}</div>`
+      ).addTo(map)
+    })
+
+    return () => {
+      map.remove()
+      instanceRef.current = null
+    }
+  }, [])
 
   return (
-    <div className="relative h-[460px] w-full overflow-hidden border border-ink-line bg-paper md:h-[620px]">
-      {/* Section code — a quiet mono kicker, top-left, over the sea plate */}
-      <span className="pointer-events-none absolute left-3 top-3 z-[400] mono-label mono-label--caps bg-paper/85 px-2 py-1 text-ink-muted">
-        FIELD MAP
-      </span>
+    <section id="dir-a-map" style={{ background: 'var(--field-50)' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 32px' }}>
 
-      <MapContainer
-        center={[12, 28]}
-        zoom={3}
-        minZoom={2}
-        scrollWheelZoom={false}
-        worldCopyJump
-        style={{ height: '100%', width: '100%', background: SEA }}
-        className="z-0"
-      >
-        {/* Self-contained basemap (bundled GeoJSON, no external tiles) */}
-        <GeoJSON data={worldGeo} style={baseLandStyle} interactive={false} />
-        <GeoJSON
-          key="project-countries"
-          data={worldGeo}
-          filter={isProjectCountry}
-          style={highlightStyle}
-          interactive={false}
-        />
-
-        {markers.map(({ project, selected, icon }) => (
-          <Marker
-            key={project.id}
-            position={project.coords}
-            icon={icon}
-            zIndexOffset={selected ? 1000 : 0}
-            keyboard
-            eventHandlers={{
-              click: () => onSelect && onSelect(project.id),
-              keydown: (e) => {
-                const key = e?.originalEvent?.key
-                if ((key === 'Enter' || key === ' ') && onSelect) {
-                  onSelect(project.id)
-                }
-              },
-            }}
-          >
-            <Tooltip direction="top" offset={[0, 0]} opacity={1}>
-              <div className="text-[12px] leading-tight">
-                <div className="font-sans font-bold text-ink">{project.country}</div>
-                <div className="font-sans text-ink-muted">{project.region}</div>
-                <div className="mt-0.5 font-sans text-ink-soft">
-                  수혜자 <span className="font-archivo font-semibold tabular-nums">{num(project.beneficiaries)}</span>명
-                </div>
-              </div>
-            </Tooltip>
-          </Marker>
-        ))}
-      </MapContainer>
-
-      {/* Legend plate — square paper plate + 1px ink hairline (no round, no
-          shadow, no backdrop-blur, no dark panel). Sits above the sea. */}
-      <div className="pointer-events-none absolute bottom-3 left-3 z-[400] max-w-[244px] border border-ink-line bg-paper px-4 py-3">
-        <div className="flex items-center gap-2">
-          {/* WV instrument mark for the project markers: solid disk + 1 solid ring */}
-          <svg width="18" height="18" viewBox="0 0 18 18" className="shrink-0" aria-hidden="true">
-            <circle cx="9" cy="9" r="7.25" fill="none" stroke={WV_ORANGE} strokeWidth="1.5" />
-            <circle cx="9" cy="9" r="3.4" fill={WV_ORANGE} />
-          </svg>
-          <span className="font-sans text-[13px] font-bold text-ink">사업 지역</span>
+        {/* Section header */}
+        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: 48, marginBottom: 40 }}>
+          <div>
+            <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--orange)', margin: 0 }}>02 — Where</p>
+            <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--grey-600)', margin: '4px 0 0' }}>현장</p>
+          </div>
+          <div>
+            <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '24ch' }}>
+              13개국 20개 현장.<br />한 지면에서 모두 확인합니다.
+            </h2>
+          </div>
         </div>
-        <p className="mt-1.5 font-sans text-[11px] leading-snug text-ink-muted">
-          마커를 선택하면 해당 사업의 상세 성과가 표시됩니다. 점 크기 = 수혜자 규모.
-        </p>
 
-        <div className="mt-2.5 border-t border-ink-line pt-2">
-          <div className="mb-1 mono-label mono-label--caps text-ink-muted">주요 활동</div>
-          <ul className="flex flex-col gap-y-1">
-            {ACTIVITY_KEYS.map((key) => {
-              const meta = ACTIVITY_META[key]
-              if (!meta) return null
-              return (
-                <li key={key} className="flex items-center gap-2 font-sans text-[11px] text-ink-soft">
-                  <CategorySample color={meta.color} />
-                  <span className="truncate">{meta.label}</span>
-                </li>
-              )
-            })}
-          </ul>
+        {/* Map card */}
+        <div style={{ background: '#fff', border: '1px solid var(--field-200)', borderRadius: 12, padding: 32, position: 'relative' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 20 }}>
+            <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: 0 }}>
+              Field Map · 사업 현장
+            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-600)' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--orange)' }} />사업국
+              </span>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 14, height: 14, borderRadius: '50%', border: '2px solid var(--orange)', boxSizing: 'border-box' }} />대규모 사업지
+              </span>
+            </div>
+          </div>
+
+          {/* Map */}
+          <div style={{ position: 'relative', height: 520, background: 'var(--field-50)', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--field-200)' }}>
+            <div ref={mapRef} style={{ position: 'absolute', inset: 0 }} />
+
+            {/* Legend chip */}
+            <div style={{
+              position: 'absolute',
+              bottom: 16,
+              left: 16,
+              background: '#fff',
+              border: '1px solid var(--field-200)',
+              borderRadius: 8,
+              padding: '14px 16px',
+              maxWidth: 280,
+              zIndex: 400,
+              boxShadow: '0 4px 12px rgba(17,18,34,0.08)',
+            }}>
+              <p style={{ fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '0 0 8px' }}>
+                Marker size · 식량 배분량
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                {[12, 18, 28].map(s => (
+                  <span key={s} style={{ width: s, height: s, borderRadius: '50%', background: 'var(--orange)', border: '2px solid #fff', boxShadow: '0 1px 3px rgba(0,0,0,0.2)', flexShrink: 0 }} />
+                ))}
+                <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-700)', fontWeight: 600 }}>20t → 3,200t</span>
+              </div>
+              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-600)', margin: '10px 0 0', lineHeight: 1.5 }}>
+                마커를 클릭하면 사업별 배분 실적이 표시됩니다.
+              </p>
+            </div>
+          </div>
+
+          {/* Country Grid */}
+          <CountryGrid />
         </div>
       </div>
-    </div>
+    </section>
   )
 }

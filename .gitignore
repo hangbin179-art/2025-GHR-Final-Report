@@ -3,3 +3,9 @@ node_modules/
 dist/
 .DS_Store
 *.local
+
+# 민감 원본 데이터 / 대용량 — 저장소에 올리지 않음 (실명 현장보고·수혜자 사진·결과보고 원본, 425MB+)
+# 주의: 루트 폴더만 제외 (src/data 는 앱 데이터라 반드시 포함)
+/2025 GHR 결과보고/
+/data/
+/screenshots/
