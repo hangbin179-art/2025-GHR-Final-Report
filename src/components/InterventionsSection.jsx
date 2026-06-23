@@ -1,6 +1,7 @@
 import ProjectTable from './ProjectTable.jsx'
 import DistributionCharts from './DistributionCharts.jsx'
 import NarrativePrograms, { PhotoSlot, Quote } from './NarrativePrograms.jsx'
+import ScrollReveal from './ScrollReveal.jsx'
 
 const TEAL = '#0E7C7B'
 const RED = '#C8102E'
@@ -76,6 +77,7 @@ export default function InterventionsSection() {
         <div style={{ borderTop: '2px solid var(--midnight)' }}>
 
           {/* 01 — 일반식량 */}
+          <ScrollReveal from="left">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
             <div style={ROW}>
               <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: 'var(--orange)', margin: 0, letterSpacing: '-0.04em' }}>01</p>
@@ -117,8 +119,10 @@ export default function InterventionsSection() {
               만드는 법</strong>을 배워 작은 사업을 시작했고, 지금은 다른 피난 여성들을 고용해 함께 생계를 꾸립니다.
             </FieldStory>
           </article>
+          </ScrollReveal>
 
           {/* 02 — 현금/교환권 */}
+          <ScrollReveal from="right">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
             <div style={ROW}>
               <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: TEAL, margin: 0, letterSpacing: '-0.04em' }}>02</p>
@@ -158,8 +162,10 @@ export default function InterventionsSection() {
               신선식품 바우처로 채소·생선·닭고기까지 구매해 균형 잡힌 식단을 차립니다.
             </FieldStory>
           </article>
+          </ScrollReveal>
 
           {/* 03 — 영양 치료식 */}
+          <ScrollReveal from="left">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
             <div style={ROW}>
               <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: RED, margin: 0, letterSpacing: '-0.04em' }}>03</p>
@@ -202,6 +208,7 @@ export default function InterventionsSection() {
               23.3cm로 회복하고 퇴소했습니다.
             </FieldStory>
           </article>
+          </ScrollReveal>
         </div>
 
         {/* 04 학교 급식 · 05 생계 역량 강화 — 사업 내러티브 */}

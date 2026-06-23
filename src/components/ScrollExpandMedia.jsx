@@ -24,6 +24,7 @@ export default function ScrollExpandMedia({
   const videoRef = useRef(null)
   const autoUnmuteTried = useRef(false)
   const [soundOn, setSoundOn] = useState(false)
+  const [videoEnded, setVideoEnded] = useState(false)
 
   // 스크롤 시작(사용자 제스처) 시 소리 켜기 시도. 브라우저가 막으면 음소거로 되돌림(버튼으로 켤 수 있음).
   const tryAutoUnmute = () => {
@@ -37,6 +38,16 @@ export default function ScrollExpandMedia({
       setSoundOn(false)
       v.play().catch(() => {})
     })
+  }
+
+  // 영상이 끝난 뒤 '다시 보기' — 처음으로 되감아 다시 재생(현재 소리 설정 유지)
+  const replayVideo = () => {
+    const v = videoRef.current
+    if (!v) return
+    setVideoEnded(false)
+    try { v.currentTime = 0 } catch (e) { /* noop */ }
+    v.muted = !soundOn
+    v.play().catch(() => {})
   }
 
   // 사운드 토글 버튼 (확실한 사용자 클릭 → 소리 재생 보장)
@@ -69,6 +80,7 @@ export default function ScrollExpandMedia({
       v.muted = true
       autoUnmuteTried.current = false
       setSoundOn(false)
+      setVideoEnded(false)
     }
   }, [scrollProgress])
 
@@ -216,9 +228,9 @@ export default function ScrollExpandMedia({
                       src={mediaSrc}
                       poster={posterSrc}
                       muted
-                      loop
                       playsInline
                       preload="auto"
+                      onEnded={() => setVideoEnded(true)}
                       className="w-full h-full object-cover rounded-xl"
                       controls={false}
                       disablePictureInPicture
@@ -234,6 +246,39 @@ export default function ScrollExpandMedia({
                       className="absolute inset-0 rounded-xl"
                       style={{ background: 'rgba(0,0,0,1)', opacity: 0.5 - scrollProgress * 0.3, transition: 'opacity 0.2s' }}
                     />
+                    {/* 영상 종료 후 '다시 보기' 버튼 (래퍼가 pointer-events-none 이라 버튼만 auto) */}
+                    {videoEnded && scrollProgress > 0 && (
+                      <button
+                        onClick={replayVideo}
+                        aria-label="영상 다시 보기"
+                        style={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          pointerEvents: 'auto',
+                          zIndex: 5,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 9,
+                          padding: '13px 24px',
+                          borderRadius: 999,
+                          border: '1px solid rgba(255,255,255,0.55)',
+                          background: 'rgba(17,18,34,0.55)',
+                          backdropFilter: 'blur(8px)',
+                          WebkitBackdropFilter: 'blur(8px)',
+                          color: '#fff',
+                          fontFamily: 'var(--font-kr)',
+                          fontSize: 15,
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          boxShadow: '0 6px 24px rgba(0,0,0,0.35)',
+                        }}
+                      >
+                        <span style={{ fontSize: 18, lineHeight: 1 }}>↻</span>
+                        다시 보기
+                      </button>
+                    )}
                   </div>
                 ) : (
                   <div className="relative w-full h-full">

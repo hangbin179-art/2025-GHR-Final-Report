@@ -1,3 +1,5 @@
+import ScrollReveal from './ScrollReveal.jsx'
+
 const AMBER = '#C77E0A'      // school feeding accent (legible amber)
 const AMBER_BG = '#FBF1DC'
 const GREEN = '#2F7D4F'      // livelihoods accent
@@ -88,6 +90,7 @@ export default function NarrativePrograms() {
     <div style={{ marginTop: 24 }}>
 
       {/* ════════ 04 — 학교 급식 ════════ */}
+      <ScrollReveal from="right">
       <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
         <PartHeader num="04" title="학교 급식" titleEn="Home-Grown School Feeding" accent={AMBER} />
 
@@ -151,8 +154,10 @@ export default function NarrativePrograms() {
           </div>
         </div>
       </article>
+      </ScrollReveal>
 
       {/* ════════ 05 — 생계 역량 강화 ════════ */}
+      <ScrollReveal from="left">
       <article style={{ padding: '40px 0 8px' }}>
         <PartHeader num="05" title="생계 역량 강화" titleEn="Livelihoods & Resilience" accent={GREEN} />
 
@@ -218,6 +223,7 @@ export default function NarrativePrograms() {
           </div>
         </div>
       </article>
+      </ScrollReveal>
     </div>
   )
 }
