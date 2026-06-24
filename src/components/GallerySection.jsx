@@ -29,6 +29,9 @@ const SLIDES = [
   { pbas: '223864', country: '케냐',               site: '마쿠에니·키투이',  activity: '생계 역량 강화',     color: GREEN,  src: null },
 ]
 
+// 라이트박스(확대)는 사진이 있는 슬라이드끼리만 좌우 이동
+const PHOTO_SLIDES = SLIDES.filter((s) => s.src)
+
 function Arrow({ dir }) {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: dir === 'prev' ? 'rotate(180deg)' : 'none' }}>
@@ -109,15 +112,28 @@ function Slide({ s, onOpen }) {
   )
 }
 
-function Lightbox({ s, onClose }) {
+function Lightbox({ slides, idx, setIdx, onClose }) {
+  const n = slides.length
+  const s = slides[idx]
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') onClose() }
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose()
+      else if (e.key === 'ArrowLeft') setIdx((i) => (i - 1 + n) % n)
+      else if (e.key === 'ArrowRight') setIdx((i) => (i + 1) % n)
+    }
     window.addEventListener('keydown', onKey)
-    const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = prev }
-  }, [onClose])
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+  }, [n, onClose, setIdx])
 
+  if (!s) return null
+  const navBtn = {
+    position: 'absolute', top: '50%', transform: 'translateY(-50%)',
+    width: 48, height: 48, borderRadius: '50%',
+    background: 'rgba(255,255,255,0.14)', border: '1px solid rgba(255,255,255,0.3)',
+    color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+    cursor: 'pointer', zIndex: 5,
+  }
   return (
     <div onClick={onClose} role="dialog" aria-modal="true" style={{
       position: 'fixed', inset: 0, zIndex: 2000,
@@ -131,14 +147,17 @@ function Lightbox({ s, onClose }) {
         color: '#fff', fontSize: 20, lineHeight: 1, cursor: 'pointer',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
       }}>✕</button>
+      {n > 1 && <button aria-label="이전 사진" onClick={(e) => { e.stopPropagation(); setIdx((i) => (i - 1 + n) % n) }} style={{ ...navBtn, left: 20 }}><Arrow dir="prev" /></button>}
+      {n > 1 && <button aria-label="다음 사진" onClick={(e) => { e.stopPropagation(); setIdx((i) => (i + 1) % n) }} style={{ ...navBtn, right: 20 }}><Arrow dir="next" /></button>}
       <figure onClick={(e) => e.stopPropagation()} style={{ margin: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'default' }}>
         <img src={s.src} alt={`${s.country} ${s.site}`} style={{
-          maxWidth: '92vw', maxHeight: '80vh', objectFit: 'contain',
+          maxWidth: '88vw', maxHeight: '80vh', objectFit: 'contain',
           borderRadius: 8, boxShadow: '0 16px 50px rgba(0,0,0,0.55)',
         }} />
         <figcaption style={{ marginTop: 16, textAlign: 'center' }}>
           <span style={{ display: 'inline-block', fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#fff', background: s.color, padding: '3px 8px', borderRadius: 4, marginBottom: 8 }}>{s.activity}</span>
           <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 18, color: '#fff', margin: 0 }}>{s.country} · {s.site}</p>
+          {n > 1 && <p className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '8px 0 0' }}>{idx + 1} / {n}</p>}
         </figcaption>
       </figure>
     </div>
@@ -148,7 +167,7 @@ function Lightbox({ s, onClose }) {
 export default function GallerySection() {
   const isMobile = useIsMobile()
   const [index, setIndex] = useState(0)
-  const [zoom, setZoom] = useState(null)
+  const [zoomIdx, setZoomIdx] = useState(null)
   const total = SLIDES.length
   const go = (i) => setIndex((i + total) % total)
 
@@ -190,7 +209,7 @@ export default function GallerySection() {
         {/* Carousel */}
         <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--field-200)', background: 'var(--field-50)' }}>
           <div style={{ display: 'flex', transform: `translateX(-${index * 100}%)`, transition: 'transform 0.45s cubic-bezier(0.4,0,0.2,1)' }}>
-            {SLIDES.map((s) => <Slide key={s.pbas} s={s} onOpen={setZoom} />)}
+            {SLIDES.map((s) => <Slide key={s.pbas} s={s} onOpen={(slide) => setZoomIdx(PHOTO_SLIDES.indexOf(slide))} />)}
           </div>
 
           {/* Prev / Next */}
@@ -280,7 +299,7 @@ export default function GallerySection() {
 
         {/* 사진 추가 방법은 파일 상단 주석 참고 — 외부 공개판에는 안내를 표시하지 않음 */}
 
-        {zoom && <Lightbox s={zoom} onClose={() => setZoom(null)} />}
+        {zoomIdx !== null && <Lightbox slides={PHOTO_SLIDES} idx={zoomIdx} setIdx={setZoomIdx} onClose={() => setZoomIdx(null)} />}
       </div>
     </section>
   )
