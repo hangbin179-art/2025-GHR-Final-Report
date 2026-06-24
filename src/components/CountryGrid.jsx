@@ -106,9 +106,20 @@ function ProjectRow({ p }) {
           {p.title && <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-500)', marginTop: 2 }}>{p.title}</span>}
         </div>
         <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'baseline' }}>
-          {p.food > 0 && <Metric color="#FF5515" label="식량" value={`${p.food.toLocaleString()}톤`} />}
+          {p.food > 0 && p.ther > 0 ? (
+            /* 치료식 무게는 식량 배분량에 포함되는 부분집합 → "식량 N톤 중 치료식 N톤"으로 표기 */
+            <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 7 }}>
+              <Metric color="#FF5515" label="식량" value={`${p.food.toLocaleString()}톤`} />
+              <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)' }}>중</span>
+              <Metric color="#C8102E" label="치료식" value={`${p.ther.toLocaleString()}톤`} />
+            </span>
+          ) : (
+            <>
+              {p.food > 0 && <Metric color="#FF5515" label="식량" value={`${p.food.toLocaleString()}톤`} />}
+              {p.ther > 0 && <Metric color="#C8102E" label="치료식" value={`${p.ther.toLocaleString()}톤`} />}
+            </>
+          )}
           {p.cash > 0 && <Metric color="#0E7C7B" label="현금" value={`${fmtCash(p.cash)} · ${usdToKrwLabel(p.cash)}`} />}
-          {p.ther > 0 && <Metric color="#C8102E" label="치료식" value={`${p.ther.toLocaleString()}톤`} />}
         </div>
       </div>
       {p.note && <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontStyle: 'italic', color: undelivered ? '#C8102E' : 'var(--grey-500)', margin: '8px 0 0', lineHeight: 1.5 }}>{p.note}</p>}

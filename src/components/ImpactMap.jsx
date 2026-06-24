@@ -81,10 +81,10 @@ export default function ImpactMap() {
       })
 
       const rows = []
-      if (p.food > 0) rows.push(`<div class="pop-row"><span>일반식량</span><strong>${p.food.toLocaleString()} 톤</strong></div>`)
+      if (p.food > 0) rows.push(`<div class="pop-row"><span>식량</span><strong>${p.food.toLocaleString()} 톤</strong></div>`)
       if (p.val > 100) rows.push(`<div class="pop-row"><span>식량 가액</span><strong>${fmtUsd(p.val)} <span style="font-weight:400;color:#9a9a9a;font-size:11px">(${fmtKrw(p.val)})</span></strong></div>`)
       if (p.cash > 0) rows.push(`<div class="pop-row"><span>현금·교환권</span><strong style="color:#0E7C7B">${fmtUsd(p.cash)} <span style="font-weight:400;color:#9a9a9a;font-size:11px">(${fmtKrw(p.cash)})</span></strong></div>`)
-      if (p.ther > 0) rows.push(`<div class="pop-row"><span>치료식</span><strong style="color:#C8102E">${p.ther.toFixed(1)} 톤</strong></div>`)
+      if (p.ther > 0) rows.push(`<div class="pop-row"><span>치료식 (식량 중)</span><strong style="color:#C8102E">${p.ther.toFixed(1)} 톤</strong></div>`)
 
       // 배분 실적 블록 — 케냐(223864)는 현물·현금 배분 없는 생계 역량 강화 사업이라 별도 표기
       let bodyHtml

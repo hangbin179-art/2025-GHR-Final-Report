@@ -219,6 +219,10 @@ export default function ScrollExpandMedia({
               style={{ objectFit: 'cover', objectPosition: 'center' }}
             />
             <div className="absolute inset-0" style={{ background: 'rgba(17,18,34,0.32)' }} />
+            {/* 사진 크레딧 — 메인 이미지 좌측 하단 */}
+            <p style={{ position: 'absolute', left: 18, bottom: 16, margin: 0, zIndex: 1, fontFamily: 'var(--font-en)', fontSize: 11, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.72)', textShadow: '0 1px 4px rgba(0,0,0,0.55)' }}>
+              © World Vision / Jon Warren · Ethiopia 2025
+            </p>
           </div>
 
           <div className="container mx-auto flex flex-col items-center justify-start relative z-10">
