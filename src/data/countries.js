@@ -13,7 +13,7 @@ export const COUNTRIES = [
   {
     ko: '콩고민주공화국', countryEn: 'DR Congo', chartName: 'DR 콩고',
     en: 'DR Congo · S. Kivu, Tanganyika, Kasai', region: '남부키부 · 탕가니카 · 카사이',
-    activities: ['food', 'nutrition'],
+    activities: ['food', 'nutrition', 'livelihood'],
     projects: [
       { site: '남부키부 (South Kivu)', siteEn: 'South Kivu', title: 'DRC South Kivu Integrated Food Assistance 2025', lat: -2.50, lng: 28.90, food: 3088.2, ther: 74.9, cash: 0, val: 5050526, beneficiaries: 152882, korea: 37522, plannedTons: 3488, pbas: '223847' },
       { site: '탕가니카 (Tanganyika)', siteEn: 'Tanganyika', title: 'DRC Tanganyika General Food Distribution (식량 배분) & Nutrition 2025', lat: -6.00, lng: 29.70, food: 632.6, ther: 0, cash: 0, val: 1093743, beneficiaries: 77122, korea: 15503, plannedTons: 1549, pbas: '223796' },
