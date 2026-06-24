@@ -97,11 +97,16 @@ export default function ImpactMap() {
         bodyHtml = `<div class="pop-rows"><div class="pop-row"><span>배분 실적</span><strong>집행 준비 중</strong></div></div>`
       }
 
-      L.marker([p.lat, p.lng], { icon }).bindPopup(
-        `<p class="pop-eyebrow">${p.countryEn} · ${p.siteEn}</p>
-         <p class="pop-name">${p.country}</p>
-         ${bodyHtml}`
-      ).on('click', () => window.dispatchEvent(new CustomEvent('cg-select-country', { detail: p.country }))).addTo(map)
+      const marker = L.marker([p.lat, p.lng], { icon })
+        .bindTooltip(
+          `<p class="pop-eyebrow">${p.countryEn} · ${p.siteEn}</p>
+           <p class="pop-name">${p.country}</p>
+           ${bodyHtml}`,
+          { direction: 'top', offset: [0, -(size / 2) - 4], opacity: 1, className: 'wv-tip' }
+        )
+        .addTo(map)
+      // 마우스 오버 → 상세 툴팁(Leaflet 자동 표시/숨김) / 클릭 → 아래 국가 그리드로 이동
+      marker.on('click', () => window.dispatchEvent(new CustomEvent('cg-select-country', { detail: p.country })))
     })
 
     return () => {
@@ -170,7 +175,7 @@ export default function ImpactMap() {
                 <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-700)', fontWeight: 600 }}>20t → 3,200t</span>
               </div>
               <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-600)', margin: '10px 0 0', lineHeight: 1.5 }}>
-                마커를 클릭하면 사업별 배분 실적이 표시됩니다.
+                마커에 마우스를 올리면 상세 실적이 표시되고, 클릭하면 아래 국가별 표로 이동합니다.
               </p>
             </div>
           </div>
