@@ -37,7 +37,7 @@ export default function ResultsCharts() {
             title="식량 배분"
             value="10,235.1"
             valueUnit="톤"
-            sub={`계획 21,133톤 中 ${FOOD_PCT}% *`}
+            sub={`계획 21,133톤 中 ${FOOD_PCT}% **`}
           />
           <DialCard
             color="#0E7C7B"
@@ -47,7 +47,7 @@ export default function ResultsCharts() {
             value="$5.1"
             valueUnit="M"
             krw="≈ 68억원"
-            sub={`계획 $10.7M (≈142억원) 中 ${CASH_PCT}% *`}
+            sub={`계획 $10.7M (≈142억원) 中 ${CASH_PCT}% **`}
           />
           <DialCard
             color="#C8102E"
@@ -62,22 +62,19 @@ export default function ResultsCharts() {
         </div>
 
         {/* 집행률 각주 — 식량·현금이 목표 대비 약 50% 수준인 사유 */}
-        <p lang="ko" style={{
-          fontFamily: 'var(--font-kr)',
-          fontSize: 13,
-          lineHeight: 1.8,
-          color: 'var(--grey-700)',
-          margin: '24px 0 0',
-          paddingTop: 18,
-          borderTop: '1px solid var(--field-200)',
-          wordBreak: 'keep-all',
-        }}>
-          <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>*</span>
-          식량·현금 배분 집행률이 목표 대비 약 50% 수준에 머문 주요 사유 —{' '}
-          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>① 미국 USAID(국제개발처) 폐지</strong>에 따른 다수 사업의 축소 및 중단,{' '}
-          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② 수단·콩고민주공화국 등 분쟁 심화</strong>로 인한 현장 접근·물자 반입 제약,{' '}
-          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ 수단 화이트나일(White Nile) 사업</strong>의 현지 정부 승인 지연에 따른 사업 미진행 등 외부 요인으로 인한 배분 실적 하락 발생.
-        </p>
+        <div style={{ margin: '24px 0 0', paddingTop: 18, borderTop: '1px solid var(--field-200)' }}>
+          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: 0, wordBreak: 'keep-all' }}>
+            <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>*</span>
+            다자기구협력사업 특성상 사업 규모 및 일정이 글로벌 인도적지원 필요 상황, 도너(WFP) 자금 상황 및 식량 수급 상황에 따라 변경될 수 있습니다.
+          </p>
+          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: '8px 0 0', wordBreak: 'keep-all' }}>
+            <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>**</span>
+            식량·현금 배분 집행률이 목표 대비 약 50% 수준에 머문 주요 사유 —{' '}
+            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>① 미국 USAID(국제개발처) 폐지</strong>에 따른 다수 사업의 축소 및 중단,{' '}
+            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② 수단·콩고민주공화국 등 분쟁 심화</strong>로 인한 현장 접근·물자 반입 제약,{' '}
+            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ 수단 화이트나일(White Nile) 사업</strong>의 현지 정부 승인 지연에 따른 사업 미진행 등 외부 요인으로 인한 배분 실적 하락 발생.
+          </p>
+        </div>
       </div>
     </section>
   )

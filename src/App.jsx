@@ -77,16 +77,20 @@ function Footer() {
           {/* Masthead */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
-              <img src="/WorldVision-Logo-Primary.svg" alt="World Vision" style={{ height: 20, filter: 'brightness(0) invert(1) opacity(0.85)' }} />
+              <a href="https://www.worldvision.or.kr/" target="_blank" rel="noopener noreferrer" aria-label="월드비전 한국 홈페이지" style={{ display: 'flex' }}>
+                <img src="/WorldVision-Logo-Primary.svg" alt="World Vision" style={{ height: 20, filter: 'brightness(0) invert(1) opacity(0.85)', display: 'block' }} />
+              </a>
               <span style={{ fontFamily: 'var(--font-en)', fontSize: 13, color: 'rgba(255,255,255,0.3)', fontWeight: 400 }}>×</span>
-              <img src="/wfp-logo.svg" alt="World Food Programme" style={{ height: 22, filter: 'brightness(0) invert(1) opacity(0.85)' }} />
+              <a href="https://ko.wfp.org/" target="_blank" rel="noopener noreferrer" aria-label="유엔세계식량계획 WFP 홈페이지" style={{ display: 'flex' }}>
+                <img src="/wfp-logo.svg" alt="World Food Programme" style={{ height: 22, filter: 'brightness(0) invert(1) opacity(0.85)', display: 'block' }} />
+              </a>
             </div>
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
-              2025 글로벌 식량위기 대응사업 (다자기구협력사업)<br />
+              2025 글로벌 식량위기 대응사업<br />
               월드비전 인도적지원팀
             </p>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', margin: '16px 0 0' }}>
-Result Report · 2025
+Final Report · 2025
             </p>
           </div>
 
@@ -119,10 +123,10 @@ Result Report · 2025
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
                 <dt lang="ko" style={{ fontFamily: 'var(--font-kr)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.3 }}>
-                  WFP 사업 수입 (실적)
-                  <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>WFP income · actual</span>
+                  총 사업비
+                  <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>Total Project Budget</span>
                 </dt>
-                <dd style={{ margin: 0, color: '#fff', whiteSpace: 'nowrap' }}>{krwThousandToUsd(GLOBAL_KPIS.wfpActualIncome)}</dd>
+                <dd style={{ margin: 0, color: '#fff', whiteSpace: 'nowrap' }}>{krwThousandToUsd(GLOBAL_KPIS.totalProjectBudget)}</dd>
               </div>
             </dl>
           </div>

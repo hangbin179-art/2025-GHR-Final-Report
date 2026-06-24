@@ -72,22 +72,27 @@ export default function StickyNav() {
         gap: 24,
       }}>
         {/* Left — logos + title */}
-        <a href="#sec-hero" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', minWidth: 0 }}>
-          <img src="/WorldVision-Logo-Primary.svg" alt="World Vision" style={{ height: 24 }} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+          <a href="https://www.worldvision.or.kr/" target="_blank" rel="noopener noreferrer" aria-label="월드비전 한국 홈페이지" style={{ display: 'flex' }}>
+            <img src="/WorldVision-Logo-Primary.svg" alt="World Vision" style={{ height: 24, display: 'block' }} />
+          </a>
           <span style={{ fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 400, color: 'var(--field-300)' }}>×</span>
-          <img src="/wfp-logo.svg" alt="World Food Programme" style={{ height: 24 }} />
+          <a href="https://ko.wfp.org/" target="_blank" rel="noopener noreferrer" aria-label="유엔세계식량계획 WFP 홈페이지" style={{ display: 'flex' }}>
+            <img src="/wfp-logo.svg" alt="World Food Programme" style={{ height: 24, display: 'block' }} />
+          </a>
           <span style={{ width: 1, height: 18, background: 'var(--field-300)', margin: '0 4px', display: isMobile ? 'none' : 'block' }} />
-          <span lang="ko" style={{
+          <a href="#sec-hero" lang="ko" style={{
             fontFamily: 'var(--font-kr)',
             fontSize: 13,
             fontWeight: 600,
             color: 'var(--midnight)',
             whiteSpace: 'nowrap',
+            textDecoration: 'none',
             display: isMobile ? 'none' : 'inline',
           }}>
             2025 글로벌 식량위기 대응 · 결과보고
-          </span>
-        </a>
+          </a>
+        </div>
 
         {/* Right — section navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
