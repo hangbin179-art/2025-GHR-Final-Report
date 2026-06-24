@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import useIsMobile from '../lib/useIsMobile.js'
 
 /* ── Count-up 애니메이션 (의존성 없음) ───────────────────────
    0에서 목표값까지 easeOutCubic 으로 증가. 디자인은 건드리지 않고
@@ -37,6 +38,7 @@ function CountUp({ value, decimals = 0, prefix = '', duration = 1.5, delay = 0, 
 export default function Hero() {
   const ref = useRef(null)
   const [started, setStarted] = useState(false)
+  const isMobile = useIsMobile()
 
   // Hero가 화면에 들어올 때 비로소 카운트업 시작 (스크롤 히어로 뒤에 있으므로
   // 마운트 즉시 시작하면 보기 전에 끝나버림).
@@ -58,12 +60,12 @@ export default function Hero() {
   }, [])
 
   return (
-    <section ref={ref} style={{ maxWidth: 1400, margin: '0 auto', padding: '56px 32px 80px', background: 'var(--field-50)' }}>
+    <section ref={ref} style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '36px 20px 48px' : '56px 32px 80px', background: 'var(--field-50)' }}>
       <div style={{
         display: 'grid',
-        gridTemplateColumns: '1.2fr 1fr',
-        gap: 48,
-        alignItems: 'end',
+        gridTemplateColumns: isMobile ? '1fr' : '1.2fr 1fr',
+        gap: isMobile ? 28 : 48,
+        alignItems: isMobile ? 'stretch' : 'end',
       }}>
         {/* Left column */}
         <div>
@@ -81,7 +83,7 @@ export default function Hero() {
           <h1 lang="ko" style={{
             fontFamily: 'var(--font-kr)',
             fontWeight: 700,
-            fontSize: 64,
+            fontSize: isMobile ? 40 : 64,
             lineHeight: 1.1,
             letterSpacing: '-0.025em',
             color: 'var(--midnight)',

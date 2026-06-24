@@ -1,25 +1,10 @@
-const FOOD_COUNTRIES = [
-  { name: 'DR 콩고', val: 6488497, tons: 3797 },
-  { name: '수단', val: 4214318, tons: 3322 },
-  { name: '에티오피아', val: 2416084, tons: 696 },
-  { name: '남수단', val: 909219, tons: 412 },
-  { name: '우간다', val: 679772, tons: 505 },
-  { name: '베네수엘라', val: 605800, tons: 476 },
-  { name: '아프가니스탄', val: 446505, tons: 829 },
-  { name: '차드', val: 278368, tons: 199 },
-]
+import useIsMobile from '../lib/useIsMobile.js'
+import { COUNTRIES, countryTotals } from '../data/countries.js'
 
-const CASH_COUNTRIES = [
-  { name: '방글라데시', val: 1885961 },
-  { name: '콜롬비아', val: 1456689 },
-  { name: '우간다', val: 558117 },
-  { name: '남수단', val: 539033 },
-  { name: '수단', val: 324429 },
-  { name: '아프가니스탄', val: 173877 },
-  { name: '중앙아프리카', val: 87318 },
-  { name: '미얀마', val: 64616 },
-  { name: '차드', val: 15941 },
-]
+// 단일 소스(countries.js)에서 국가별 합계를 구해 식량가액·현금 내림차순 정렬
+const _BY = COUNTRIES.map((c) => ({ name: c.chartName || c.ko, ...countryTotals(c) }))
+const FOOD_COUNTRIES = _BY.filter((c) => c.food > 0).sort((a, b) => b.foodVal - a.foodVal).map((c) => ({ name: c.name, val: c.foodVal, tons: Math.round(c.food) }))
+const CASH_COUNTRIES = _BY.filter((c) => c.cash > 0).sort((a, b) => b.cash - a.cash).map((c) => ({ name: c.name, val: c.cash }))
 
 function fmtUsd(n) {
   if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M'
@@ -107,6 +92,7 @@ function HBarChart({ title, subtitle, data, color, maxKey = 'val', note }) {
 }
 
 export default function DistributionCharts() {
+  const isMobile = useIsMobile()
   return (
     <div style={{ marginTop: 56 }}>
       {/* Header */}
@@ -126,7 +112,7 @@ export default function DistributionCharts() {
       </div>
 
       {/* Two charts side by side */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1px 1fr', gap: '0 32px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1px 1fr', gap: isMobile ? '40px 0' : '0 32px', alignItems: 'start' }}>
         <HBarChart
           title="국가별 식량 배분 가치 (USD)"
           subtitle="식량 배분 실적이 있는 8개국 — 현물 식량 가액 합산"
@@ -134,7 +120,7 @@ export default function DistributionCharts() {
           color="var(--orange)"
           note="DR 콩고 남부 키부 단일 사업($5.05M)이 전체 식량 가액의 40%를 점유합니다."
         />
-        <div style={{ background: 'var(--field-200)', alignSelf: 'stretch' }} />
+        {!isMobile && <div style={{ background: 'var(--field-200)', alignSelf: 'stretch' }} />}
         <HBarChart
           title="국가별 현금 · 교환권 배분 (USD)"
           subtitle="현금 또는 교환권 배분 실적이 있는 9개국"

@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import CountryGrid from './CountryGrid.jsx'
+import useIsMobile from '../lib/useIsMobile.js'
+import { ALL_PROJECTS } from '../data/countries.js'
 
 // Marker size formula from Direction A reference
 function sizeFor(food, ther, cash) {
@@ -25,30 +27,10 @@ function fmtKrw(n) {
   return Math.round(won / 1e4).toLocaleString() + '만원'
 }
 
-const PROJECTS = [
-  { country: '수단', countryEn: 'Sudan', site: 'South Darfur (IFA)', lat: 11.00, lng: 24.90, food: 2276.3, ther: 15.3, cash: 0, val: 3121934, pbas: '223711' },
-  { country: '수단', countryEn: 'Sudan', site: 'South Kordofan', lat: 12.20, lng: 30.20, food: 1025.7, ther: 17.4, cash: 324429, val: 1010325, pbas: '223710' },
-  { country: '수단', countryEn: 'Sudan', site: 'South Darfur (Nutr.)', lat: 11.10, lng: 24.95, food: 20.1, ther: 20.1, cash: 0, val: 82059, pbas: '223745' },
-  { country: '수단', countryEn: 'Sudan', site: 'White Nile', lat: 13.05, lng: 32.55, food: 0, ther: 0, cash: 0, val: 0, pbas: '223856' },
-  { country: '콩고민주공화국', countryEn: 'DR Congo', site: 'South Kivu', lat: -2.50, lng: 28.90, food: 3088.2, ther: 74.9, cash: 0, val: 5050526, pbas: '223847' },
-  { country: '콩고민주공화국', countryEn: 'DR Congo', site: 'Tanganyika', lat: -6.00, lng: 29.70, food: 632.6, ther: 0, cash: 0, val: 1093743, pbas: '223796' },
-  { country: '콩고민주공화국', countryEn: 'DR Congo', site: 'Kasai · Luiza', lat: -5.90, lng: 22.40, food: 76.2, ther: 76.2, cash: 0, val: 344228, pbas: '224041' },
-  { country: '남수단', countryEn: 'South Sudan', site: 'Fashoda · Panyikang', lat: 10.00, lng: 32.00, food: 301.1, ther: 0.5, cash: 397930, val: 518775, pbas: '223756' },
-  { country: '남수단', countryEn: 'South Sudan', site: 'Renk · Manyo', lat: 11.75, lng: 32.80, food: 81.2, ther: 0, cash: 0, val: 136515, pbas: '223758' },
-  { country: '남수단', countryEn: 'South Sudan', site: 'Juba · Yambio', lat: 4.85, lng: 31.60, food: 29.6, ther: 0, cash: 141103, val: 253929, pbas: '223753' },
-  { country: '아프가니스탄', countryEn: 'Afghanistan', site: 'Ghor · Badghis', lat: 34.50, lng: 65.30, food: 829.3, ther: 65.7, cash: 173877, val: 446505, pbas: '223255' },
-  { country: '에티오피아', countryEn: 'Ethiopia', site: 'Tigray · Afar · Amhara', lat: 13.50, lng: 39.50, food: 695.8, ther: 695.8, cash: 0, val: 2416084, pbas: '223707' },
-  { country: '우간다', countryEn: 'Uganda', site: 'Bidibidi · Lobule', lat: 3.42, lng: 31.40, food: 505.0, ther: 33.6, cash: 558117, val: 679772, pbas: '223766' },
-  { country: '베네수엘라', countryEn: 'Venezuela', site: 'Zulia · Falcón +2', lat: 10.40, lng: -72.00, food: 475.5, ther: 0, cash: 0, val: 605800, pbas: '223806' },
-  { country: '차드', countryEn: 'Chad', site: 'Farchana +5', lat: 13.60, lng: 22.00, food: 198.5, ther: 0, cash: 15941, val: 278368, pbas: '223850' },
-  { country: '방글라데시', countryEn: 'Bangladesh', site: "Cox's Bazar", lat: 21.43, lng: 92.00, food: 0, ther: 0, cash: 1885961, val: 17, pbas: '223748' },
-  { country: '콜롬비아', countryEn: 'Colombia', site: 'Valle del Cauca', lat: 3.40, lng: -76.50, food: 0, ther: 0, cash: 1456689, val: 0, pbas: '223799' },
-  { country: '중앙아프리카공화국', countryEn: 'CAR', site: 'Bambari · Bouar', lat: 5.70, lng: 20.70, food: 0, ther: 0, cash: 87318, val: 0, pbas: '223999' },
-  { country: '미얀마', countryEn: 'Myanmar', site: 'Northern Shan', lat: 22.50, lng: 97.50, food: 0, ther: 0, cash: 64616, val: 0, pbas: '223982' },
-  { country: '케냐', countryEn: 'Kenya', site: 'Makueni · Kitui', lat: -1.80, lng: 37.60, food: 0, ther: 0, cash: 0, val: 0, pbas: '223864' },
-]
+// 사업 데이터는 단일 소스(countries.js)의 ALL_PROJECTS 사용
 
 export default function ImpactMap() {
+  const isMobile = useIsMobile()
   const mapRef = useRef(null)
   const instanceRef = useRef(null)
 
@@ -83,7 +65,7 @@ export default function ImpactMap() {
       { subdomains: 'abcd', maxZoom: 19, pane: 'shadowPane' }
     ).addTo(map)
 
-    PROJECTS.forEach((p) => {
+    ALL_PROJECTS.forEach((p) => {
       const size = sizeFor(p.food, p.ther, p.cash)
       const labelFont = Math.max(8, Math.round(size * 0.30))
       let label
@@ -105,10 +87,10 @@ export default function ImpactMap() {
       if (p.ther > 0) rows.push(`<div class="pop-row"><span>치료식</span><strong style="color:#C8102E">${p.ther.toFixed(1)} 톤</strong></div>`)
 
       L.marker([p.lat, p.lng], { icon }).bindPopup(
-        `<p class="pop-eyebrow">${p.countryEn} · ${p.site}</p>
+        `<p class="pop-eyebrow">${p.countryEn} · ${p.siteEn}</p>
          <p class="pop-name">${p.country}</p>
          <div class="pop-rows">${rows.join('') || '<div class="pop-row"><span>배분 실적</span><strong>집행 준비 중</strong></div>'}</div>`
-      ).addTo(map)
+      ).on('click', () => window.dispatchEvent(new CustomEvent('cg-select-country', { detail: p.country }))).addTo(map)
     })
 
     return () => {
@@ -119,10 +101,10 @@ export default function ImpactMap() {
 
   return (
     <section id="sec-where" style={{ background: 'var(--field-50)' }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 32px' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '48px 20px' : '80px 32px' }}>
 
         {/* Section header */}
-        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: 48, marginBottom: 40 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '240px 1fr', gap: isMobile ? 16 : 48, marginBottom: 40 }}>
           <div>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--orange)', margin: 0 }}>02 — Where</p>
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--grey-600)', margin: '4px 0 0' }}>현장</p>
@@ -135,7 +117,7 @@ export default function ImpactMap() {
         </div>
 
         {/* Map card */}
-        <div style={{ background: '#fff', border: '1px solid var(--field-200)', borderRadius: 12, padding: 32, position: 'relative' }}>
+        <div style={{ background: '#fff', border: '1px solid var(--field-200)', borderRadius: 12, padding: isMobile ? 16 : 32, position: 'relative' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 20 }}>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: 0 }}>
               Field Map · 사업 현장
@@ -151,7 +133,7 @@ export default function ImpactMap() {
           </div>
 
           {/* Map */}
-          <div style={{ position: 'relative', height: 520, background: 'var(--field-50)', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--field-200)' }}>
+          <div style={{ position: 'relative', height: isMobile ? 360 : 520, background: 'var(--field-50)', borderRadius: 8, overflow: 'hidden', border: '1px solid var(--field-200)' }}>
             <div ref={mapRef} style={{ position: 'absolute', inset: 0 }} />
 
             {/* Legend chip */}

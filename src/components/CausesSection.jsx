@@ -1,17 +1,20 @@
+import useIsMobile from '../lib/useIsMobile.js'
+
 export default function CausesSection() {
+  const isMobile = useIsMobile()
   return (
     <section id="sec-causes" style={{
       background: '#fff',
       borderTop: '1px solid var(--field-200)',
       borderBottom: '1px solid var(--field-200)',
     }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 32px' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '48px 20px' : '80px 32px' }}>
         {/* Section header */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: '240px 1fr',
-          gap: 48,
-          marginBottom: 48,
+          gridTemplateColumns: isMobile ? '1fr' : '240px 1fr',
+          gap: isMobile ? 16 : 48,
+          marginBottom: isMobile ? 32 : 48,
         }}>
           <div>
             <p style={{
@@ -54,7 +57,7 @@ export default function CausesSection() {
         </div>
 
         {/* 3-col card grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: 24 }}>
           {/* Conflict */}
           <article style={{
             background: 'var(--field-50)',

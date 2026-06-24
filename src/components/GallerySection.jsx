@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import useIsMobile from '../lib/useIsMobile.js'
 
 /* 활동별 색상 토큰 */
 const ORANGE = 'var(--orange)'
@@ -97,6 +98,7 @@ function Slide({ s }) {
 }
 
 export default function GallerySection() {
+  const isMobile = useIsMobile()
   const [index, setIndex] = useState(0)
   const total = SLIDES.length
   const go = (i) => setIndex((i + total) % total)
@@ -121,10 +123,10 @@ export default function GallerySection() {
 
   return (
     <section id="sec-gallery" style={{ background: '#fff', borderTop: '1px solid var(--field-200)', borderBottom: '1px solid var(--field-200)' }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 32px' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '48px 20px' : '80px 32px' }}>
 
         {/* Section header */}
-        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: 48, marginBottom: 40 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '240px 1fr', gap: isMobile ? 16 : 48, marginBottom: 40 }}>
           <div>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--orange)', margin: 0 }}>05 — Gallery</p>
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--grey-600)', margin: '4px 0 0' }}>현장의 기록</p>
@@ -176,7 +178,7 @@ export default function GallerySection() {
         </div>
 
         {/* Thumbnail strip */}
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${total}, 1fr)`, gap: 8, marginTop: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${isMobile ? 4 : total}, 1fr)`, gap: 8, marginTop: 16 }}>
           {SLIDES.map((s, i) => (
             <button
               key={s.pbas}

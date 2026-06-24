@@ -2,23 +2,25 @@ import ProjectTable from './ProjectTable.jsx'
 import DistributionCharts from './DistributionCharts.jsx'
 import NarrativePrograms, { PhotoSlot, Quote } from './NarrativePrograms.jsx'
 import ScrollReveal from './ScrollReveal.jsx'
+import useIsMobile from '../lib/useIsMobile.js'
 
 const TEAL = '#0E7C7B'
 const RED = '#C8102E'
 
 /* 01–03 활동 하단 현장 스토리 블록 */
 function FieldStory({ accent, eyebrow, caption, quote, quoteSource, children }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{
       display: 'grid',
-      gridTemplateColumns: '120px 1fr',
-      gap: 48,
+      gridTemplateColumns: isMobile ? '1fr' : '120px 1fr',
+      gap: isMobile ? 0 : 48,
       marginTop: 36,
       paddingTop: 32,
       borderTop: '1px solid var(--field-100)',
     }}>
-      <div />
-      <div style={{ display: 'grid', gridTemplateColumns: '0.8fr 1fr', gap: 40, alignItems: 'start' }}>
+      {!isMobile && <div />}
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '0.8fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
         <PhotoSlot accent={accent} ratio="4/3" caption={caption} />
         <div>
           <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: accent, margin: '0 0 12px' }}>
@@ -42,16 +44,18 @@ const ROW = {
 }
 
 export default function InterventionsSection() {
+  const isMobile = useIsMobile()
+  const row = isMobile ? { display: 'grid', gridTemplateColumns: '1fr', gap: 16, alignItems: 'start' } : ROW
   return (
     <section id="sec-what" style={{
       background: '#fff',
       borderTop: '1px solid var(--field-200)',
       borderBottom: '1px solid var(--field-200)',
     }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '120px 64px' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '56px 20px' : '120px 64px' }}>
 
         {/* Section header — 3-col editorial grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 760px 1fr', gap: 0, marginBottom: 80 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 760px 1fr', gap: isMobile ? 20 : 0, marginBottom: isMobile ? 40 : 80 }}>
           <div style={{ alignSelf: 'start' }}>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--orange)', margin: '0 0 12px' }}>
               Chapter III
@@ -79,7 +83,7 @@ export default function InterventionsSection() {
           {/* 01 — 일반식량 */}
           <ScrollReveal from="left">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
-            <div style={ROW}>
+            <div style={row}>
               <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: 'var(--orange)', margin: 0, letterSpacing: '-0.04em' }}>01</p>
               <div>
                 <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>일반식량 배분</h3>
@@ -125,7 +129,7 @@ export default function InterventionsSection() {
           {/* 02 — 현금/교환권 */}
           <ScrollReveal from="right">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
-            <div style={ROW}>
+            <div style={row}>
               <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: TEAL, margin: 0, letterSpacing: '-0.04em' }}>02</p>
               <div>
                 <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>현금 / 교환권 배분</h3>
@@ -169,7 +173,7 @@ export default function InterventionsSection() {
           {/* 03 — 영양 치료식 */}
           <ScrollReveal from="left">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
-            <div style={ROW}>
+            <div style={row}>
               <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: RED, margin: 0, letterSpacing: '-0.04em' }}>03</p>
               <div>
                 <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>영양실조 치료식 배분</h3>

@@ -7,6 +7,7 @@ import InterventionsSection from './components/InterventionsSection.jsx'
 import ResultsCharts from './components/ResultsCharts.jsx'
 import GallerySection from './components/GallerySection.jsx'
 import FlowReveal from './components/FlowReveal.jsx'
+import useIsMobile from './lib/useIsMobile.js'
 import { GLOBAL_KPIS } from './data/projects.js'
 import { num, krwThousandToUsd, multiple } from './lib/format.js'
 
@@ -64,14 +65,15 @@ export default function App() {
 }
 
 function Footer() {
+  const isMobile = useIsMobile()
   return (
     <footer style={{
       background: 'var(--midnight)',
       color: 'rgba(255,255,255,0.7)',
-      padding: '64px 32px',
+      padding: isMobile ? '48px 20px' : '64px 32px',
     }}>
       <div style={{ maxWidth: 1400, margin: '0 auto' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 40, marginBottom: 40 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: isMobile ? 28 : 40, marginBottom: 40 }}>
           {/* Masthead */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
@@ -119,12 +121,12 @@ Result Report · 2025
               Sources &amp; Notice
             </p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
-              계획 수치는 제안서(2025.03), 배분 실적은 결과보고 누적(2026.06) 기준입니다.
+              계획 수치는 제안서(2025.03), 배분 실적은 (2025.1~2025.12) 누적 기준입니다.
               환율 1,330원/USD 적용.
             </p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', margin: '8px 0 0' }}>
               출처: Hunger Hotspots (WFP &amp; FAO, 2025)<br />
-              문의: 긴급구호팀 조항빈
+              문의: 인도적지원팀 조항빈 (hangbin_cho@worldvision.or.kr)
             </p>
           </div>
         </div>

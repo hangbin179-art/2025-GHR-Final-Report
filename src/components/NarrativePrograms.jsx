@@ -1,5 +1,7 @@
 import ScrollReveal from './ScrollReveal.jsx'
 
+import useIsMobile from '../lib/useIsMobile.js'
+
 const AMBER = '#C77E0A'      // school feeding accent (legible amber)
 const AMBER_BG = '#FBF1DC'
 const GREEN = '#2F7D4F'      // livelihoods accent
@@ -74,8 +76,9 @@ function StatChip({ value, unit, label, accent }) {
 
 /* ── Section number header (matches 01–03 editorial rows) ── */
 function PartHeader({ num, title, titleEn, accent }) {
+  const isMobile = useIsMobile()
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 48, alignItems: 'start', marginBottom: 36 }}>
+    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '120px 1fr', gap: isMobile ? 8 : 48, alignItems: 'start', marginBottom: isMobile ? 20 : 36 }}>
       <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: accent, margin: 0, letterSpacing: '-0.04em' }}>{num}</p>
       <div>
         <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>{title}</h3>
@@ -86,6 +89,7 @@ function PartHeader({ num, title, titleEn, accent }) {
 }
 
 export default function NarrativePrograms() {
+  const isMobile = useIsMobile()
   return (
     <div style={{ marginTop: 24 }}>
 
@@ -94,11 +98,11 @@ export default function NarrativePrograms() {
       <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
         <PartHeader num="04" title="학교 급식" titleEn="Home-Grown School Feeding" accent={AMBER} />
 
-        <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 48 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '120px 1fr', gap: isMobile ? 0 : 48 }}>
           <div />
           <div>
             {/* Intro + lead stats */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 40, alignItems: 'start' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
               <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                 자립형 학교급식(Home-Grown School Feeding)은 끼니를 주는 데서 멈추지 않습니다. 학교가 직접 작물을
                 기르고, 학생이 그 기술을 집으로 가져갑니다. 남수단 <strong style={{ color: 'var(--midnight)' }}>주바·얌비오 자립형 학교급식 사업</strong>은
@@ -118,7 +122,7 @@ export default function NarrativePrograms() {
             </div>
 
             {/* Field story — Kapuri */}
-            <div style={{ display: 'grid', gridTemplateColumns: '0.85fr 1fr', gap: 40, marginTop: 36, alignItems: 'start' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '0.85fr 1fr', gap: isMobile ? 20 : 40, marginTop: 36, alignItems: 'start' }}>
               <PhotoSlot accent={AMBER} caption="사진 캡션 · 카푸리 초등학교 학교 텃밭에서 토지 준비 실습 중인 학생들. 추후 현장 사진으로 교체 예정." />
               <div>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: AMBER, margin: '0 0 12px' }}>
@@ -161,11 +165,11 @@ export default function NarrativePrograms() {
       <article style={{ padding: '40px 0 8px' }}>
         <PartHeader num="05" title="생계 역량 강화" titleEn="Livelihoods & Resilience" accent={GREEN} />
 
-        <div style={{ display: 'grid', gridTemplateColumns: '120px 1fr', gap: 48 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '120px 1fr', gap: isMobile ? 0 : 48 }}>
           <div />
           <div>
             {/* Intro + lead stats */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr', gap: 40, alignItems: 'start' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
               <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                 식량을 나눠주는 것을 넘어, 스스로 벌 수 있게 합니다. 케냐 <strong style={{ color: 'var(--midnight)' }}>마쿠에니·키투이
                 지속가능 식량체계 사업</strong>은 가뭄이 잦은 건조·반건조 지역에서 식량을 직접 배분하지 않는
@@ -185,7 +189,7 @@ export default function NarrativePrograms() {
             </div>
 
             {/* Two story cards side by side */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginTop: 36 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? 28 : 32, marginTop: 36 }}>
 
               {/* Kenya SFSP */}
               <div>

@@ -6,7 +6,10 @@ const NAV = [
   { href: '#sec-gallery', num: '05', label: '갤러리' },
 ]
 
-function NavLink({ item }) {
+import { useState, useEffect } from 'react'
+import useIsMobile from '../lib/useIsMobile.js'
+
+function NavLink({ item, active }) {
   return (
     <a
       href={item.href}
@@ -18,18 +21,38 @@ function NavLink({ item }) {
         textDecoration: 'none',
         padding: '6px 10px',
         borderRadius: 6,
+        background: active ? 'var(--orange-100)' : 'transparent',
         transition: 'background 0.15s ease',
       }}
-      onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--field-50)')}
-      onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+      onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = 'var(--field-50)' }}
+      onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = 'transparent' }}
     >
       <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'var(--orange)' }}>{item.num}</span>
-      <span style={{ fontFamily: 'var(--font-kr)', fontSize: 13, fontWeight: 600, color: 'var(--grey-700)' }}>{item.label}</span>
+      <span style={{ fontFamily: 'var(--font-kr)', fontSize: 13, fontWeight: active ? 700 : 600, color: active ? 'var(--orange-900)' : 'var(--grey-700)' }}>{item.label}</span>
     </a>
   )
 }
 
 export default function StickyNav() {
+  const isMobile = useIsMobile()
+  const [active, setActive] = useState('')
+
+  // 스크롤 스파이 — 현재 화면의 섹션을 상단 메뉴에서 강조
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return
+    const ids = NAV.map((n) => n.href.slice(1))
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean)
+    if (!els.length) return
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id) })
+      },
+      { rootMargin: '-45% 0px -50% 0px', threshold: 0 }
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
   return (
     <nav style={{
       position: 'sticky',
@@ -42,7 +65,7 @@ export default function StickyNav() {
       <div style={{
         maxWidth: 1400,
         margin: '0 auto',
-        padding: '10px 32px',
+        padding: isMobile ? '8px 14px' : '10px 32px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -53,13 +76,14 @@ export default function StickyNav() {
           <img src="/WorldVision-Logo-Primary.svg" alt="World Vision" style={{ height: 24 }} />
           <span style={{ fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 400, color: 'var(--field-300)' }}>×</span>
           <img src="/wfp-logo.svg" alt="World Food Programme" style={{ height: 24 }} />
-          <span style={{ width: 1, height: 18, background: 'var(--field-300)', margin: '0 4px' }} />
+          <span style={{ width: 1, height: 18, background: 'var(--field-300)', margin: '0 4px', display: isMobile ? 'none' : 'block' }} />
           <span lang="ko" style={{
             fontFamily: 'var(--font-kr)',
             fontSize: 13,
             fontWeight: 600,
             color: 'var(--midnight)',
             whiteSpace: 'nowrap',
+            display: isMobile ? 'none' : 'inline',
           }}>
             2025 글로벌 식량위기 대응 · 결과보고
           </span>
@@ -67,7 +91,7 @@ export default function StickyNav() {
 
         {/* Right — section navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          {NAV.map((item) => <NavLink key={item.href} item={item} />)}
+          {NAV.map((item) => <NavLink key={item.href} item={item} active={active === item.href.slice(1)} />)}
         </div>
       </div>
     </nav>

@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 import { Wheat, Banknote, HeartPulse, GraduationCap, Sprout, X } from 'lucide-react'
 import { AnimatedGradient } from './AnimatedGradient.jsx'
 import { usdToKrwLabel } from '../lib/format.js'
+import useIsMobile from '../lib/useIsMobile.js'
+import { COUNTRIES as RAW_COUNTRIES, countryTotals } from '../data/countries.js'
 
 const MAX_FOOD = 3797 // DRC total (3,088+632+76)
 const GREEN = '#2F7D4F'
@@ -15,87 +17,15 @@ const ACTIVITY_DEFS = [
   { key: 'livelihood', label: '생계 역량',   Icon: Sprout,        color: '#2F7D4F' },
 ]
 
-// 국가별 데이터: 카드 표시값(food/cash) + 진행 활동 + 사업별 배분 실적
-const COUNTRIES = [
-  {
-    name: '콩고민주공화국', en: 'DR Congo · S. Kivu, Tanganyika, Kasai', region: '남부키부 · 탕가니카 · 카사이',
-    food: 3797, cash: 0, activities: ['food', 'nutrition'],
-    projects: [
-      { site: '남부키부 (South Kivu)', food: 3088.2, ther: 74.9, cash: 0 },
-      { site: '탕가니카 (Tanganyika)', food: 632.6, ther: 0, cash: 0 },
-      { site: '카사이 · 루이자 (Kasai · Luiza)', food: 76.2, ther: 76.2, cash: 0 },
-    ],
-  },
-  {
-    name: '수단', en: 'Sudan · S. Darfur, S. Kordofan, White Nile', region: '남다르푸르 · 남코르도판 · 백나일',
-    food: 3322, cash: 324429, activities: ['food', 'cash', 'nutrition'],
-    projects: [
-      { site: '남다르푸르 (IFA)', food: 2276.3, ther: 15.3, cash: 0 },
-      { site: '남코르도판', food: 1025.7, ther: 17.4, cash: 324429 },
-      { site: '남다르푸르 (영양)', food: 20.1, ther: 20.1, cash: 0 },
-      { site: '백나일 (White Nile)', food: 0, ther: 0, cash: 0, note: '현지 정부 승인 지연으로 사업 미진행' },
-    ],
-  },
-  {
-    name: '아프가니스탄', en: 'Afghanistan · Ghor, Badghis', region: '고르 · 바드기스',
-    food: 829, cash: 173877, activities: ['food', 'cash', 'nutrition'],
-    projects: [{ site: '고르 · 바드기스', food: 829.3, ther: 65.7, cash: 173877 }],
-  },
-  {
-    name: '에티오피아', en: 'Ethiopia · Tigray, Afar, Amhara', region: '티그라이 · 아파르 · 암하라',
-    food: 696, cash: 0, activities: ['food', 'nutrition'],
-    projects: [{ site: '티그라이 · 아파르 · 암하라', food: 695.8, ther: 695.8, cash: 0 }],
-  },
-  {
-    name: '우간다', en: 'Uganda · Bidibidi, Lobule', region: '비디비디 · 로불레',
-    food: 505, cash: 558117, activities: ['food', 'cash', 'nutrition'],
-    projects: [{ site: '비디비디 · 로불레', food: 505.0, ther: 33.6, cash: 558117 }],
-  },
-  {
-    name: '베네수엘라', en: 'Venezuela · Zulia, Falcón +2', region: '줄리아 · 팔콘 외',
-    food: 476, cash: 0, activities: ['food'],
-    projects: [{ site: '줄리아 · 팔콘 외', food: 475.5, ther: 0, cash: 0 }],
-  },
-  {
-    name: '남수단', en: 'South Sudan · Fashoda, Renk, Juba', region: '파쇼다 · 렌크 · 주바',
-    food: 412, cash: 539033, activities: ['food', 'cash', 'nutrition', 'school'],
-    projects: [
-      { site: '파쇼다 · 파니캉', food: 301.1, ther: 0.5, cash: 397930 },
-      { site: '렌크 · 마뇨', food: 81.2, ther: 0, cash: 0 },
-      { site: '주바 · 얌비오 (자립형 학교급식)', food: 29.6, ther: 0, cash: 141103 },
-    ],
-  },
-  {
-    name: '차드', en: 'Chad · Farchana +5 (학교 급식)', region: '파르샤나 외 · 학교급식',
-    food: 199, cash: 15941, activities: ['food', 'cash', 'school'],
-    projects: [{ site: '파르샤나 외 5개 지역 (긴급 학교급식 ESF)', food: 198.5, ther: 0, cash: 15941 }],
-  },
-  {
-    name: '방글라데시', en: "Bangladesh · Cox's Bazar (현금)", region: '콕스바자르 · 현금 전용',
-    food: 0, cash: 1885961, activities: ['cash'],
-    projects: [{ site: "콕스바자르 (전자바우처 E-Voucher)", food: 0, ther: 0, cash: 1885961 }],
-  },
-  {
-    name: '콜롬비아', en: 'Colombia · Valle del Cauca (현금)', region: '바예델카우카 · 현금 전용',
-    food: 0, cash: 1456689, activities: ['cash'],
-    projects: [{ site: '바예델카우카', food: 0, ther: 0, cash: 1456689 }],
-  },
-  {
-    name: '중앙아프리카공화국', en: 'CAR · Bambari, Bouar (생계)', region: '밤바리 · 부아르 · 생계',
-    food: 0, cash: 87318, activities: ['cash', 'livelihood'],
-    projects: [{ site: '밤바리 · 부아르 (자산조성지원 FFA)', food: 0, ther: 0, cash: 87318 }],
-  },
-  {
-    name: '미얀마', en: 'Myanmar · Northern Shan (긴급 현금)', region: '노던샨 · 긴급 현금',
-    food: 0, cash: 64616, activities: ['cash'],
-    projects: [{ site: '노던샨 (긴급 현금)', food: 0, ther: 0, cash: 64616 }],
-  },
-  {
-    name: '케냐', en: 'Kenya · Makueni, Kitui', region: '마쿠에니 · 키투이',
-    food: 0, cash: 0, livelihood: true, activities: ['livelihood'],
-    projects: [{ site: '마쿠에니 · 키투이 (VSLA · 작물보험)', food: 0, ther: 0, cash: 0, note: '배분 없는 생계 역량 강화 사업' }],
-  },
-]
+// 국가별 표시 데이터 — 단일 소스(countries.js)에서 파생 (카드 표시값 + 활동 + 사업 목록 + 계획 수혜자)
+const COUNTRIES = RAW_COUNTRIES.map((c) => {
+  const t = countryTotals(c)
+  return {
+    name: c.ko, en: c.en, region: c.region,
+    activities: c.activities, livelihood: c.livelihood, projects: c.projects,
+    food: Math.round(t.food), cash: t.cash,
+  }
+})
 
 function fmtCash(n) {
   if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M'
@@ -140,7 +70,10 @@ function ProjectRow({ p }) {
   const empty = !(p.food > 0) && !(p.cash > 0) && !(p.ther > 0)
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', padding: '14px 0', borderBottom: '1px solid var(--field-200)' }}>
-      <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--midnight)' }}>{p.site}</span>
+      <div style={{ minWidth: 0 }}>
+        <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--midnight)' }}>{p.site}</span>
+        {p.title && <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-500)', marginTop: 2 }}>{p.title}</span>}
+      </div>
       <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'baseline' }}>
         {p.food > 0 && <Metric color="#FF5515" label="식량" value={`${p.food.toLocaleString()}톤`} />}
         {p.cash > 0 && <Metric color="#0E7C7B" label="현금" value={`${fmtCash(p.cash)} · ${usdToKrwLabel(p.cash)}`} />}
@@ -152,6 +85,7 @@ function ProjectRow({ p }) {
 }
 
 export default function CountryGrid() {
+  const isMobile = useIsMobile()
   const [selected, setSelected] = useState(null)
   const panelRef = useRef(null)
   const country = COUNTRIES.find((c) => c.name === selected)
@@ -164,6 +98,15 @@ export default function CountryGrid() {
     }, 80)
     return () => clearTimeout(t)
   }, [selected])
+
+  // 지도 마커 클릭 → 해당 국가 상세 열기 (ImpactMap에서 발생시키는 이벤트 수신)
+  useEffect(() => {
+    const onSelect = (e) => {
+      if (COUNTRIES.some((c) => c.name === e.detail)) setSelected(e.detail)
+    }
+    window.addEventListener('cg-select-country', onSelect)
+    return () => window.removeEventListener('cg-select-country', onSelect)
+  }, [])
 
   return (
     <div style={{ marginTop: 40, borderTop: '1px solid var(--field-200)', paddingTop: 24 }}>
@@ -179,7 +122,7 @@ export default function CountryGrid() {
           position: 'relative',
           zIndex: 1,
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
+          gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
           gap: 1,
           background: 'transparent',
         }}>
@@ -262,7 +205,7 @@ export default function CountryGrid() {
             background: '#fff',
             border: '1px solid var(--field-200)',
             borderRadius: 12,
-            padding: '28px 32px 32px',
+            padding: isMobile ? '22px 18px 24px' : '28px 32px 32px',
             position: 'relative',
             animation: 'cgPanelIn 0.34s ease-out',
           }}

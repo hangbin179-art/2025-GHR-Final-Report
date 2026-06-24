@@ -1,3 +1,5 @@
+import useIsMobile from '../lib/useIsMobile.js'
+
 const C = 301.6 // circle circumference at r=48
 
 const FOOD_PCT = 48.4   // 10,235 / 21,133
@@ -12,12 +14,13 @@ const ACTIVITIES = [
 ]
 
 export default function ResultsCharts() {
+  const isMobile = useIsMobile()
   return (
     <section id="sec-result" style={{ background: 'var(--field-50)' }}>
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 32px' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '48px 20px' : '80px 32px' }}>
 
         {/* Section header */}
-        <div style={{ display: 'grid', gridTemplateColumns: '240px 1fr', gap: 48, marginBottom: 48 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '240px 1fr', gap: isMobile ? 16 : 48, marginBottom: isMobile ? 32 : 48 }}>
           <div>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--orange)', margin: 0 }}>04 — Result</p>
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--grey-600)', margin: '4px 0 0' }}>최종 성과</p>
@@ -33,7 +36,7 @@ export default function ResultsCharts() {
         <LeverageFlow />
 
         {/* Progress dials */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 24 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: isMobile ? 16 : 24 }}>
           <DialCard
             color="var(--orange)"
             pct={FOOD_PCT}
@@ -88,8 +91,9 @@ export default function ResultsCharts() {
 }
 
 function LeverageFlow() {
+  const isMobile = useIsMobile()
   return (
-    <div style={{ background: '#fff', border: '1px solid var(--field-200)', borderRadius: 12, padding: 32, marginBottom: 24 }}>
+    <div style={{ background: '#fff', border: '1px solid var(--field-200)', borderRadius: 12, padding: isMobile ? 18 : 32, marginBottom: 24 }}>
       <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '0 0 24px' }}>
         Leverage flow · 자금 흐름
       </p>
@@ -164,7 +168,7 @@ function LeverageFlow() {
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
           {ACTIVITIES.map(a => (
-            <div key={a.label} style={{ display: 'grid', gridTemplateColumns: '140px 1fr 46px 104px', alignItems: 'center', gap: 12 }}>
+            <div key={a.label} style={{ display: 'grid', gridTemplateColumns: isMobile ? '88px 1fr 36px 80px' : '140px 1fr 46px 104px', alignItems: 'center', gap: isMobile ? 8 : 12 }}>
               <span lang="ko" style={{
                 fontFamily: 'var(--font-kr)',
                 fontSize: 12,

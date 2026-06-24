@@ -26,6 +26,17 @@ export default function ScrollExpandMedia({
   const autoUnmuteTried = useRef(false)
   const [soundOn, setSoundOn] = useState(false)
   const [videoEnded, setVideoEnded] = useState(false)
+  const [reduceMotion, setReduceMotion] = useState(false)
+
+  // 모션 최소화 설정 감지 — 켜져 있으면 스크롤 하이재킹/확장을 비활성화하고 정적 히어로로 표시
+  useEffect(() => {
+    if (!window.matchMedia) return
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const update = () => setReduceMotion(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
 
   // 스크롤 시작(사용자 제스처) 시 소리 켜기 시도. 브라우저가 막으면 음소거로 되돌림(버튼으로 켤 수 있음).
   const tryAutoUnmute = () => {
@@ -86,6 +97,7 @@ export default function ScrollExpandMedia({
   }, [scrollProgress])
 
   useEffect(() => {
+    if (reduceMotion) return // 모션 최소화: 스크롤 하이재킹 비활성화 (페이지 정상 스크롤)
     const handleWheel = (e) => {
       if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
         setMediaFullyExpanded(false)
@@ -157,7 +169,7 @@ export default function ScrollExpandMedia({
       window.removeEventListener('touchmove', handleTouchMove)
       window.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [scrollProgress, mediaFullyExpanded, touchStartY])
+  }, [scrollProgress, mediaFullyExpanded, touchStartY, reduceMotion])
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -192,7 +204,7 @@ export default function ScrollExpandMedia({
   const textOpacity = Math.max(1 - scrollProgress * 1.3, 0)
 
   return (
-    <div ref={sectionRef} className="transition-colors duration-700 ease-in-out overflow-x-hidden">
+    <div ref={sectionRef} className="cg-hero-cinematic transition-colors duration-700 ease-in-out overflow-x-hidden">
       <section className="relative flex flex-col items-center justify-start min-h-[100dvh]">
         <div className="relative w-full flex flex-col items-center min-h-[100dvh]">
           {/* Background image — 스크롤할수록 서서히 사라짐 */}
@@ -350,7 +362,7 @@ export default function ScrollExpandMedia({
                     {subtitle}
                   </p>
                 )}
-                {scrollToExpand && (
+                {scrollToExpand && !reduceMotion && (
                   <p
                     style={{
                       fontFamily: 'var(--font-kr)',

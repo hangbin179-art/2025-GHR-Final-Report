@@ -27,6 +27,17 @@ html { scroll-behavior: smooth; }
   to   { transform: translateY(0); }
 }
 
+/* 인쇄 / PDF 저장 — 영상 히어로·고정 네비 제거, 회전 애니메이션 평탄화, 페이지 분할 정리 */
+@media print {
+  nav { display: none !important; }
+  .cg-hero-cinematic { display: none !important; }
+  [data-flow-section] { overflow: visible !important; }
+  .flow-art-container { transform: none !important; }
+  section, article { break-inside: avoid; page-break-inside: avoid; }
+  body { background: #fff !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
 /* ============================================================
    Direction A — Design Tokens (WV × WFP 2025 식량위기 대시보드)
    ============================================================ */
