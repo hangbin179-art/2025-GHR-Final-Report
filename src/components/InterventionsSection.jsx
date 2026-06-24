@@ -9,7 +9,7 @@ const TEAL = '#0E7C7B'
 const RED = '#C8102E'
 
 /* 01–03 활동 하단 현장 스토리 블록 */
-function FieldStory({ accent, eyebrow, caption, quote, quoteSource, children }) {
+function FieldStory({ accent, eyebrow, caption, quote, quoteSource, photo, children }) {
   const isMobile = useIsMobile()
   return (
     <div style={{
@@ -22,7 +22,7 @@ function FieldStory({ accent, eyebrow, caption, quote, quoteSource, children }) 
     }}>
       {!isMobile && <div />}
       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '0.8fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
-        <PhotoSlot accent={accent} ratio="4/3" caption={caption} />
+        <PhotoSlot accent={accent} ratio="4/3" src={photo} caption={caption} />
         <div>
           <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: accent, margin: '0 0 12px' }}>
             {eyebrow}
@@ -115,7 +115,8 @@ export default function InterventionsSection() {
             <FieldStory
               accent="var(--orange)"
               eyebrow="Field Story · 수단 남코르도판"
-              caption="사진 캡션 · 아부주바이하 캠프의 식량 배분 현장. 추후 현장 사진으로 교체 예정."
+              photo="/gallery/223710-1.jpg"
+              caption="남코르도판 알 아바시야 식량배분소(FDP) — WFP·월드비전 식량 배분 현장."
               quote="아이들이 더는 굶지 않게 되자, 비로소 내일을 계획할 수 있었습니다."
               quoteSource="하와 이스마일 · 아부주바이하 캠프, 네 자녀의 어머니"
             >
@@ -161,7 +162,8 @@ export default function InterventionsSection() {
             <FieldStory
               accent={TEAL}
               eyebrow="Field Story · 방글라데시 콕스바자르"
-              caption="사진 캡션 · 콕스바자르 캠프의 전자바우처(E-Voucher) 매장. 추후 현장 사진으로 교체 예정."
+              photo="/gallery/223748-3.jpg"
+              caption="콕스바자르 캠프 — 식량 전자바우처(E-Voucher) 토큰을 받는 로힝야 수혜자."
               quote="늘 아이들을 어떻게 먹일지 걱정뿐이었습니다. 하지만 WFP가 우리에게 다시 희망을 주었습니다."
               quoteSource="딜 바하르 · 콕스바자르 캠프, 세 자녀의 어머니"
             >
@@ -206,7 +208,8 @@ export default function InterventionsSection() {
             <FieldStory
               accent={RED}
               eyebrow="Field Story · 에티오피아 티그라이"
-              caption="사진 캡션 · 티그라이 표적보충영양사업 영양식 배분 및 상담 현장. 추후 현장 사진으로 교체 예정."
+              photo="/gallery/223707-1.jpg"
+              caption="티그라이 표적보충영양사업(TSFP) — 어머니들에게 영양보충식을 배분하는 현장."
               quote="제대로 먹지 못해 아기 건강이 늘 걱정이었어요. 이제는 더 건강해졌고, 아이를 돌보는 데 자신감이 생겼습니다."
               quoteSource="티르하스 체가이 · 티그라이 아디하위 국내 실향민 캠프, 수유모"
             >

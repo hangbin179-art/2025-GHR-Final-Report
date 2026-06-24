@@ -118,7 +118,7 @@ export default function DistributionCharts() {
           subtitle="식량 배분 실적이 있는 8개국 — 현물 식량 가액 합산"
           data={FOOD_COUNTRIES}
           color="var(--orange)"
-          note="DR 콩고 남부 키부 단일 사업($5.05M)이 전체 식량 가액의 40%를 점유합니다."
+          note="DR 콩고 남부 키부 단일 사업($5.05M)이 전체 식량 가액의 약 31%를 점유합니다."
         />
         {!isMobile && <div style={{ background: 'var(--field-200)', alignSelf: 'stretch' }} />}
         <HBarChart

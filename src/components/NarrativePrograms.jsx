@@ -8,9 +8,17 @@ const GREEN = '#2F7D4F'      // livelihoods accent
 const GREEN_BG = '#E6F0E9'
 
 /* ── Shared photo placeholder ───────────────────────────── */
-export function PhotoSlot({ caption, ratio = '4/3', accent }) {
+export function PhotoSlot({ caption, ratio = '4/3', accent, src }) {
   return (
     <div>
+      {src ? (
+        <img
+          src={src}
+          alt={caption || ''}
+          loading="lazy"
+          style={{ width: '100%', aspectRatio: ratio, objectFit: 'cover', borderRadius: 12, display: 'block', border: '1px solid var(--field-200)' }}
+        />
+      ) : (
       <div style={{
         width: '100%',
         aspectRatio: ratio,
@@ -32,6 +40,7 @@ export function PhotoSlot({ caption, ratio = '4/3', accent }) {
           Photo Placeholder
         </p>
       </div>
+      )}
       {caption && (
         <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-600)', margin: '10px 0 0', lineHeight: 1.6 }}>
           {caption}
@@ -123,7 +132,7 @@ export default function NarrativePrograms() {
 
             {/* Field story — Kapuri */}
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '0.85fr 1fr', gap: isMobile ? 20 : 40, marginTop: 36, alignItems: 'start' }}>
-              <PhotoSlot accent={AMBER} caption="사진 캡션 · 카푸리 초등학교 학교 텃밭에서 토지 준비 실습 중인 학생들. 추후 현장 사진으로 교체 예정." />
+              <PhotoSlot accent={AMBER} src="/gallery/223753-1.jpg" caption="남수단 주바 자립형 학교급식 사업 — 학생들이 교사와 함께 학교 텃밭을 일구는 모습." />
               <div>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: AMBER, margin: '0 0 12px' }}>
                   Field Story · 카푸리 초등학교
@@ -144,14 +153,33 @@ export default function NarrativePrograms() {
               </div>
             </div>
 
+            {/* School gardens — aggregate harvest & income */}
+            <div style={{ marginTop: 36, paddingTop: 32, borderTop: '1px solid var(--field-200)' }}>
+              <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: AMBER, margin: '0 0 16px' }}>
+                School Gardens · 학교 텃밭의 결실
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
+                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
+                  WFP 배급에 학교가 직접 기른 채소를 더했습니다. 주바 카운티 <strong style={{ color: 'var(--midnight)' }}>목표 21개교 중 20개교</strong>에
+                  텃밭을 조성하고 종자·농기구를 지원해 토마토·가지·오크라·옥수수 등을 재배했습니다. 수확물 대부분은 학생
+                  급식으로 돌아갔고, 그중 <strong style={{ color: AMBER }}>316kg을 시장에 팔아 약 40만 남수단파운드(약 70 USD)</strong>를
+                  학교 운영비에 보탰습니다. 일례로 나바구 초등학교는 옥수수 750kg을 거둬 550kg은 급식에, 200kg은 판매에 썼습니다.
+                </p>
+                <div style={{ background: AMBER_BG, borderRadius: 12, padding: 24, display: 'flex', gap: 20 }}>
+                  <StatChip value="2,269" unit="kg" label="학교 텃밭 총 수확량" accent={AMBER} />
+                  <StatChip value="1,403" unit="kg" label="교내 급식으로 소비" accent={AMBER} />
+                </div>
+              </div>
+            </div>
+
             {/* Secondary — Chad */}
             <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--field-200)', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 20, alignItems: 'baseline' }}>
               <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', border: '1px solid var(--field-200)', padding: '4px 8px', borderRadius: 4, whiteSpace: 'nowrap' }}>
-                차드 · 파르샤나 외
+                차드 · 파르차나 외
               </span>
               <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, wordBreak: 'keep-all' }}>
-                차드 동부(아베셰·파르샤나·게레다·고즈베이다·이리바)에서는 <strong style={{ color: 'var(--midnight)' }}>긴급 학교급식(ESF)</strong>을
-                현금이체 방식으로 운영했습니다. 식량 보관 창고를 건립해 우기에도 안정적으로 급식을 공급할 수 있는
+                차드 동부(아베셰·파르차나·게레다·고즈베이다·이리바)에서는 <strong style={{ color: 'var(--midnight)' }}>긴급 학교급식(Emergency School Feeding)</strong>을
+                현금 배분 방식으로 운영했습니다. 식량 보관 창고를 건립해 우기에도 안정적으로 급식을 공급할 수 있는
                 공급망을 구축했습니다.
               </p>
             </div>
@@ -193,21 +221,20 @@ export default function NarrativePrograms() {
 
               {/* Kenya SFSP */}
               <div>
-                <PhotoSlot ratio="16/10" accent={GREEN} caption="사진 캡션 · 마쿠에니 마을저축그룹의 저축 모임. 추후 현장 사진으로 교체 예정." />
+                <PhotoSlot ratio="16/10" accent={GREEN} src="/gallery/223864-2.jpg" caption="마쿠에니·키투이 회복력 사업 — 염소 사육으로 자산을 형성한 수혜자." />
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: GREEN, margin: '16px 0 10px' }}>
                   Kenya · 마쿠에니 · 키투이
                 </p>
                 <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                   주민들은 <strong style={{ color: GREEN }}>녹두·동부콩·기장·수수</strong> 같은 가뭄 저항성 작물을 재배하고,
-                  기후스마트 농업과 가금류·염소 사육 기술을 익혔습니다. <strong style={{ color: 'var(--midnight)' }}>R4 회복력
-                  프로그램</strong>을 통해 작물 보험에 가입해 가뭄·홍수·병충해 손실을 보상받게 되었습니다. 이 경제적 완충장치는
+                  기후스마트 농업과 가금류·염소 사육 기술을 익혔습니다. <strong style={{ color: 'var(--midnight)' }}>R4 회복력 강화 프로그램(R4 Rural Resilience Initiative)</strong>을 통해 작물 보험에 가입해 가뭄·홍수·병충해 손실을 보상받게 되었습니다. 이 경제적 완충장치는
                   가정의 구매력을 높여 아이들의 영양·교육·의료 지출을 안정적으로 감당하게 했습니다.
                 </p>
               </div>
 
               {/* CAR FFA */}
               <div>
-                <PhotoSlot ratio="16/10" accent={GREEN} caption="사진 캡션 · 자루아 농업그룹의 땅콩·벼 경작지. 추후 현장 사진으로 교체 예정." />
+                <PhotoSlot ratio="16/10" accent={GREEN} src="/gallery/223999-2.jpg" caption="방가수 — 현금근로(Cash for Work)로 농업 접근로를 복구하며 작업 자재를 전달받는 주민들." />
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: GREEN, margin: '16px 0 10px' }}>
                   Central African Rep. · 부아르 · 방가수 · 생계 역량 강화 및 자산 조성 기회 제공
                 </p>

@@ -58,7 +58,7 @@ export const COUNTRIES = [
   {
     ko: '베네수엘라', countryEn: 'Venezuela',
     en: 'Venezuela · Zulia, Falcón +2', region: '줄리아 · 팔콘 외',
-    activities: ['food'],
+    activities: ['food', 'school'],
     projects: [
       { site: '줄리아 · 팔콘 외', siteEn: 'Zulia · Falcón +2', title: 'School Feeding Program in Venezuela 2025', lat: 10.40, lng: -72.00, food: 475.5, ther: 0, cash: 0, val: 605800, beneficiaries: 77939, korea: 17004, plannedTons: 1355, pbas: '223806' },
     ],
@@ -66,7 +66,7 @@ export const COUNTRIES = [
   {
     ko: '남수단', countryEn: 'South Sudan',
     en: 'South Sudan · Fashoda, Renk, Juba', region: '파쇼다 · 렌크 · 주바',
-    activities: ['food', 'cash', 'nutrition', 'school'],
+    activities: ['food', 'cash', 'nutrition', 'school', 'livelihood'],
     projects: [
       { site: '파쇼다 · 파니캉', siteEn: 'Fashoda · Panyikang', title: 'Fashoda and Panyikang FA Project', lat: 10.00, lng: 32.00, food: 301.1, ther: 0.5, cash: 397930, val: 518775, beneficiaries: 63970, korea: 21065, plannedTons: 621, pbas: '223756' },
       { site: '렌크 · 마뇨', siteEn: 'Renk · Manyo', title: 'Renk and Manyo Food Assistance Project', lat: 11.75, lng: 32.80, food: 81.2, ther: 0, cash: 0, val: 136515, beneficiaries: 43370, korea: 4620, plannedTons: 103, pbas: '223758' },
@@ -75,10 +75,10 @@ export const COUNTRIES = [
   },
   {
     ko: '차드', countryEn: 'Chad',
-    en: 'Chad · Farchana +5 (학교 급식)', region: '파르샤나 외 · 학교급식',
+    en: 'Chad · Farchana +5 (학교 급식)', region: '파르차나 외 · 학교급식',
     activities: ['food', 'cash', 'school'],
     projects: [
-      { site: '파르샤나 외 5개 지역 (긴급 학교급식 ESF)', siteEn: 'Farchana +5', title: 'Eastern Chad Emergency School Feeding 2025', lat: 13.60, lng: 22.00, food: 198.5, ther: 0, cash: 15941, val: 278368, beneficiaries: 79140, korea: 23041, plannedTons: 347, pbas: '223850' },
+      { site: '파르차나 외 5개 지역 (긴급 학교급식 ESF)', siteEn: 'Farchana +5', title: 'Eastern Chad Emergency School Feeding 2025', lat: 13.60, lng: 22.00, food: 198.5, ther: 0, cash: 15941, val: 278368, beneficiaries: 79140, korea: 23041, plannedTons: 347, pbas: '223850' },
     ],
   },
   {

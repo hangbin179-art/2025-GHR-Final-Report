@@ -9,28 +9,88 @@ const RED = '#C8102E'
 const TEAL = '#0E7C7B'
 
 /*
- * 사진 교체 방법:
- *   public/gallery/ 폴더에 사진을 넣고 각 슬라이드의 src에 '/gallery/파일명.jpg' 를 기입하세요.
- *   src 가 null 이면 자리표시자(placeholder)가 표시됩니다.
+ * 사진 교체/추가 방법:
+ *   public/gallery/ 폴더에 사진을 넣고 PHOTOS 배열에 한 줄 추가하세요.
+ *   P(pbas, 국가, CountryEn, 지역, 활동, 색상, 번호[, 장면])
+ *   → src 는 /gallery/{pbas}-{번호}.jpg 로 자동 매핑됩니다.
+ *   각 국가의 "첫 번째" 사진이 캐러셀(국가별 대표)로 노출되고,
+ *   라이트박스(확대)에서는 전체 사진을 국가·지역·활동과 함께 넘겨봅니다.
  */
-const SLIDES = [
-  { pbas: '223847', country: '콩고민주공화국',     site: '남부 키부',        activity: '일반식량 배분',      color: ORANGE, src: '/gallery/drc-southkivu.jpg', credit: '© World Vision · DR Congo 2025' },
-  { pbas: '223711', country: '수단',               site: '남다르푸르',       activity: '통합 식량지원',      color: ORANGE, src: null },
-  { pbas: '223255', country: '아프가니스탄',       site: '고르·바드기스',    activity: '식량 배분',          color: ORANGE, src: '/gallery/afghanistan-ghor.jpg', credit: '© World Vision · Afghanistan 2025' },
-  { pbas: '223707', country: '에티오피아',         site: '티그라이·아파르',  activity: '영양 치료식',        color: RED,    src: '/gallery/ethiopia-tigray.jpg', credit: '© World Vision · Ethiopia 2025' },
-  { pbas: '223766', country: '우간다',             site: '비디비디·로불레',  activity: '일반식량 배분',      color: ORANGE, src: null },
-  { pbas: '223806', country: '베네수엘라',         site: '줄리아·팔콘',      activity: '학교 급식',          color: AMBER,  src: null },
-  { pbas: '223753', country: '남수단',             site: '주바·얌비오',      activity: '학교 텃밭 · 급식',   color: AMBER,  src: null },
-  { pbas: '223850', country: '차드',               site: '파르샤나 외',      activity: '긴급 학교급식',      color: AMBER,  src: null },
-  { pbas: '223748', country: '방글라데시',         site: '콕스바자르',       activity: '현금 · 바우처',      color: TEAL,   src: '/gallery/bangladesh-coxsbazar.jpg', credit: '© World Vision · Bangladesh 2025' },
-  { pbas: '223799', country: '콜롬비아',           site: '바예델카우카',     activity: '현금 · 바우처',      color: TEAL,   src: null },
-  { pbas: '223999', country: '중앙아프리카공화국', site: '부아르·방가수',    activity: '생계 역량 강화 및 자산 조성 기회 제공', color: GREEN,  src: null },
-  { pbas: '223982', country: '미얀마',             site: '북부 샨',          activity: '긴급 현금 지원',     color: TEAL,   src: null },
-  { pbas: '223864', country: '케냐',               site: '마쿠에니·키투이',  activity: '생계 역량 강화',     color: GREEN,  src: null },
+const P = (pbas, country, countryEn, site, activity, color, n, scene = '') => ({
+  pbas, country, countryEn, site, activity, color, scene,
+  src: `/gallery/${pbas}-${n}.jpg`,
+  credit: `© World Vision · ${countryEn} 2025`,
+})
+
+const PHOTOS = [
+  // 콩고민주공화국 (남부 키부 · 탕가니카)
+  P('223847', '콩고민주공화국', 'DR Congo', '남부 키부', '일반식량 배분', ORANGE, 1, '식량 받아 가는 여성 수혜자'),
+  P('223847', '콩고민주공화국', 'DR Congo', '남부 키부 카만욜라', '일반식량 배분', ORANGE, 2, '식량 포대 운반'),
+  P('223847', '콩고민주공화국', 'DR Congo', '남부 키부', '영양 상담', RED, 3, '영양 민감 상담 현장'),
+  P('223796', '콩고민주공화국', 'DR Congo', '탕가니카', '일반식량 배분', ORANGE, 1, '식량 지원 받은 여성'),
+  // 수단 (남다르푸르 · 남코르도판)
+  P('223711', '수단', 'Sudan', '남다르푸르', '일반식량 배분', ORANGE, 1, '곡물 계량 배분 현장'),
+  P('223711', '수단', 'Sudan', '남다르푸르 오타시', '일반식량 배분', ORANGE, 2, '오타시 IDP 캠프 배분'),
+  P('223745', '수단', 'Sudan', '남다르푸르', '영양 치료식', RED, 1, '치료식으로 회복한 쌍둥이 형제'),
+  P('223745', '수단', 'Sudan', '남다르푸르', '영양 측정', RED, 2, '영유아 MUAC 측정'),
+  P('223710', '수단', 'Sudan', '남코르도판', '일반식량 배분', ORANGE, 1, '알 아바시야 식량배분소(FDP)'),
+  // 아프가니스탄 (고르 · 바드기스)
+  P('223255', '아프가니스탄', 'Afghanistan', '고르·바드기스', '일반식량 배분', ORANGE, 1, '밀가루·식용유 배분'),
+  P('223255', '아프가니스탄', 'Afghanistan', '고르·바드기스', '식량 배분', ORANGE, 2, '대규모 배분 현장 전경'),
+  P('223255', '아프가니스탄', 'Afghanistan', '고르·바드기스', '식량 배분', ORANGE, 3, '식량 물자 배분'),
+  P('223255', '아프가니스탄', 'Afghanistan', '고르·바드기스', '현금성 노동', GREEN, 4, '현금성 노동 자산 형성'),
+  // 에티오피아 (티그라이 · 아파르 · 암하라)
+  P('223707', '에티오피아', 'Ethiopia', '티그라이·아파르', '영양 치료식', RED, 1, '영양보충식 배분 현장'),
+  // 우간다 (비디비디 · 로불레)
+  P('223766', '우간다', 'Uganda', '비디비디·로불레', '일반식량 배분', ORANGE, 1, '곡물 계량 배분'),
+  P('223766', '우간다', 'Uganda', '비디비디·로불레', '식량 배분', ORANGE, 2, '배분 대기 중인 여성들'),
+  P('223766', '우간다', 'Uganda', '로불레', '식량 배분', ORANGE, 3, '실내 식량 배분소'),
+  // 베네수엘라 (줄리아 · 팔콘) — 학교 급식
+  P('223806', '베네수엘라', 'Venezuela', '줄리아·팔콘', '학교 급식', AMBER, 1, '학교 급식 현장'),
+  P('223806', '베네수엘라', 'Venezuela', '줄리아·팔콘', '학교 급식', AMBER, 2, '아이들의 학교 급식 식사'),
+  P('223806', '베네수엘라', 'Venezuela', '줄리아·팔콘', '학교 급식', AMBER, 3, '학교 급식 조리 준비'),
+  // 남수단 (파쇼다 · 주바)
+  P('223756', '남수단', 'South Sudan', '파쇼다·파니캉', '생계 역량 강화', GREEN, 1, '옥수수밭의 여성 농민'),
+  P('223756', '남수단', 'South Sudan', '파쇼다', '생계 역량 강화', GREEN, 2, '수수밭 영농 지원'),
+  P('223753', '남수단', 'South Sudan', '주바·얌비오', '학교 급식', AMBER, 1, '학교 텃밭 경작 실습'),
+  P('223753', '남수단', 'South Sudan', '주바·얌비오', '학교 급식', AMBER, 2, '학생들의 텃밭 가꾸기'),
+  // 방글라데시 (콕스바자르) — 로힝야 난민
+  P('223748', '방글라데시', 'Bangladesh', '콕스바자르', '식량 지원', ORANGE, 1, '긴급 식량 지원 전달'),
+  P('223748', '방글라데시', 'Bangladesh', '콕스바자르', '식량 배달', ORANGE, 2, '우기 취약가구 식량 배달'),
+  P('223748', '방글라데시', 'Bangladesh', '콕스바자르', '전자바우처', TEAL, 3, '전자바우처 토큰 배부'),
+  P('223748', '방글라데시', 'Bangladesh', '콕스바자르', '식량 수령', ORANGE, 4, '여성 가구주 식량 수령'),
+  // 중앙아프리카공화국 (부아르 · 방가수)
+  P('223999', '중앙아프리카공화국', 'CAR', '부아르·방가수', '현금 배분', TEAL, 1, '고첼레 현금 지원 배분'),
+  P('223999', '중앙아프리카공화국', 'CAR', '부아르·방가수', '생계 역량 강화', GREEN, 2, '농로 복구 자재 전달'),
+  P('223999', '중앙아프리카공화국', 'CAR', '응구얄리', '생계 역량 강화', GREEN, 3, '옥수수 수확·건조'),
+  P('223999', '중앙아프리카공화국', 'CAR', '부아르·방가수', '현금 배분', TEAL, 4, '노동참여자 현금 수령'),
+  // 케냐 (마쿠에니 · 키투이) — 생계 회복력
+  P('223864', '케냐', 'Kenya', '마쿠에니·키투이', '생계 역량 강화', GREEN, 1, '과수 재배 농가의 결실'),
+  P('223864', '케냐', 'Kenya', '마쿠에니·키투이', '생계 역량 강화', GREEN, 2, '염소 사육 자산 형성'),
+  P('223864', '케냐', 'Kenya', '마쿠에니·키투이', '생계 역량 강화', GREEN, 3, '마을 저축그룹 모임'),
+  P('223864', '케냐', 'Kenya', '마쿠에니·키투이', '생계 역량 강화', GREEN, 4, '과수원 관개 농업'),
 ]
 
-// 라이트박스(확대)는 사진이 있는 슬라이드끼리만 좌우 이동
-const PHOTO_SLIDES = SLIDES.filter((s) => s.src)
+/* 사진 없는 사업(콜롬비아·미얀마·차드)은 자리표시자로 노출 */
+const PH = (country, site, activity, color) => ({ placeholder: true, country, site, activity, color, src: null })
+const feat = (pbas) => PHOTOS.find((p) => p.pbas === pbas)
+
+/* 캐러셀 = 국가별 대표 1컷(+자리표시자) · 13개국 순서 */
+const CAROUSEL = [
+  feat('223847'),                              // 콩고민주공화국
+  feat('223711'),                              // 수단
+  feat('223255'),                              // 아프가니스탄
+  feat('223707'),                              // 에티오피아
+  feat('223766'),                              // 우간다
+  feat('223806'),                              // 베네수엘라
+  feat('223756'),                              // 남수단
+  PH('차드', '파르차나 외', '긴급 학교급식', AMBER),
+  feat('223748'),                              // 방글라데시
+  PH('콜롬비아', '바예델카우카', '현금·바우처', TEAL),
+  feat('223999'),                              // 중앙아프리카공화국
+  PH('미얀마', '북부 샨', '긴급 현금 지원', TEAL),
+  feat('223864'),                              // 케냐
+]
 
 function Arrow({ dir }) {
   return (
@@ -44,7 +104,7 @@ function Slide({ s, onOpen }) {
   return (
     <div onClick={s.src ? () => onOpen(s) : undefined} style={{ flex: '0 0 100%', position: 'relative', aspectRatio: '16/9', background: 'var(--field-50)', cursor: s.src ? 'zoom-in' : 'default' }}>
       {s.src ? (
-        <img src={s.src} alt={`${s.country} ${s.site}`} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        <img src={s.src} alt={`${s.country} ${s.site}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
       ) : (
         <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--field-300)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -81,27 +141,15 @@ function Slide({ s, onOpen }) {
       }}>
         <div>
           <span style={{
-            display: 'inline-block',
-            fontFamily: 'var(--font-en)',
-            fontSize: 10,
-            fontWeight: 700,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            color: '#fff',
-            background: s.color,
-            padding: '3px 8px',
-            borderRadius: 4,
-            marginBottom: 10,
+            display: 'inline-block', fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700,
+            letterSpacing: '0.08em', textTransform: 'uppercase', color: '#fff', background: s.color,
+            padding: '3px 8px', borderRadius: 4, marginBottom: 10,
           }}>
             {s.activity}
           </span>
           <p lang="ko" style={{
-            fontFamily: 'var(--font-kr)',
-            fontWeight: 700,
-            fontSize: 22,
-            color: s.src ? '#fff' : 'var(--midnight)',
-            margin: 0,
-            lineHeight: 1.2,
+            fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 22,
+            color: s.src ? '#fff' : 'var(--midnight)', margin: 0, lineHeight: 1.2,
             textShadow: s.src ? '0 1px 8px rgba(0,0,0,0.4)' : 'none',
           }}>
             {s.country} · {s.site}
@@ -154,14 +202,15 @@ function Lightbox({ slides, idx, setIdx, onClose }) {
       {n > 1 && <button aria-label="다음 사진" onClick={(e) => { e.stopPropagation(); setIdx((i) => (i + 1) % n) }} style={{ ...navBtn, right: 20 }}><Arrow dir="next" /></button>}
       <figure onClick={(e) => e.stopPropagation()} style={{ margin: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'default' }}>
         <img src={s.src} alt={`${s.country} ${s.site}`} style={{
-          maxWidth: '88vw', maxHeight: '80vh', objectFit: 'contain',
+          maxWidth: '88vw', maxHeight: '78vh', objectFit: 'contain',
           borderRadius: 8, boxShadow: '0 16px 50px rgba(0,0,0,0.55)',
         }} />
-        <figcaption style={{ marginTop: 16, textAlign: 'center' }}>
+        <figcaption style={{ marginTop: 16, textAlign: 'center', maxWidth: '88vw' }}>
           <span style={{ display: 'inline-block', fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#fff', background: s.color, padding: '3px 8px', borderRadius: 4, marginBottom: 8 }}>{s.activity}</span>
           <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 18, color: '#fff', margin: 0 }}>{s.country} · {s.site}</p>
+          {s.scene && <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'rgba(255,255,255,0.7)', margin: '6px 0 0' }}>{s.scene}</p>}
           {s.credit && <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, color: 'rgba(255,255,255,0.5)', margin: '6px 0 0' }}>{s.credit}</p>}
-          {n > 1 && <p className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '8px 0 0' }}>{idx + 1} / {n}</p>}
+          <p className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '8px 0 0' }}>{idx + 1} / {n}</p>
         </figcaption>
       </figure>
     </div>
@@ -172,25 +221,16 @@ export default function GallerySection() {
   const isMobile = useIsMobile()
   const [index, setIndex] = useState(0)
   const [zoomIdx, setZoomIdx] = useState(null)
-  const total = SLIDES.length
+  const total = CAROUSEL.length
   const go = (i) => setIndex((i + total) % total)
 
   const navBtn = {
-    position: 'absolute',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: 44,
-    height: 44,
-    borderRadius: '50%',
-    background: 'rgba(255,255,255,0.92)',
-    border: '1px solid var(--field-200)',
+    position: 'absolute', top: '50%', transform: 'translateY(-50%)',
+    width: 44, height: 44, borderRadius: '50%',
+    background: 'rgba(255,255,255,0.92)', border: '1px solid var(--field-200)',
     boxShadow: '0 2px 12px rgba(17,18,34,0.12)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
-    color: 'var(--midnight)',
-    zIndex: 5,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    cursor: 'pointer', color: 'var(--midnight)', zIndex: 5,
   }
 
   return (
@@ -210,10 +250,10 @@ export default function GallerySection() {
           </div>
         </div>
 
-        {/* Carousel */}
+        {/* Carousel — 국가별 대표 1컷 */}
         <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--field-200)', background: 'var(--field-50)' }}>
           <div style={{ display: 'flex', transform: `translateX(-${index * 100}%)`, transition: 'transform 0.45s cubic-bezier(0.4,0,0.2,1)' }}>
-            {SLIDES.map((s) => <Slide key={s.pbas} s={s} onOpen={(slide) => setZoomIdx(PHOTO_SLIDES.indexOf(slide))} />)}
+            {CAROUSEL.map((s) => <Slide key={s.src || `ph-${s.country}`} s={s} onOpen={(slide) => setZoomIdx(PHOTOS.indexOf(slide))} />)}
           </div>
 
           {/* Prev / Next */}
@@ -222,25 +262,22 @@ export default function GallerySection() {
         </div>
 
         {/* Controls: counter + dots */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 20, gap: 16, flexWrap: 'wrap' }}>
           <p className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 700, color: 'var(--midnight)', margin: 0 }}>
             <span style={{ color: 'var(--orange)' }}>{String(index + 1).padStart(2, '0')}</span>
             <span style={{ color: 'var(--field-300)', margin: '0 6px' }}>/</span>
             <span style={{ color: 'var(--grey-500)' }}>{String(total).padStart(2, '0')}</span>
+            <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 500, fontSize: 12, color: 'var(--grey-500)', marginLeft: 10 }}>국가</span>
           </p>
-          <div style={{ display: 'flex', gap: 8 }}>
-            {SLIDES.map((s, i) => (
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+            {CAROUSEL.map((s, i) => (
               <button
-                key={s.pbas}
-                aria-label={`${i + 1}번 슬라이드`}
+                key={s.src || `dot-${s.country}`}
+                aria-label={`${s.country} 슬라이드`}
                 onClick={() => go(i)}
                 style={{
-                  width: i === index ? 28 : 8,
-                  height: 8,
-                  borderRadius: 999,
-                  border: 'none',
-                  padding: 0,
-                  cursor: 'pointer',
+                  width: i === index ? 28 : 8, height: 8, borderRadius: 999,
+                  border: 'none', padding: 0, cursor: 'pointer',
                   background: i === index ? 'var(--orange)' : 'var(--field-300)',
                   transition: 'width 0.3s, background 0.3s',
                 }}
@@ -249,62 +286,16 @@ export default function GallerySection() {
           </div>
         </div>
 
-        {/* Thumbnail strip */}
-        <div style={{ display: 'grid', gridTemplateColumns: `repeat(${isMobile ? 4 : total}, 1fr)`, gap: 8, marginTop: 16 }}>
-          {SLIDES.map((s, i) => (
-            <button
-              key={s.pbas}
-              onClick={() => go(i)}
-              style={{
-                position: 'relative',
-                aspectRatio: '16/10',
-                borderRadius: 8,
-                overflow: 'hidden',
-                cursor: 'pointer',
-                padding: 0,
-                background: 'var(--field-50)',
-                border: i === index ? `2px solid ${s.color}` : '1px solid var(--field-200)',
-                opacity: i === index ? 1 : 0.6,
-                transition: 'opacity 0.2s',
-              }}
-              onMouseEnter={(e) => { if (i !== index) e.currentTarget.style.opacity = '1' }}
-              onMouseLeave={(e) => { if (i !== index) e.currentTarget.style.opacity = '0.6' }}
-            >
-              {s.src ? (
-                <img src={s.src} alt={s.country} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-              ) : (
-                <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--field-300)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                    <circle cx="8.5" cy="8.5" r="1.5" />
-                    <polyline points="21 15 16 10 5 21" />
-                  </svg>
-                </div>
-              )}
-              <span lang="ko" style={{
-                position: 'absolute',
-                left: 0, right: 0, bottom: 0,
-                fontFamily: 'var(--font-kr)',
-                fontSize: 9,
-                fontWeight: 700,
-                color: '#fff',
-                background: 'rgba(17,18,34,0.55)',
-                padding: '3px 4px',
-                lineHeight: 1.2,
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}>
-                {s.country}
-              </span>
-            </button>
-          ))}
-        </div>
-
-        {/* 사진 추가 방법은 파일 상단 주석 참고 — 외부 공개판에는 안내를 표시하지 않음 */}
-
-        {zoomIdx !== null && <Lightbox slides={PHOTO_SLIDES} idx={zoomIdx} setIdx={setZoomIdx} onClose={() => setZoomIdx(null)} />}
+        {/* Hint — 전체 사진 안내 */}
+        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-600)', margin: '16px 0 0', lineHeight: 1.6 }}>
+          국가별 <strong style={{ color: 'var(--midnight)' }}>대표 사진 {total}컷</strong>입니다. 사진을 클릭하면 전체 <strong style={{ color: 'var(--orange)' }}>{PHOTOS.length}장</strong>을 지역·활동과 함께 좌우로 넘겨볼 수 있습니다.
+          <span style={{ color: 'var(--grey-500)' }}> (콜롬비아·미얀마·차드는 현장 사진 확보 예정)</span>
+        </p>
       </div>
+
+      {zoomIdx !== null && (
+        <Lightbox slides={PHOTOS} idx={zoomIdx} setIdx={setZoomIdx} onClose={() => setZoomIdx(null)} />
+      )}
     </section>
   )
 }

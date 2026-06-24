@@ -458,7 +458,7 @@ export const GLOBAL_KPIS = {
     foodActualUSD: 16038579, // 식량 상품가치 (USD)
     cashActualKRW: 6790954000, // 현금/교환권 실적 (원)
     cashPct: 63.4, // 계획 대비
-    cashActualUSD: 5105980, // 현금/교환권 실적 (USD)
+    cashActualUSD: 5105981, // 현금/교환권 실적 (USD)
     nutritionKg: 998110, // 영양실조 치료식 (kg)
   },
   // 월드비전이 WFP 협력 파트너로서 전달·운영한 사업 전체 규모 (USD)
@@ -499,9 +499,9 @@ export const PROJECT_NARRATIVES = {
   },
   'chad-farchana': {
     context:
-      '차드 동부 6개 주의 학생 영양을 지원하는 긴급학교급식(ESF) 현금이체 사업입니다.',
+      '차드 동부 6개 주의 학생 영양을 지원하는 긴급 학교급식(Emergency School Feeding) 현금 배분 사업입니다.',
     result:
-      '2024~2025 학년도 현금이체를 누적 93.7% 집행했습니다(계획 6개월 중 현장 5개월 실시).',
+      '2024~2025 학년도 현금 배분을 누적 93.7% 집행했습니다(계획 6개월 중 현장 5개월 실시).',
   },
   'colombia-valledelcauca': {
     context:
