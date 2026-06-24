@@ -83,7 +83,7 @@ function Footer() {
             </div>
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
               2025 글로벌 식량위기 대응사업 (다자기구협력사업)<br />
-              월드비전 긴급구호팀
+              월드비전 인도적지원팀
             </p>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', margin: '16px 0 0' }}>
 Result Report · 2025
