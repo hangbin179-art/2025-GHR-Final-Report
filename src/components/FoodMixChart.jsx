@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import useIsMobile from '../lib/useIsMobile.js'
 
 // 2025년 배분 식량 종류(톤). 출처: 사업 식량 배분 실적표(영양치료식 포함).
@@ -32,12 +33,15 @@ function seg(c, rO, rI, s, e) {
 
 export default function FoodMixChart() {
   const isMobile = useIsMobile()
+  const [active, setActive] = useState(null)
   const C = 115, RO = 105, RI = 66
   let acc = 0
   const segs = FOOD.map((d) => {
-    const s = (acc / TOTAL) * 360
+    const start = (acc / TOTAL) * 360
     acc += d.t
-    return { ...d, path: seg(C, RO, RI, s, (acc / TOTAL) * 360), pct: (d.t / TOTAL) * 100 }
+    const end = (acc / TOTAL) * 360
+    const ang = (((start + end) / 2 - 90) * Math.PI) / 180
+    return { ...d, path: seg(C, RO, RI, start, end), pct: (d.t / TOTAL) * 100, dx: 6 * Math.cos(ang), dy: 6 * Math.sin(ang) }
   })
 
   return (
@@ -47,14 +51,43 @@ export default function FoodMixChart() {
 
         {/* Donut + legend */}
         <div>
-          <div style={{ width: '100%', maxWidth: 260, margin: '0 auto' }}>
-            <svg viewBox="0 0 230 230" style={{ width: '100%', height: 'auto', display: 'block' }}>
-              {segs.map((s) => (
-                <path key={s.name} d={s.path} fill={s.color} stroke="#fff" strokeWidth="2" />
+          <div style={{ position: 'relative', width: '100%', maxWidth: 260, margin: '0 auto' }}>
+            <svg viewBox="0 0 230 230" style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible' }}>
+              {segs.map((s, i) => (
+                <path
+                  key={s.name}
+                  d={s.path}
+                  fill={s.color}
+                  stroke="#fff"
+                  strokeWidth={active === i ? 2.5 : 2}
+                  onMouseEnter={() => setActive(i)}
+                  onMouseLeave={() => setActive(null)}
+                  style={{
+                    cursor: 'pointer',
+                    opacity: active === null || active === i ? 1 : 0.34,
+                    transform: active === i ? `translate(${s.dx}px, ${s.dy}px)` : undefined,
+                    transition: 'opacity 0.2s ease, transform 0.2s ease',
+                  }}
+                />
               ))}
-              <text x={C} y={C - 4} textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif" fontSize="34" fontWeight="900" fill="var(--midnight)">2025</text>
-              <text x={C} y={C + 19} textAnchor="middle" fontFamily="var(--font-kr)" fontSize="12" fontWeight="700" fill="var(--grey-600)">배분 식량 구성</text>
             </svg>
+            {/* 가운데 표시 — 호버 시 해당 품목 톤·%, 평소엔 2025 */}
+            <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', textAlign: 'center', padding: '0 20%' }}>
+              {active === null ? (
+                <>
+                  <span className="num" style={{ fontSize: 34, color: 'var(--midnight)', lineHeight: 1 }}>2025</span>
+                  <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', marginTop: 4 }}>배분 식량 구성</span>
+                </>
+              ) : (
+                <>
+                  <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12.5, fontWeight: 700, color: 'var(--grey-700)', lineHeight: 1.15 }}>{segs[active].name}</span>
+                  <span className="num tnum" style={{ fontSize: 24, color: segs[active].color, lineHeight: 1.05, marginTop: 3 }}>
+                    {segs[active].t.toLocaleString()}<span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-500)', marginLeft: 2 }}>톤</span>
+                  </span>
+                  <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 14, fontWeight: 800, color: segs[active].color, marginTop: 3 }}>{segs[active].pct.toFixed(1)}%</span>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Legend — 이름 · 무게 · 비율 */}
@@ -64,10 +97,15 @@ export default function FoodMixChart() {
               <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 10, color: 'var(--grey-500)' }}>톤 · 비율</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '5px 22px' }}>
-              {segs.map((d) => (
-                <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                  <span style={{ width: 10, height: 10, borderRadius: 2, background: d.color, flexShrink: 0 }} />
-                  <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-700)', flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{d.name}</span>
+              {segs.map((d, i) => (
+                <div
+                  key={d.name}
+                  onMouseEnter={() => setActive(i)}
+                  onMouseLeave={() => setActive(null)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', padding: '2px 6px', margin: '0 -6px', borderRadius: 5, background: active === i ? 'var(--field-50)' : 'transparent', transition: 'background 0.15s ease' }}
+                >
+                  <span style={{ width: 10, height: 10, borderRadius: 2, background: d.color, flexShrink: 0, boxShadow: active === i ? `0 0 0 3px ${d.color}33` : 'none', transition: 'box-shadow 0.15s' }} />
+                  <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: active === i ? 'var(--midnight)' : 'var(--grey-700)', fontWeight: active === i ? 700 : 400, flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{d.name}</span>
                   <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 11.5, fontWeight: 700, color: 'var(--grey-600)', textAlign: 'right', flexShrink: 0 }}>{d.t.toLocaleString()}<span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 400, color: 'var(--grey-500)', fontSize: 10 }}>톤</span></span>
                   <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 11.5, fontWeight: 700, color: d.color, width: 42, textAlign: 'right', flexShrink: 0 }}>{d.pct.toFixed(1)}%</span>
                 </div>

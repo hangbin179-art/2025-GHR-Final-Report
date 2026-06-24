@@ -123,28 +123,85 @@ function header(s, eyebrow, title) {
   s.addText('치료식 무게는 식량 배분량에 포함된 부분집합입니다.  ·  환율 1,330원/USD  ·  월드비전 기여분 누적 기준.', { x: 0.7, y: 6.85, w: 12, h: 0.3, fontFace: KR, fontSize: 10, italic: true, color: G5 })
 }
 
-// ---------- Slide 5 — 03 핵심 활동 5종 ----------
-{
+// ---------- Slides — 03 핵심 활동 (활동별 1장, 중간보고서 설명 반영) ----------
+const ACTIVITIES = [
+  {
+    c: ORANGE, en: 'In-kind Food Distribution', name: '일반식량 배분',
+    lead: '극심한 식량난을 겪는 취약계층에게 정기적으로 현물 식량을 배분합니다.',
+    points: [
+      '1인 최소 필요 열량 2,100kcal 기준으로, 가족 구성원 수에 따라 지급합니다.',
+      '사업 지역에 따라 수수·콩·옥수수·식용유 등 배분하는 식량 종류가 달라집니다.',
+      '시장 접근이 어렵거나 식량 공급이 끊긴 긴급 상황에 우선 적용하는 방식입니다.',
+    ],
+    steps: ['식량 운송', '보관·검수', '수혜자 확인', '정기 배분'],
+    statBig: '2,100', statUnit: 'kcal', statLabel: '1인 1일 최소 필요 열량 기준',
+  },
+  {
+    c: TEAL, en: 'Cash & Voucher Assistance', name: '현금·교환권 배분',
+    lead: '시장 기능이 갖춰진 지역에서 현금·교환권을 지급해 수혜자가 직접 식량을 구매하게 합니다.',
+    points: [
+      '은행·모바일 계좌 이체 또는 현금으로 직접 지급합니다.',
+      '운송·보관비를 줄여 효율적이고, 수혜자가 직접 고르며 자존감도 높아집니다.',
+      '현지에 식량을 살 수 있는 시장 환경이 갖춰진 경우에만 활용합니다.',
+      "'Cash for Work' — 산림 조성·농경지 개간·도로 보수 등 지역사회 복구에 참여한 대가로 현금을 지급합니다.",
+    ],
+    steps: ['수혜자 확인', '현금·교환권 수령', '직접 식량 구매'],
+    statBig: '효율+효과', statUnit: '', statLabel: '비용 절감 · 수혜자 존엄성',
+  },
+  {
+    c: RED, en: 'Nutrition Treatment', name: '영양 치료식',
+    lead: '5세 미만 아동·임산부·수유부를 대상으로 영양실조를 진단하고 치료합니다.',
+    points: [
+      '상완둘레 측정 등으로 아동·성인의 영양 상태를 진단합니다.',
+      '상태에 따라 입원·통원 치료, 영양 보조식(플럼피넛 등)을 지급합니다.',
+      '마을 영양 자원봉사자·어머니 자조그룹과 함께 추적 관리합니다.',
+    ],
+    steps: ['영양 상태 진단', '치료 방식 결정', '치료식·보조식 지급'],
+    statBig: '998.1', statUnit: '톤', statLabel: '영양 치료식 누계 배분 (식량 중)',
+  },
+  {
+    c: AMBER, en: 'School Feeding', name: '학교 급식',
+    lead: '학교에 출석하는 아동에게 정기적으로 급식을 제공해 영양과 출석률을 함께 높입니다.',
+    points: [
+      '아동 성장에 필요한 필수 영양소 섭취를 지원합니다.',
+      '학교 내 조리시설에서 직접 조리해 학생에게 배식합니다.',
+      '교내 텃밭 조성·지역 식재료 조달로 일자리와 지역경제까지 연결됩니다.',
+    ],
+    steps: ['식사 준비·조리', '학생 배식', '텃밭·식재료 수급'],
+    statBig: '+9%', statUnit: '', statLabel: '급식 시행 후 학교 등록률 향상',
+  },
+  {
+    c: GREEN, en: 'Livelihood & Resilience', name: '생계 역량 강화',
+    lead: '다시 식량위기를 겪지 않도록 주민 주도의 생계 회복력을 강화합니다.',
+    points: [
+      '기후변화 적응 종자 지원과 농업 기술 훈련을 제공합니다.',
+      '농업보험으로 흉작이 들어도 생계수단을 확보합니다.',
+      '저축 그룹 — 낮은 이율·높은 접근성, 이자는 구성원에게 재배분되어 의료·교육·투자에 자유롭게 씁니다.',
+    ],
+    steps: ['저축 그룹 형성', '종자·기술·보험 지원', '소득·자본 형성'],
+    statBig: '자립', statUnit: '', statLabel: '주민 주도 · 역량 강화',
+  },
+]
+ACTIVITIES.forEach((a, idx) => {
   const s = pres.addSlide(); s.background = { color: WHITE }
-  header(s, '03  WHAT', '핵심 활동')
-  const acts = [
-    [ORANGE, '일반식량 배분', '분쟁·기후로 식량을 잃은 가정에 수수·콩·옥수수 등 현물 식량을 정기 배분', '1인 2,100kcal 기준'],
-    [TEAL, '현금·교환권', '시장 기능이 있는 지역에 현금·바우처를 지급해 수혜자가 직접 식량 구매', '효율 + 존엄성'],
-    [RED, '영양 치료식', '5세 미만 아동·임산부·수유부의 영양실조를 진단·치료 (플럼피넛 등 즉석 치료식)', '998.1톤'],
-    [AMBER, '학교 급식', '출석 아동에게 급식을 제공해 영양과 출석률을 함께 향상, 텃밭·지역조달 병행', '등록률 +9%'],
-    [GREEN, '생계 역량 강화', '마을저축그룹·작물보험·기후스마트농업으로 주민 주도의 자립 기반 마련', '자립 지원'],
-  ]
-  const y0 = 1.75, rh = 1.0
-  acts.forEach((a, i) => {
-    const y = y0 + i * rh
-    s.addShape(pres.shapes.OVAL, { x: 0.7, y: y + 0.12, w: 0.62, h: 0.62, fill: { color: a[0] } })
-    s.addText(String(i + 1), { x: 0.7, y: y + 0.12, w: 0.62, h: 0.62, align: 'center', valign: 'middle', fontFace: KR, fontSize: 22, bold: true, color: WHITE })
-    s.addText(a[1], { x: 1.55, y: y + 0.06, w: 3.3, h: 0.4, fontFace: KR, fontSize: 16, bold: true, color: MID })
-    s.addText(a[2], { x: 1.55, y: y + 0.46, w: 8.3, h: 0.5, fontFace: KR, fontSize: 12.5, color: G6 })
-    s.addText(a[3], { x: 10.0, y: y + 0.18, w: 2.65, h: 0.5, align: 'right', fontFace: KR, fontSize: 15, bold: true, color: a[0], valign: 'middle' })
-    if (i < acts.length - 1) s.addShape(pres.shapes.LINE, { x: 1.55, y: y + rh - 0.02, w: 11.1, h: 0, line: { color: LINE, width: 0.75 } })
+  header(s, `03  WHAT  ·  핵심 활동  ${idx + 1} / 5`, a.name)
+  s.addText(a.en, { x: 0.7, y: 1.45, w: 9, h: 0.32, fontFace: 'Arial', fontSize: 13, bold: true, color: a.c })
+  s.addText(a.lead, { x: 0.7, y: 1.98, w: 7.5, h: 0.85, fontFace: KR, fontSize: 16, bold: true, color: MID, lineSpacingMultiple: 1.15, valign: 'top' })
+  s.addText(a.points.map((p) => ({ text: p, options: { bullet: true, breakLine: true, paraSpaceAfter: 9 } })),
+    { x: 0.74, y: 3.0, w: 7.5, h: 2.6, fontFace: KR, fontSize: 13.5, color: G6, lineSpacingMultiple: 1.12, valign: 'top' })
+  s.addText('사업 형태', { x: 0.7, y: 5.78, w: 3, h: 0.3, fontFace: KR, fontSize: 12, bold: true, color: G6 })
+  const sw = 2.5, sgap = 0.5, sy = 6.18, sx0 = 0.7
+  a.steps.forEach((st, i) => {
+    const sx = sx0 + i * (sw + sgap)
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: sx, y: sy, w: sw, h: 0.6, fill: { color: FIELD }, line: { color: LINE, width: 1 }, rectRadius: 0.08 })
+    s.addText(st, { x: sx, y: sy, w: sw, h: 0.6, align: 'center', valign: 'middle', fontFace: KR, fontSize: 12, bold: true, color: MID })
+    if (i < a.steps.length - 1) s.addText('›', { x: sx + sw - 0.02, y: sy, w: sgap + 0.04, h: 0.6, align: 'center', valign: 'middle', fontFace: 'Arial', fontSize: 18, bold: true, color: a.c })
   })
-}
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.6, y: 1.98, w: 4.03, h: 3.55, fill: { color: a.c }, rectRadius: 0.1, shadow: shadow() })
+  const statText = a.statUnit ? `${a.statBig} ${a.statUnit}` : a.statBig
+  s.addText(statText, { x: 8.78, y: 2.7, w: 3.67, h: 1.25, align: 'center', valign: 'middle', fontFace: KR, fontSize: statText.length > 6 ? 30 : 48, bold: true, color: WHITE })
+  s.addText(a.statLabel, { x: 8.85, y: 4.32, w: 3.53, h: 0.95, align: 'center', fontFace: KR, fontSize: 13, color: 'F7F7F7', lineSpacingMultiple: 1.15 })
+})
 
 // ---------- Slide 6 — 배분 식량 구성 (도넛) ----------
 {
@@ -181,7 +238,7 @@ function header(s, eyebrow, title) {
   s.addText('25.6배', { x: 1.0, y: 2.7, w: 5.1, h: 1.4, fontFace: KR, fontSize: 80, bold: true, color: ORANGE })
   s.addText([
     { text: '한국 기여 12.9억원이', options: { breakLine: true } },
-    { text: 'WFP 다자협력 사업 수입 $24.8M (≈330억원)', options: { breakLine: true, bold: true, color: WHITE } },
+    { text: 'WFP 다자협력 총 사업비 $24.8M (≈330억원)', options: { breakLine: true, bold: true, color: WHITE } },
     { text: '으로 확장되었습니다.', options: {} },
   ], { x: 1.05, y: 4.35, w: 5.0, h: 1.2, fontFace: KR, fontSize: 13, color: 'CFCFCF', lineSpacingMultiple: 1.1 })
   // 집행률 막대
@@ -241,6 +298,11 @@ function header(s, eyebrow, title) {
   s.addText('WORLD VISION  ✕  WFP   ·   2025 글로벌 식량위기 대응사업', { x: 0.8, y: 6.95, w: 11.7, h: 0.35, fontFace: KR, fontSize: 11, bold: true, color: ORANGE, charSpacing: 1 })
 }
 
-pres.writeFile({ fileName: 'C:/dev/food-crisis-dashboard/reports/2025_글로벌식량위기대응_결과보고.pptx' })
+const OUT = 'C:/dev/food-crisis-dashboard/reports/2025_글로벌식량위기대응_결과보고.pptx'
+pres.writeFile({ fileName: OUT })
   .then((f) => console.log('WROTE', f))
-  .catch((e) => { console.error('ERR', e); process.exit(1) })
+  .catch(() => {
+    // 기존 파일이 PowerPoint에 열려 있어 잠긴 경우 _v2 로 저장
+    const ALT = OUT.replace(/\.pptx$/, '_v2.pptx')
+    pres.writeFile({ fileName: ALT }).then((f) => console.log('WROTE_ALT', f)).catch((e2) => { console.error('ERR', e2); process.exit(1) })
+  })
