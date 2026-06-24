@@ -14,14 +14,19 @@ const TEAL = '#0E7C7B'
  *   src 가 null 이면 자리표시자(placeholder)가 표시됩니다.
  */
 const SLIDES = [
-  { pbas: '223847', country: '콩고민주공화국', site: '남부 키부',        activity: '일반식량 배분',      color: ORANGE, src: '/gallery/drc-southkivu.jpg' },
-  { pbas: '223753', country: '남수단',         site: '주바·얌비오',      activity: '학교 텃밭 · 급식',   color: AMBER,  src: null },
-  { pbas: '223864', country: '케냐',           site: '마쿠에니·키투이',  activity: '생계 역량 강화',     color: GREEN,  src: null },
-  { pbas: '223707', country: '에티오피아',     site: '티그라이·아파르',  activity: '영양 치료식',        color: RED,    src: '/gallery/ethiopia-tigray.jpg' },
-  { pbas: '223748', country: '방글라데시',     site: '콕스바자르',       activity: '현금 · 바우처',      color: TEAL,   src: '/gallery/bangladesh-coxsbazar.jpg' },
-  { pbas: '223999', country: '중앙아프리카공화국', site: '부아르·방가수', activity: '생계 역량 강화 및 자산 조성 기회 제공', color: GREEN,  src: null },
-  { pbas: '223255', country: '아프가니스탄',   site: '고르·바드기스',    activity: '식량 배분',          color: ORANGE, src: '/gallery/afghanistan-ghor.jpg' },
-  { pbas: '223711', country: '수단',           site: '남다르푸르',       activity: '통합 식량지원',      color: ORANGE, src: null },
+  { pbas: '223847', country: '콩고민주공화국',     site: '남부 키부',        activity: '일반식량 배분',      color: ORANGE, src: '/gallery/drc-southkivu.jpg' },
+  { pbas: '223711', country: '수단',               site: '남다르푸르',       activity: '통합 식량지원',      color: ORANGE, src: null },
+  { pbas: '223255', country: '아프가니스탄',       site: '고르·바드기스',    activity: '식량 배분',          color: ORANGE, src: '/gallery/afghanistan-ghor.jpg' },
+  { pbas: '223707', country: '에티오피아',         site: '티그라이·아파르',  activity: '영양 치료식',        color: RED,    src: '/gallery/ethiopia-tigray.jpg' },
+  { pbas: '223766', country: '우간다',             site: '비디비디·로불레',  activity: '일반식량 배분',      color: ORANGE, src: null },
+  { pbas: '223806', country: '베네수엘라',         site: '줄리아·팔콘',      activity: '학교 급식',          color: AMBER,  src: null },
+  { pbas: '223753', country: '남수단',             site: '주바·얌비오',      activity: '학교 텃밭 · 급식',   color: AMBER,  src: null },
+  { pbas: '223850', country: '차드',               site: '파르샤나 외',      activity: '긴급 학교급식',      color: AMBER,  src: null },
+  { pbas: '223748', country: '방글라데시',         site: '콕스바자르',       activity: '현금 · 바우처',      color: TEAL,   src: '/gallery/bangladesh-coxsbazar.jpg' },
+  { pbas: '223799', country: '콜롬비아',           site: '바예델카우카',     activity: '현금 · 바우처',      color: TEAL,   src: null },
+  { pbas: '223999', country: '중앙아프리카공화국', site: '부아르·방가수',    activity: '생계 역량 강화 및 자산 조성 기회 제공', color: GREEN,  src: null },
+  { pbas: '223982', country: '미얀마',             site: '북부 샨',          activity: '긴급 현금 지원',     color: TEAL,   src: null },
+  { pbas: '223864', country: '케냐',               site: '마쿠에니·키투이',  activity: '생계 역량 강화',     color: GREEN,  src: null },
 ]
 
 function Arrow({ dir }) {
