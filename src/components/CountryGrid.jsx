@@ -3,7 +3,7 @@ import { Wheat, Banknote, HeartPulse, GraduationCap, Sprout, X } from 'lucide-re
 import { AnimatedGradient } from './AnimatedGradient.jsx'
 import { usdToKrwLabel } from '../lib/format.js'
 import useIsMobile from '../lib/useIsMobile.js'
-import { COUNTRIES as RAW_COUNTRIES, countryTotals } from '../data/countries.js'
+import { COUNTRIES as RAW_COUNTRIES, countryTotals, countryFinance } from '../data/countries.js'
 
 const MAX_FOOD = 3797 // DRC total (3,088+632+76)
 const GREEN = '#2F7D4F'
@@ -20,10 +20,12 @@ const ACTIVITY_DEFS = [
 // 국가별 표시 데이터 — 단일 소스(countries.js)에서 파생 (카드 표시값 + 활동 + 사업 목록 + 계획 수혜자)
 const COUNTRIES = RAW_COUNTRIES.map((c) => {
   const t = countryTotals(c)
+  const f = countryFinance(c)
   return {
     name: c.ko, en: c.en, region: c.region,
     activities: c.activities, livelihood: c.livelihood, projects: c.projects,
     food: Math.round(t.food), cash: t.cash,
+    match: f.match, wfpIncome: f.wfpIncome, totalCost: f.total,
   }
 })
 
@@ -66,20 +68,38 @@ function Metric({ color, label, value }) {
   )
 }
 
-function ProjectRow({ p }) {
-  const empty = !(p.food > 0) && !(p.cash > 0) && !(p.ther > 0)
+// 재무 셀 — 한국 기여금 / WFP 기여금 / 총 사업비 (KRW 주, USD 보조)
+function FinanceCell({ label, krw, usd, color, emphasize }) {
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center', padding: '14px 0', borderBottom: '1px solid var(--field-200)' }}>
-      <div style={{ minWidth: 0 }}>
-        <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--midnight)' }}>{p.site}</span>
-        {p.title && <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-500)', marginTop: 2 }}>{p.title}</span>}
+    <div style={{ flex: 1, minWidth: 0, textAlign: 'center' }}>
+      <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, fontWeight: 700, color: 'var(--grey-600)', margin: 0, whiteSpace: 'nowrap' }}>{label}</p>
+      <p className="num tnum" style={{ fontSize: emphasize ? 21 : 17, fontWeight: emphasize ? 800 : 700, color: emphasize ? 'var(--midnight)' : color, margin: '5px 0 0', lineHeight: 1.1, whiteSpace: 'nowrap' }}>{krw}</p>
+      <p style={{ fontFamily: 'var(--font-en)', fontSize: 10, color: 'var(--grey-500)', margin: '2px 0 0' }}>{usd}</p>
+    </div>
+  )
+}
+
+function FinOp({ children }) {
+  return <span className="num" style={{ fontSize: 16, color: 'var(--field-300)', flex: '0 0 auto' }}>{children}</span>
+}
+
+function ProjectRow({ p }) {
+  // 분배 실적이 전무하지만 계획 물량이 있던 사업(예: 백나일 미진행)은 빨강, 그 외(생계 등)는 회색
+  const undelivered = !(p.food > 0) && !(p.cash > 0) && !(p.ther > 0) && p.plannedTons > 0
+  return (
+    <div style={{ padding: '14px 0', borderBottom: '1px solid var(--field-200)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center' }}>
+        <div style={{ minWidth: 0 }}>
+          <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--midnight)' }}>{p.site}</span>
+          {p.title && <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-500)', marginTop: 2 }}>{p.title}</span>}
+        </div>
+        <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'baseline' }}>
+          {p.food > 0 && <Metric color="#FF5515" label="식량" value={`${p.food.toLocaleString()}톤`} />}
+          {p.cash > 0 && <Metric color="#0E7C7B" label="현금" value={`${fmtCash(p.cash)} · ${usdToKrwLabel(p.cash)}`} />}
+          {p.ther > 0 && <Metric color="#C8102E" label="치료식" value={`${p.ther.toLocaleString()}톤`} />}
+        </div>
       </div>
-      <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'baseline' }}>
-        {p.food > 0 && <Metric color="#FF5515" label="식량" value={`${p.food.toLocaleString()}톤`} />}
-        {p.cash > 0 && <Metric color="#0E7C7B" label="현금" value={`${fmtCash(p.cash)} · ${usdToKrwLabel(p.cash)}`} />}
-        {p.ther > 0 && <Metric color="#C8102E" label="치료식" value={`${p.ther.toLocaleString()}톤`} />}
-        {p.note && <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontStyle: 'italic', color: empty ? '#C8102E' : 'var(--grey-500)' }}>{p.note}</span>}
-      </div>
+      {p.note && <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontStyle: 'italic', color: undelivered ? '#C8102E' : 'var(--grey-500)', margin: '8px 0 0', lineHeight: 1.5 }}>{p.note}</p>}
     </div>
   )
 }
@@ -236,6 +256,26 @@ export default function CountryGrid() {
           <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-600)', margin: '6px 0 0' }}>
             {country.region}
           </p>
+
+          {/* 재무 구조 — 한국 매칭 + WFP 기여 = 총 사업비 (배분액과 다름을 명시) */}
+          {country.totalCost > 0 && (() => {
+            const eok = (usd) => +(usd * 1330 / 1e8).toFixed(1)   // USD → 억원(소수1자리)
+            const m = eok(country.match), w = eok(country.wfpIncome), tot = +(m + w).toFixed(1)
+            return (
+            <div style={{ marginTop: 22, padding: isMobile ? '16px 14px' : '18px 22px', background: 'var(--field-50)', borderRadius: 10, border: '1px solid var(--field-200)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 14 }}>
+                <FinanceCell label="한국 기여금" krw={`${m.toFixed(1)}억원`} usd={fmtCash(country.match)} color="var(--orange)" />
+                <FinOp>+</FinOp>
+                <FinanceCell label="WFP 기여금" krw={`${w.toFixed(1)}억원`} usd={fmtCash(country.wfpIncome)} color="#0E7C7B" />
+                <FinOp>=</FinOp>
+                <FinanceCell label="총 사업비" krw={`${tot.toFixed(1)}억원`} usd={fmtCash(country.totalCost)} emphasize />
+              </div>
+              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '12px 0 0', lineHeight: 1.6, textAlign: 'center' }}>
+                한국 기여금이 WFP 기여금을 견인해 조성된 총 사업비입니다. 식량·현금 배분 외 영양·학교급식·생계·물류·운영비가 포함되어, 아래 배분 실적과 총 사업비는 차이가 있습니다.
+              </p>
+            </div>
+            )
+          })()}
 
           {/* 5대 활동 */}
           <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', margin: '24px 0 14px' }}>

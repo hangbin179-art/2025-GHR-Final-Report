@@ -109,8 +109,8 @@ Result Report · 2025
                 <dd style={{ margin: 0, color: 'var(--orange)' }}>{multiple(GLOBAL_KPIS.leverage)}</dd>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <dt style={{ color: 'rgba(255,255,255,0.4)' }}>WFP grant</dt>
-                <dd style={{ margin: 0, color: '#fff' }}>{krwThousandToUsd(GLOBAL_KPIS.wfpGrant)}</dd>
+                <dt style={{ color: 'rgba(255,255,255,0.4)' }}>WFP income (actual)</dt>
+                <dd style={{ margin: 0, color: '#fff' }}>{krwThousandToUsd(GLOBAL_KPIS.wfpActualIncome)}</dd>
               </div>
             </dl>
           </div>

@@ -118,10 +118,36 @@ export const COUNTRIES = [
     en: 'Kenya · Makueni, Kitui', region: '마쿠에니 · 키투이',
     activities: ['livelihood'],
     projects: [
-      { site: '마쿠에니 · 키투이 (VSLA · 작물보험)', siteEn: 'Makueni · Kitui', title: 'Sustainable Food Systems Project', lat: -1.80, lng: 37.60, food: 0, ther: 0, cash: 0, val: 0, beneficiaries: 64080, korea: 64080, plannedTons: 0, pbas: '223864', note: '배분 없는 생계 역량 강화 사업' },
+      { site: '마쿠에니 · 키투이 (VSLA · 작물보험)', siteEn: 'Makueni · Kitui', title: 'Sustainable Food Systems Project', lat: -1.80, lng: 37.60, food: 0, ther: 0, cash: 0, val: 0, beneficiaries: 64080, korea: 64080, plannedTons: 0, pbas: '223864', note: '저축그룹 운영비 및 가축 구입 등 생계 역량 강화 활동 사업비' },
     ],
   },
 ]
+
+// ─── 사업 재무보고 (USD) ──────────────────────────────────────
+// match = 한국(WV) 매칭금(자기부담) · wfpIncome = WFP 실제 수입 인식액(Actual Income to WVK)
+// 총 사업비 = match + wfpIncome. 출처: 사업 재무보고 표(2026-06). 배분 실적(food/cash/val)과는 별개.
+const FINANCE = {
+  '223255': { match: 29805,  wfpIncome: 1541046 },
+  '223748': { match: 10000,  wfpIncome: 1908676 },
+  '223999': { match: 21477,  wfpIncome: 134502  },
+  '223850': { match: 75000,  wfpIncome: 526717  },
+  '223799': { match: 71092,  wfpIncome: 1498389 },
+  '223796': { match: 20959,  wfpIncome: 1155857 },
+  '223847': { match: 72067,  wfpIncome: 4891122 },
+  '224041': { match: 30000,  wfpIncome: 419395  },
+  '223707': { match: 158468, wfpIncome: 2936901 },
+  '223864': { match: 23128,  wfpIncome: 145554  },
+  '223982': { match: 16248,  wfpIncome: 72795   },
+  '223756': { match: 75312,  wfpIncome: 1112107 },
+  '223758': { match: 12528,  wfpIncome: 29451   },
+  '223753': { match: 38715,  wfpIncome: 482356  },
+  '223745': { match: 18496,  wfpIncome: 151245  },
+  '223710': { match: 27362,  wfpIncome: 1210048 },
+  '223711': { match: 22047,  wfpIncome: 3163735 },
+  '223856': { match: 29210,  wfpIncome: 0       },
+  '223766': { match: 157554, wfpIncome: 1442610 },
+  '223806': { match: 60000,  wfpIncome: 2021955 },
+}
 
 // 국가 합계 (사업 단위 합산) — 식량·치료식은 소수 1자리로 정리
 export function countryTotals(c) {
@@ -147,6 +173,14 @@ export function countryPlanned(c) {
     }),
     { beneficiaries: 0, korea: 0, plannedTons: 0 }
   )
+}
+
+// 국가 재무 합계 — 사업별 match/wfpIncome 합산 → 한국 기여금·WFP 기여금·총 사업비(USD)
+export function countryFinance(c) {
+  return c.projects.reduce((a, p) => {
+    const f = FINANCE[p.pbas] || { match: 0, wfpIncome: 0 }
+    return { match: a.match + f.match, wfpIncome: a.wfpIncome + f.wfpIncome, total: a.total + f.match + f.wfpIncome }
+  }, { match: 0, wfpIncome: 0, total: 0 })
 }
 
 // 전체 사업 평탄화 (지도용) — 각 사업에 국가명 부착

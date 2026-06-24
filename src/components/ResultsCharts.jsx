@@ -6,13 +6,6 @@ const FOOD_PCT = 48.4   // 10,235 / 21,133
 const CASH_PCT = 47.7   // $5.1M / $10.7M
 const NUT_PCT  = 59.5
 
-const ACTIVITIES = [
-  { label: '일반식량 배분',    pct: 70.9, val: '$28.3M', krw: '376억원', color: 'var(--orange)'  },
-  { label: '현금 · 교환권',   pct: 20.2, val: '$8.1M',  krw: '108억원', color: '#0E7C7B'        },
-  { label: '영양 치료식',      pct: 6.3,  val: '$2.5M',  krw: '33억원',  color: '#C8102E'        },
-  { label: '학교급식 · 생계', pct: 2.6,  val: '$1.0M',  krw: '13억원',  color: '#F4B223'        },
-]
-
 export default function ResultsCharts() {
   const isMobile = useIsMobile()
   return (
@@ -27,7 +20,7 @@ export default function ResultsCharts() {
           </div>
           <div>
             <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '24ch' }}>
-              월드비전 1원이 WFP 41배를 움직였고,<br />그 돈은 다시 식탁으로 갔습니다.
+              월드비전 1원이 WFP 25.6배를 움직였고,<br />그 돈은 다시 식탁으로 갔습니다.
             </h2>
           </div>
         </div>
@@ -117,7 +110,7 @@ function LeverageFlow() {
 
         {/* Multiplier arrow */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2, padding: '0 2px', flexShrink: 0 }}>
-          <span className="num" style={{ fontSize: 22, color: 'var(--orange)', lineHeight: 1, letterSpacing: '-0.03em' }}>41×</span>
+          <span className="num" style={{ fontSize: 22, color: 'var(--orange)', lineHeight: 1, letterSpacing: '-0.03em' }}>25.6×</span>
           <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
             <path d="M0 5 H16 M11 1 L17 5 L11 9" stroke="var(--orange)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -147,51 +140,24 @@ function LeverageFlow() {
             letterSpacing: '-0.04em',
             userSelect: 'none',
             pointerEvents: 'none',
-          }}>41×</span>
+          }}>25.6×</span>
 
           <div style={{ position: 'relative' }}>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>
-              WFP Grant · 다자기구협력보조금
+              WFP 다자협력 사업 수입 · 실제 인식액
             </p>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, marginTop: 4 }}>
-              <p className="num tnum" style={{ fontSize: 44, color: '#fff', margin: 0, lineHeight: 0.9 }}>$39.9M</p>
-              <p style={{ fontFamily: 'var(--font-en)', fontSize: 13, color: 'rgba(255,255,255,0.7)', margin: 0 }}>≈ 530억원</p>
+              <p className="num tnum" style={{ fontSize: 44, color: '#fff', margin: 0, lineHeight: 0.9 }}>$24.8M</p>
+              <p style={{ fontFamily: 'var(--font-en)', fontSize: 13, color: 'rgba(255,255,255,0.7)', margin: 0 }}>≈ 330억원</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Activity breakdown bars */}
-      <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 20, marginBottom: 20 }}>
-        <p style={{ fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '0 0 14px' }}>
-          WFP Grant 활동별 배분
-        </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-          {ACTIVITIES.map(a => (
-            <div key={a.label} style={{ display: 'grid', gridTemplateColumns: isMobile ? '88px 1fr 36px 80px' : '140px 1fr 46px 104px', alignItems: 'center', gap: isMobile ? 8 : 12 }}>
-              <span lang="ko" style={{
-                fontFamily: 'var(--font-kr)',
-                fontSize: 12,
-                fontWeight: 600,
-                color: 'var(--midnight)',
-                textAlign: 'right',
-              }}>{a.label}</span>
-              <div style={{ height: 16, background: 'var(--field-200)', borderRadius: 3, overflow: 'hidden' }}>
-                <div style={{ width: `${a.pct}%`, height: '100%', background: a.color, borderRadius: 3 }} />
-              </div>
-              <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'var(--grey-600)', textAlign: 'right' }}>{a.pct}%</span>
-              <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, color: a.color, textAlign: 'right', lineHeight: 1.25 }}>
-                {a.val}
-                <span lang="ko" style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 10, fontWeight: 400, color: 'var(--grey-500)' }}>{a.krw}</span>
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, lineHeight: 1.7, color: 'var(--grey-600)', margin: 0, maxWidth: '78ch' }}>
-        유엔세계식량계획(WFP) 다자기구협력사업은 회원국 정부가 출연하는 보충 예산 시스템에 한국 정부·민간이 함께 참여하는 구조입니다.
-        월드비전이 투입한 1원이 WFP의 협력 보조금을 통해 약 41배로 확장되어 현장에 도달합니다.
+      <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, lineHeight: 1.7, color: 'var(--grey-600)', margin: 0, paddingTop: 20, borderTop: '1px solid var(--field-200)', maxWidth: '82ch' }}>
+        유엔세계식량계획(WFP) 다자기구협력사업은 회원국이 출연하는 자기부담금(매치)을 마중물로 WFP 보충 예산을 끌어와 대규모 사업으로 확장하는 구조입니다.
+        월드비전이 매칭으로 투입한 12.9억원은 실제 약 330억원의 사업 수입으로 집행되어, 한국 기여 대비 <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>평균 약 25.6배</strong>의 증대 효과를 거뒀습니다.
+        <span style={{ display: 'block', marginTop: 6, color: 'var(--grey-500)' }}>* 전체 실제 수입(약 330억원) ÷ 전체 매칭금(12.9억원) 기준. 계획(기대수입) 대비로는 약 41배.</span>
       </p>
     </div>
   )

@@ -442,9 +442,10 @@ export const GLOBAL_KPIS = {
   countries: 13,
   projects: 20,
   beneficiaries: 464295,
-  wvSupport: 1289391, // 천원  (≈ USD 969,468)
-  wfpGrant: 53025844, // 천원  (≈ USD 39,869,056)
-  leverage: 41, // WFP grant ÷ WV support
+  wvSupport: 1289391, // 천원  (≈ USD 969,468) — 한국(WV) 매칭금
+  wfpGrant: 53025844, // 천원  (≈ USD 39,869,056) — 계획/기대수입
+  wfpActualIncome: 33043129, // 천원 (≈ USD 24,844,458) — 실제 수입 인식액
+  leverage: 25.6, // 실제 수입(24.8M) ÷ 매칭(0.97M). 계획(기대수입) 기준은 41배.
   foodTons: 21133, // 계획 식량 (WV 기여분, 톤)
   foodValue: 37649968, // 천원 (계획)
   cashValue: 10705540, // 천원 (계획)

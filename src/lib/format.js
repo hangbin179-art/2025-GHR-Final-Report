@@ -89,8 +89,8 @@ export function pct(value) {
   return `${value.toFixed(1)}%`
 }
 
-/** leverage multiple, e.g. 41 -> "41배" */
+/** leverage multiple, e.g. 25.6 -> "25.6배", 41 -> "41배" */
 export function multiple(value) {
   if (value == null || Number.isNaN(value)) return '—'
-  return `${nf.format(Math.round(value))}배`
+  return `${Number.isInteger(value) ? nf.format(value) : value.toFixed(1)}배`
 }
