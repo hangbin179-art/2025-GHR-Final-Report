@@ -152,6 +152,9 @@ Final Report · 2025
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: 0 }}>
             © 2025 World Vision Korea · 2025 글로벌 식량위기 대응사업 결과보고 · 본 대시보드는 후원자 여러분께 사업 결과를 투명하게 보고하기 위해 제작되었습니다.
           </p>
+          <p lang="ko" style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: '6px 0 0', lineHeight: 1.6 }}>
+            © World Vision · 본 보고서 내 담긴 사진 및 영상에 대한 모든 저작권은 월드비전에 있으며, 무단 도용 및 배포를 금합니다.
+          </p>
         </div>
       </div>
     </footer>
