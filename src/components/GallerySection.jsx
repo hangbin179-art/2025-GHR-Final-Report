@@ -100,64 +100,60 @@ function Arrow({ dir }) {
   )
 }
 
-function Slide({ s, onOpen }) {
+// 국가별 미리보기 썸네일 카드 — 누르면 라이트박스로 크게
+function Thumb({ s, onOpen }) {
+  const [hover, setHover] = useState(false)
+  const clickable = !!s.src
   return (
-    <div onClick={s.src ? () => onOpen(s) : undefined} style={{ flex: '0 0 100%', position: 'relative', aspectRatio: '16/9', background: 'var(--field-50)', cursor: s.src ? 'zoom-in' : 'default' }}>
+    <div
+      onClick={clickable ? () => onOpen(s) : undefined}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        position: 'relative', aspectRatio: '4 / 3', borderRadius: 10, overflow: 'hidden',
+        border: '1px solid var(--field-200)', background: 'var(--field-50)',
+        cursor: clickable ? 'zoom-in' : 'default',
+        transform: hover && clickable ? 'translateY(-3px)' : 'none',
+        boxShadow: hover && clickable ? '0 10px 28px rgba(17,18,34,0.18)' : 'none',
+        transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+      }}
+    >
       {s.src ? (
-        <img src={s.src} alt={`${s.country} ${s.site}`} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        <img
+          src={s.src}
+          alt={`${s.country} ${s.site}`}
+          loading="lazy"
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transform: hover && clickable ? 'scale(1.06)' : 'none', transition: 'transform 0.4s ease' }}
+        />
       ) : (
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--field-300)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, padding: 8 }}>
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--field-300)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
             <circle cx="8.5" cy="8.5" r="1.5" />
             <polyline points="21 15 16 10 5 21" />
           </svg>
-          <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: 0 }}>
-            Photo Placeholder
-          </p>
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-500)', margin: 0 }}>
-            추후 현장 사진으로 교체 예정
-          </p>
+          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: 0, textAlign: 'center' }}>사진 준비 중</p>
         </div>
       )}
 
       {/* 확대 힌트 아이콘 */}
-      {s.src && (
-        <div style={{ position: 'absolute', top: 14, right: 14, width: 30, height: 30, borderRadius: '50%', background: 'rgba(17,18,34,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
+      {clickable && (
+        <div style={{ position: 'absolute', top: 10, right: 10, width: 26, height: 26, borderRadius: '50%', background: 'rgba(17,18,34,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
         </div>
       )}
 
       {/* Caption overlay */}
-      <div style={{
-        position: 'absolute',
-        left: 0, right: 0, bottom: 0,
-        padding: '40px 28px 24px',
-        background: s.src ? 'linear-gradient(to top, rgba(17,18,34,0.78), rgba(17,18,34,0))' : 'none',
-        display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: 'space-between',
-        gap: 16,
-      }}>
-        <div>
-          <span style={{
-            display: 'inline-block', fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700,
-            letterSpacing: '0.08em', textTransform: 'uppercase', color: '#fff', background: s.color,
-            padding: '3px 8px', borderRadius: 4, marginBottom: 10,
-          }}>
-            {s.activity}
-          </span>
-          <p lang="ko" style={{
-            fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 22,
-            color: s.src ? '#fff' : 'var(--midnight)', margin: 0, lineHeight: 1.2,
-            textShadow: s.src ? '0 1px 8px rgba(0,0,0,0.4)' : 'none',
-          }}>
-            {s.country} · {s.site}
-          </p>
-        </div>
-        {s.src && s.credit && (
-          <span style={{ fontFamily: 'var(--font-en)', fontSize: 10, color: 'rgba(255,255,255,0.65)', textShadow: '0 1px 3px rgba(0,0,0,0.5)', whiteSpace: 'nowrap', flexShrink: 0 }}>{s.credit}</span>
-        )}
+      <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '28px 12px 10px', background: s.src ? 'linear-gradient(to top, rgba(17,18,34,0.85), rgba(17,18,34,0))' : 'none' }}>
+        <span style={{ display: 'inline-block', fontFamily: 'var(--font-en)', fontSize: 9, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: '#fff', background: s.color, padding: '2px 6px', borderRadius: 3, marginBottom: 6 }}>
+          {s.activity}
+        </span>
+        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 14, color: s.src ? '#fff' : 'var(--midnight)', margin: 0, lineHeight: 1.25, textShadow: s.src ? '0 1px 6px rgba(0,0,0,0.5)' : 'none' }}>
+          {s.country}
+        </p>
+        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 500, fontSize: 11, color: s.src ? 'rgba(255,255,255,0.8)' : 'var(--grey-500)', margin: '1px 0 0', lineHeight: 1.2, textShadow: s.src ? '0 1px 4px rgba(0,0,0,0.5)' : 'none' }}>
+          {s.site}
+        </p>
       </div>
     </div>
   )
@@ -230,26 +226,15 @@ function Lightbox({ slides, idx, setIdx, onClose }) {
 
 export default function GallerySection() {
   const isMobile = useIsMobile()
-  const [index, setIndex] = useState(0)
   const [zoomIdx, setZoomIdx] = useState(null)
-  const total = CAROUSEL.length
-  const go = (i) => setIndex((i + total) % total)
-
-  const navBtn = {
-    position: 'absolute', top: '50%', transform: 'translateY(-50%)',
-    width: 44, height: 44, borderRadius: '50%',
-    background: 'rgba(255,255,255,0.92)', border: '1px solid var(--field-200)',
-    boxShadow: '0 2px 12px rgba(17,18,34,0.12)',
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    cursor: 'pointer', color: 'var(--midnight)', zIndex: 5,
-  }
+  const photoCount = CAROUSEL.filter((s) => s.src).length
 
   return (
     <section id="sec-gallery" style={{ background: '#fff', borderTop: '1px solid var(--field-200)', borderBottom: '1px solid var(--field-200)' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: isMobile ? '48px 20px' : '80px 32px' }}>
 
         {/* Section header */}
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '240px 1fr', gap: isMobile ? 16 : 48, marginBottom: 40 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '240px 1fr', gap: isMobile ? 16 : 48, marginBottom: 32 }}>
           <div>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--orange)', margin: 0 }}>05 — Gallery</p>
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--grey-600)', margin: '4px 0 0' }}>현장의 기록</p>
@@ -261,45 +246,16 @@ export default function GallerySection() {
           </div>
         </div>
 
-        {/* Carousel — 국가별 대표 1컷 */}
-        <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: '1px solid var(--field-200)', background: 'var(--field-50)' }}>
-          <div style={{ display: 'flex', transform: `translateX(-${index * 100}%)`, transition: 'transform 0.45s cubic-bezier(0.4,0,0.2,1)' }}>
-            {CAROUSEL.map((s) => <Slide key={s.src || `ph-${s.country}`} s={s} onOpen={(slide) => setZoomIdx(PHOTOS.indexOf(slide))} />)}
-          </div>
-
-          {/* Prev / Next */}
-          <button aria-label="이전" onClick={() => go(index - 1)} style={{ ...navBtn, left: 16 }}><Arrow dir="prev" /></button>
-          <button aria-label="다음" onClick={() => go(index + 1)} style={{ ...navBtn, right: 16 }}><Arrow dir="next" /></button>
-        </div>
-
-        {/* Controls: counter + dots */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 20, gap: 16, flexWrap: 'wrap' }}>
-          <p className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 700, color: 'var(--midnight)', margin: 0 }}>
-            <span style={{ color: 'var(--orange)' }}>{String(index + 1).padStart(2, '0')}</span>
-            <span style={{ color: 'var(--field-300)', margin: '0 6px' }}>/</span>
-            <span style={{ color: 'var(--grey-500)' }}>{String(total).padStart(2, '0')}</span>
-            <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 500, fontSize: 12, color: 'var(--grey-500)', marginLeft: 10 }}>국가</span>
-          </p>
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
-            {CAROUSEL.map((s, i) => (
-              <button
-                key={s.src || `dot-${s.country}`}
-                aria-label={`${s.country} 슬라이드`}
-                onClick={() => go(i)}
-                style={{
-                  width: i === index ? 28 : 8, height: 8, borderRadius: 999,
-                  border: 'none', padding: 0, cursor: 'pointer',
-                  background: i === index ? 'var(--orange)' : 'var(--field-300)',
-                  transition: 'width 0.3s, background 0.3s',
-                }}
-              />
-            ))}
-          </div>
+        {/* 국가별 미리보기 그리드 — 누르면 라이트박스로 크게 */}
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fill, minmax(220px, 1fr))', gap: isMobile ? 10 : 16 }}>
+          {CAROUSEL.map((s) => (
+            <Thumb key={s.src || `ph-${s.country}`} s={s} onOpen={(slide) => setZoomIdx(PHOTOS.indexOf(slide))} />
+          ))}
         </div>
 
         {/* Hint — 전체 사진 안내 */}
-        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-600)', margin: '16px 0 0', lineHeight: 1.6 }}>
-          국가별 <strong style={{ color: 'var(--midnight)' }}>대표 사진 {total}컷</strong>입니다. 사진을 클릭하면 전체 <strong style={{ color: 'var(--orange)' }}>{PHOTOS.length}장</strong>을 지역·활동과 함께 좌우로 넘겨볼 수 있습니다.
+        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-600)', margin: '20px 0 0', lineHeight: 1.6 }}>
+          국가별 <strong style={{ color: 'var(--midnight)' }}>대표 사진 {photoCount}컷</strong>입니다. 사진을 누르면 크게 보이고, 좌우 화살표·키보드로 전체 <strong style={{ color: 'var(--orange)' }}>{PHOTOS.length}장</strong>을 지역·활동과 함께 넘겨볼 수 있어요. 확대 상태에서는 스크롤로 세부를 살펴볼 수 있습니다.
           <span style={{ color: 'var(--grey-500)' }}> (콜롬비아·미얀마·차드는 현장 사진 확보 예정)</span>
         </p>
       </div>
