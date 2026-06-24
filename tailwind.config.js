@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    'C:/dev/food-crisis-dashboard/index.html',
-    'C:/dev/food-crisis-dashboard/src/**/*.{js,jsx}',
+    './index.html',
+    './src/**/*.{js,jsx}',
   ],
   theme: {
     extend: {
