@@ -19,8 +19,8 @@ export default function ResultsCharts() {
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--grey-600)', margin: '4px 0 0' }}>최종 성과</p>
           </div>
           <div>
-            <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '24ch' }}>
-              월드비전 1원이 WFP 25.6배를 움직였고,<br />그 돈은 다시 식탁으로 갔습니다.
+            <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '34ch' }}>
+              월드비전의 10,000원이 약 256,000원의 식량이 되어<br />식탁 위에 올라갔습니다.
             </h2>
           </div>
         </div>
@@ -93,7 +93,7 @@ function LeverageFlow() {
 
         {/* WV Korea — 1 unit (small) */}
         <div style={{
-          flex: '0 0 60px',
+          flex: '0 0 84px',
           background: 'var(--midnight)',
           borderRadius: 8,
           padding: '12px 10px',
@@ -101,8 +101,8 @@ function LeverageFlow() {
           flexDirection: 'column',
           justifyContent: 'flex-end',
         }}>
-          <p style={{ fontFamily: 'var(--font-en)', fontSize: 8, fontWeight: 700, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0, lineHeight: 1.4 }}>WV KR</p>
-          <p className="num" style={{ fontSize: 12, color: '#fff', margin: '4px 0 0', lineHeight: 1 }}>12.9억원</p>
+          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 9.5, fontWeight: 700, color: 'rgba(255,255,255,0.6)', margin: 0, lineHeight: 1.3, whiteSpace: 'nowrap' }}>월드비전</p>
+          <p className="num" style={{ fontSize: 13, color: '#fff', margin: '4px 0 0', lineHeight: 1, whiteSpace: 'nowrap' }}>12.9억원</p>
         </div>
 
         {/* Multiplier arrow */}
@@ -141,7 +141,7 @@ function LeverageFlow() {
 
           <div style={{ position: 'relative' }}>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>
-              WFP 다자협력 사업 수입 · 실제 인식액
+              WFP 다자협력 총 사업비
             </p>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, marginTop: 4 }}>
               <p className="num tnum" style={{ fontSize: 44, color: '#fff', margin: 0, lineHeight: 0.9 }}>$24.8M</p>
@@ -153,8 +153,8 @@ function LeverageFlow() {
 
       <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, lineHeight: 1.7, color: 'var(--grey-600)', margin: 0, paddingTop: 20, borderTop: '1px solid var(--field-200)', maxWidth: '82ch' }}>
         유엔세계식량계획(WFP) 다자기구협력사업은 회원국이 출연하는 자기부담금(매치)을 마중물로 WFP 보충 예산을 끌어와 대규모 사업으로 확장하는 구조입니다.
-        월드비전이 매칭으로 투입한 12.9억원은 실제 약 330억원의 사업 수입으로 집행되어, 한국 기여 대비 <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>평균 약 25.6배</strong>의 증대 효과를 거뒀습니다.
-        <span style={{ display: 'block', marginTop: 6, color: 'var(--grey-500)' }}>* 전체 실제 수입(약 330억원) ÷ 전체 매칭금(12.9억원) 기준. 계획(기대수입) 대비로는 약 41배.</span>
+        월드비전이 매칭으로 투입한 12.9억원은 실제 약 330억원 규모의 총 사업비로 집행되어, 한국 기여 대비 <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>평균 약 25.6배</strong>의 증대 효과를 거뒀습니다.
+        <span style={{ display: 'block', marginTop: 6, color: 'var(--grey-500)' }}>* 전체 총 사업비(약 330억원) ÷ 전체 매칭금(12.9억원) 기준. 계획 대비로는 약 41배.</span>
       </p>
     </div>
   )
