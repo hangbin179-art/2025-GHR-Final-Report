@@ -44,7 +44,7 @@ function header(s, eyebrow, title) {
     { label: '영양 치료식', num: '998.1', unit: '톤  (식량 중)', c: RED },
     { label: '현금·교환권', num: '$5.1M', unit: '≈ 68억원', c: TEAL },
     { label: '자금 레버리지', num: '25.6배', unit: '한국 기여 대비', c: ORANGE },
-    { label: '총 사업비', num: '$25.8M', unit: '≈ 343억원', c: MID },
+    { label: '총 사업비', num: '$24.8M', unit: '≈ 330억원', c: MID },
     { label: '사업 규모', num: '13개국', unit: '20개 사업', c: GREEN },
   ]
   const x0 = 0.7, y0 = 1.75, cw = 3.78, ch = 2.35, gx = 0.36, gy = 0.42
