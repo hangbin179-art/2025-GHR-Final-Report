@@ -1,0 +1,6 @@
+# 생성물·참고용 바이너리는 저장소에 올리지 않음 (build-deck.cjs로 재생성)
+*.pptx
+*.pdf
+~$*
+slide-*.jpg
+node_modules/
