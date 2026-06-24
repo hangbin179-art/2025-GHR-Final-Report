@@ -10,6 +10,7 @@ export default function ScrollExpandMedia({
   posterSrc,
   bgImageSrc,
   title,
+  midline,
   subtitle,
   scrollToExpand,
   children,
@@ -317,6 +318,23 @@ export default function ScrollExpandMedia({
                   >
                     {title}
                   </h2>
+                )}
+                {midline && (
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-kr)',
+                      fontWeight: 600,
+                      color: 'rgba(255,255,255,0.95)',
+                      fontSize: 'clamp(16px, 3.4vw, 30px)',
+                      letterSpacing: '-0.01em',
+                      lineHeight: 1.2,
+                      textShadow: '0 1px 16px rgba(0,0,0,0.55)',
+                      margin: 0,
+                      transform: `translateY(-${scrollProgress * 24}px)`,
+                    }}
+                  >
+                    {midline}
+                  </p>
                 )}
                 {subtitle && (
                   <p

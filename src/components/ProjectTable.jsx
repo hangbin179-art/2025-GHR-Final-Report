@@ -1,3 +1,5 @@
+import { usdToKrwLabel } from '../lib/format.js'
+
 // 국가별 집계 (사업 단위 합산) — 식량 배분량 내림차순, 현금 전용국 → 생계 사업 순
 const COUNTRY_ROWS = [
   { ko: '콩고민주공화국',     region: '남부키부 · 탕가니카 · 카사이',     food: 3797.0, foodVal: 6488497, cash: 0,       ther: 151.1 },
@@ -49,7 +51,7 @@ export default function ProjectTable() {
         borderBottom: '2px solid var(--midnight)',
       }}>
         <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, fontWeight: 700, letterSpacing: '0.02em', color: 'var(--midnight)', margin: 0 }}>
-          국가별 배분 현황 <span style={{ fontFamily: 'var(--font-en)', fontWeight: 700, color: 'var(--grey-500)', fontSize: 11, letterSpacing: '0.08em' }}>· COUNTRY BREAKDOWN</span>
+          국가별 배분 상세 <span style={{ fontFamily: 'var(--font-en)', fontWeight: 700, color: 'var(--grey-500)', fontSize: 11, letterSpacing: '0.08em' }}>· COUNTRY BREAKDOWN</span>
         </p>
         <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: 0 }}>
           13개국 · 20개 사업 누적 · 환율 1,330원/USD
@@ -97,9 +99,11 @@ export default function ProjectTable() {
               </div>
               <div className="tnum" style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'var(--font-en)', fontSize: 13, color: 'var(--grey-700)' }}>
                 {fmtUsd(r.foodVal) || dash}
+                {r.foodVal > 0 && <span style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 10, fontWeight: 400, color: 'var(--grey-500)', marginTop: 1 }}>{usdToKrwLabel(r.foodVal)}</span>}
               </div>
               <div className="tnum" style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 600, color: r.cash > 0 ? TEAL : 'var(--field-300)' }}>
                 {fmtUsd(r.cash) || dash}
+                {r.cash > 0 && <span style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 10, fontWeight: 400, color: 'var(--grey-500)', marginTop: 1 }}>{usdToKrwLabel(r.cash)}</span>}
               </div>
               <div className="tnum" style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 600, color: r.ther > 0 ? RED : 'var(--field-300)' }}>
                 {fmtTon(r.ther) || dash}
@@ -115,8 +119,14 @@ export default function ProjectTable() {
           합계 <span style={{ fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', color: 'rgba(255,255,255,0.55)', marginLeft: 4 }}>GRAND TOTAL</span>
         </div>
         <div className="num tnum" style={{ padding: '16px 14px', textAlign: 'right', fontSize: 16, color: '#fff' }}>{TOTAL.food.toLocaleString()}</div>
-        <div className="num tnum" style={{ padding: '16px 14px', textAlign: 'right', fontSize: 16, color: 'var(--orange)' }}>${(TOTAL.foodVal / 1000000).toFixed(2)}M</div>
-        <div className="num tnum" style={{ padding: '16px 14px', textAlign: 'right', fontSize: 16, color: '#4ABFBA' }}>${(TOTAL.cash / 1000000).toFixed(2)}M</div>
+        <div className="num tnum" style={{ padding: '16px 14px', textAlign: 'right', fontSize: 16, color: 'var(--orange)' }}>
+          ${(TOTAL.foodVal / 1000000).toFixed(2)}M
+          <span style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 10, fontWeight: 400, color: 'rgba(255,255,255,0.6)', marginTop: 1 }}>{usdToKrwLabel(TOTAL.foodVal)}</span>
+        </div>
+        <div className="num tnum" style={{ padding: '16px 14px', textAlign: 'right', fontSize: 16, color: '#4ABFBA' }}>
+          ${(TOTAL.cash / 1000000).toFixed(2)}M
+          <span style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 10, fontWeight: 400, color: 'rgba(255,255,255,0.6)', marginTop: 1 }}>{usdToKrwLabel(TOTAL.cash)}</span>
+        </div>
         <div className="num tnum" style={{ padding: '16px 14px', textAlign: 'right', fontSize: 16, color: '#FF8585' }}>{TOTAL.ther.toLocaleString()}</div>
       </div>
 

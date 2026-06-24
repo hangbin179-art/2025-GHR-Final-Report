@@ -99,6 +99,7 @@ export default function InterventionsSection() {
                 </p>
                 <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--field-200)' }}>
                   <p className="num tnum" style={{ fontSize: 32, color: 'var(--grey-700)', margin: 0 }}>$16.0M</p>
+                  <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-500)', margin: '4px 0 0' }}>≈ 213억원</p>
                   <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '6px 0 0' }}>
                     commodity value (USD)
                   </p>
@@ -137,6 +138,7 @@ export default function InterventionsSection() {
               </div>
               <div style={{ textAlign: 'right' }}>
                 <p className="num tnum" style={{ fontSize: 72, color: TEAL, margin: 0, lineHeight: 0.85 }}>$5.1M</p>
+                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-500)', margin: '6px 0 0' }}>≈ 68억원</p>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>
                   cash &amp; voucher (USD)
                 </p>

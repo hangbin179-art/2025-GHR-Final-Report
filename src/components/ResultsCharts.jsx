@@ -5,15 +5,15 @@ const CASH_PCT = 47.7   // $5.1M / $10.7M
 const NUT_PCT  = 59.5
 
 const ACTIVITIES = [
-  { label: '일반식량 배분',    pct: 70.9, val: '$28.3M', color: 'var(--orange)'  },
-  { label: '현금 · 교환권',   pct: 20.2, val: '$8.1M',  color: '#0E7C7B'        },
-  { label: '영양 치료식',      pct: 6.3,  val: '$2.5M',  color: '#C8102E'        },
-  { label: '학교급식 · 생계', pct: 2.6,  val: '$1.0M',  color: '#F4B223'        },
+  { label: '일반식량 배분',    pct: 70.9, val: '$28.3M', krw: '376억원', color: 'var(--orange)'  },
+  { label: '현금 · 교환권',   pct: 20.2, val: '$8.1M',  krw: '108억원', color: '#0E7C7B'        },
+  { label: '영양 치료식',      pct: 6.3,  val: '$2.5M',  krw: '33억원',  color: '#C8102E'        },
+  { label: '학교급식 · 생계', pct: 2.6,  val: '$1.0M',  krw: '13억원',  color: '#F4B223'        },
 ]
 
 export default function ResultsCharts() {
   return (
-    <section id="dir-a-result" style={{ background: 'var(--field-50)' }}>
+    <section id="sec-result" style={{ background: 'var(--field-50)' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 32px' }}>
 
         {/* Section header */}
@@ -50,7 +50,8 @@ export default function ResultsCharts() {
             title="현금 배분"
             value="$5.1"
             valueUnit="M"
-            sub={`계획 $10.7M 中 ${CASH_PCT}% *`}
+            krw="≈ 68억원"
+            sub={`계획 $10.7M (≈142억원) 中 ${CASH_PCT}% *`}
           />
           <DialCard
             color="#C8102E"
@@ -73,14 +74,13 @@ export default function ResultsCharts() {
           margin: '24px 0 0',
           paddingTop: 18,
           borderTop: '1px solid var(--field-200)',
-          maxWidth: '94ch',
           wordBreak: 'keep-all',
         }}>
           <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>*</span>
           식량·현금 배분 집행률이 목표 대비 약 50% 수준에 머문 주요 사유 —{' '}
           <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>① 미국 USAID(국제개발처) 폐지</strong>에 따른 다수 사업의 축소 및 중단,{' '}
-          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② 수단 내전 심화</strong>로 인한 현장 접근·물자 반입 제약,{' '}
-          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ 수단 화이트나일(White Nile) 사업</strong>의 현지 정부 승인 지연에 따른 사업 미진행.
+          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② 수단 및 DRC 등 분쟁 심화</strong>로 인한 현장 접근·물자 반입 제약,{' '}
+          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ 수단 화이트나일(White Nile) 사업</strong>의 현지 정부 승인 지연에 따른 사업 미진행 등 외부 요인으로 인한 배분 실적 하락 발생.
         </p>
       </div>
     </section>
@@ -164,7 +164,7 @@ function LeverageFlow() {
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
           {ACTIVITIES.map(a => (
-            <div key={a.label} style={{ display: 'grid', gridTemplateColumns: '148px 1fr 52px 80px', alignItems: 'center', gap: 12 }}>
+            <div key={a.label} style={{ display: 'grid', gridTemplateColumns: '140px 1fr 46px 104px', alignItems: 'center', gap: 12 }}>
               <span lang="ko" style={{
                 fontFamily: 'var(--font-kr)',
                 fontSize: 12,
@@ -176,7 +176,10 @@ function LeverageFlow() {
                 <div style={{ width: `${a.pct}%`, height: '100%', background: a.color, borderRadius: 3 }} />
               </div>
               <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'var(--grey-600)', textAlign: 'right' }}>{a.pct}%</span>
-              <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, color: a.color }}>{a.val}</span>
+              <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, color: a.color, textAlign: 'right', lineHeight: 1.25 }}>
+                {a.val}
+                <span lang="ko" style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 10, fontWeight: 400, color: 'var(--grey-500)' }}>{a.krw}</span>
+              </span>
             </div>
           ))}
         </div>
@@ -190,7 +193,7 @@ function LeverageFlow() {
   )
 }
 
-function DialCard({ color, pct, label, title, value, valueUnit, sub, dialLabel }) {
+function DialCard({ color, pct, label, title, value, valueUnit, sub, dialLabel, krw }) {
   const dashArray = (pct / 100) * C
   return (
     <div style={{
@@ -227,6 +230,7 @@ function DialCard({ color, pct, label, title, value, valueUnit, sub, dialLabel }
           {value}
           <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 500, fontSize: 14, color: 'var(--grey-600)', marginLeft: 4 }}>{valueUnit}</span>
         </p>
+        {krw && <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 600, color: 'var(--grey-500)', margin: '4px 0 0' }}>{krw}</p>}
         <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-600)', margin: '6px 0 0', lineHeight: 1.5 }}>{sub}</p>
       </div>
     </div>

@@ -6,6 +6,7 @@ import ImpactMap from './components/ImpactMap.jsx'
 import InterventionsSection from './components/InterventionsSection.jsx'
 import ResultsCharts from './components/ResultsCharts.jsx'
 import GallerySection from './components/GallerySection.jsx'
+import FlowReveal from './components/FlowReveal.jsx'
 import { GLOBAL_KPIS } from './data/projects.js'
 import { num, krwThousandToUsd, multiple } from './lib/format.js'
 
@@ -19,6 +20,7 @@ export default function App() {
         posterSrc="/hero/hero-poster.jpg"
         bgImageSrc="/hero/hero-poster.jpg"
         title="월드비전 식량위기 대응 사업"
+        midline="2025년 사업 결과보고"
         subtitle="13개국 20개 사업"
         scrollToExpand="아래로 스크롤하여 영상 재생"
       />
@@ -31,19 +33,29 @@ export default function App() {
       </div>
 
       {/* 01 — Why (Causes) */}
-      <CausesSection />
+      <FlowReveal>
+        <CausesSection />
+      </FlowReveal>
 
       {/* 02 — Where (Map + Country Grid) */}
-      <ImpactMap />
+      <FlowReveal>
+        <ImpactMap />
+      </FlowReveal>
 
       {/* 03 — What (Chapter III editorial + PBAS table) */}
-      <InterventionsSection />
+      <FlowReveal>
+        <InterventionsSection />
+      </FlowReveal>
 
       {/* 04 — Result (Sankey + Progress dials) */}
-      <ResultsCharts />
+      <FlowReveal>
+        <ResultsCharts />
+      </FlowReveal>
 
       {/* 05 — Field Gallery (사업 사진 슬라이드) */}
-      <GallerySection />
+      <FlowReveal>
+        <GallerySection />
+      </FlowReveal>
 
       {/* Footer */}
       <Footer />
@@ -119,7 +131,7 @@ Result Report · 2025
 
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 20 }}>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: 0 }}>
-            © 2025 World Vision Korea · 2025 글로벌 식량위기 대응사업 결과보고 · 본 대시보드는 마케팅·후원자 커뮤니케이션 지원을 위한 내부 시각화 자료입니다.
+            © 2025 World Vision Korea · 2025 글로벌 식량위기 대응사업 결과보고 · 본 대시보드는 후원자 여러분께 사업 결과를 투명하게 보고하기 위해 제작되었습니다.
           </p>
         </div>
       </div>

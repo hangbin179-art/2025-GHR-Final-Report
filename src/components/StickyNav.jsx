@@ -1,9 +1,9 @@
 const NAV = [
-  { href: '#sec-causes',    num: '01', label: '원인' },
-  { href: '#dir-a-map',     num: '02', label: '현장' },
-  { href: '#sec-what',      num: '03', label: '활동' },
-  { href: '#dir-a-result',  num: '04', label: '성과' },
-  { href: '#dir-a-gallery', num: '05', label: '갤러리' },
+  { href: '#sec-causes',  num: '01', label: '원인' },
+  { href: '#sec-where',   num: '02', label: '현장' },
+  { href: '#sec-what',    num: '03', label: '활동' },
+  { href: '#sec-result',  num: '04', label: '성과' },
+  { href: '#sec-gallery', num: '05', label: '갤러리' },
 ]
 
 function NavLink({ item }) {

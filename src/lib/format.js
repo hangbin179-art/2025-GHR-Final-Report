@@ -60,6 +60,16 @@ export function wonToEok(value) {
   return `${eok.toFixed(eok >= 100 ? 0 : 1)}억원`
 }
 
+/** raw USD -> 한화 라벨 ($1=1,330원). 5.1e6 -> "68억원", 446505 -> "5.9억원", 15941 -> "2,121만원" */
+export function usdToKrwLabel(value) {
+  if (value == null || Number.isNaN(value) || value === 0) return null
+  const won = value * FX_KRW_PER_USD
+  const eok = won / 1e8
+  if (eok >= 10) return `${Math.round(eok)}억원`
+  if (eok >= 1) return `${eok.toFixed(1)}억원`
+  return `${nf.format(Math.round(won / 1e4))}만원`
+}
+
 /** tonnes, e.g. 21133 -> "21,133톤", 1.72 -> "1.72톤" */
 export function tons(value) {
   if (value == null || Number.isNaN(value)) return '—'

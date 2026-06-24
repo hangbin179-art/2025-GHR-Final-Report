@@ -16,6 +16,15 @@ function fmtUsd(n) {
   return '$' + (n / 1000).toFixed(0) + 'K'
 }
 
+// USD → 한화 ($1=1,330원). 팝업 병기용.
+function fmtKrw(n) {
+  const won = n * 1330
+  const eok = won / 1e8
+  if (eok >= 10) return Math.round(eok) + '억원'
+  if (eok >= 1) return eok.toFixed(1) + '억원'
+  return Math.round(won / 1e4).toLocaleString() + '만원'
+}
+
 const PROJECTS = [
   { country: '수단', countryEn: 'Sudan', site: 'South Darfur (IFA)', lat: 11.00, lng: 24.90, food: 2276.3, ther: 15.3, cash: 0, val: 3121934, pbas: '223711' },
   { country: '수단', countryEn: 'Sudan', site: 'South Kordofan', lat: 12.20, lng: 30.20, food: 1025.7, ther: 17.4, cash: 324429, val: 1010325, pbas: '223710' },
@@ -91,8 +100,8 @@ export default function ImpactMap() {
 
       const rows = []
       if (p.food > 0) rows.push(`<div class="pop-row"><span>일반식량</span><strong>${p.food.toLocaleString()} 톤</strong></div>`)
-      if (p.val > 100) rows.push(`<div class="pop-row"><span>식량 가액</span><strong>${fmtUsd(p.val)}</strong></div>`)
-      if (p.cash > 0) rows.push(`<div class="pop-row"><span>현금·바우처</span><strong style="color:#0E7C7B">${fmtUsd(p.cash)}</strong></div>`)
+      if (p.val > 100) rows.push(`<div class="pop-row"><span>식량 가액</span><strong>${fmtUsd(p.val)} <span style="font-weight:400;color:#9a9a9a;font-size:11px">(${fmtKrw(p.val)})</span></strong></div>`)
+      if (p.cash > 0) rows.push(`<div class="pop-row"><span>현금·교환권</span><strong style="color:#0E7C7B">${fmtUsd(p.cash)} <span style="font-weight:400;color:#9a9a9a;font-size:11px">(${fmtKrw(p.cash)})</span></strong></div>`)
       if (p.ther > 0) rows.push(`<div class="pop-row"><span>치료식</span><strong style="color:#C8102E">${p.ther.toFixed(1)} 톤</strong></div>`)
 
       L.marker([p.lat, p.lng], { icon }).bindPopup(
@@ -109,7 +118,7 @@ export default function ImpactMap() {
   }, [])
 
   return (
-    <section id="dir-a-map" style={{ background: 'var(--field-50)' }}>
+    <section id="sec-where" style={{ background: 'var(--field-50)' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 32px' }}>
 
         {/* Section header */}
@@ -120,7 +129,7 @@ export default function ImpactMap() {
           </div>
           <div>
             <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '24ch' }}>
-              13개국 20개 현장.<br />한 지면에서 모두 확인합니다.
+              13개국 20개 현장.<br />한눈에 확인합니다.
             </h2>
           </div>
         </div>

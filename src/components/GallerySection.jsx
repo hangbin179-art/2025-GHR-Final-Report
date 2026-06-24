@@ -120,7 +120,7 @@ export default function GallerySection() {
   }
 
   return (
-    <section id="dir-a-gallery" style={{ background: '#fff', borderTop: '1px solid var(--field-200)', borderBottom: '1px solid var(--field-200)' }}>
+    <section id="sec-gallery" style={{ background: '#fff', borderTop: '1px solid var(--field-200)', borderBottom: '1px solid var(--field-200)' }}>
       <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 32px' }}>
 
         {/* Section header */}
@@ -227,10 +227,7 @@ export default function GallerySection() {
           ))}
         </div>
 
-        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-500)', margin: '20px 0 0', lineHeight: 1.6 }}>
-          사진 추가 안내 · <code style={{ fontFamily: 'var(--font-mono)', fontSize: 11, background: 'var(--field-50)', padding: '2px 6px', borderRadius: 4 }}>public/gallery/</code> 폴더에 사진을 넣고
-          각 슬라이드의 <code style={{ fontFamily: 'var(--font-mono)', fontSize: 11, background: 'var(--field-50)', padding: '2px 6px', borderRadius: 4 }}>src</code> 값을 채우면 자리표시자가 사진으로 바뀝니다.
-        </p>
+        {/* 사진 추가 방법은 파일 상단 주석 참고 — 외부 공개판에는 안내를 표시하지 않음 */}
       </div>
     </section>
   )

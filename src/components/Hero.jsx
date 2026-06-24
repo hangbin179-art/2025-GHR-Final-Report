@@ -100,12 +100,12 @@ export default function Hero() {
             maxWidth: '50ch',
           }}>
             2025년, 월드비전과 유엔세계식량계획(WFP)은 13개국 20개 사업 현장에서
-            식량 10,235.1톤, 영양실조 치료식 999.5톤, 현금·바우처 510만 달러를
-            직접 배분했습니다. 본 대시보드는 그 결과보고입니다.
+            식량 10,235.1톤, 영양실조 치료식 999.5톤, 현금·교환권 510만 달러(약 68억원)를
+            직접 배분했습니다.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
             <a
-              href="#dir-a-map"
+              href="#sec-where"
               lang="ko"
               style={{
                 background: 'var(--midnight)',
@@ -121,7 +121,7 @@ export default function Hero() {
               지도에서 사업 보기 →
             </a>
             <a
-              href="#dir-a-result"
+              href="#sec-result"
               lang="ko"
               style={{
                 background: 'transparent',
@@ -141,6 +141,7 @@ export default function Hero() {
         </div>
 
         {/* Right column — KPI Ledger */}
+        <div>
         <div style={{
           background: '#fff',
           border: '1px solid var(--field-200)',
@@ -165,9 +166,9 @@ export default function Hero() {
             <div style={{ height: 1, background: 'var(--field-200)' }} />
             <LedgerRow label="영양실조 치료식" value={999.5} decimals={1} unit="톤" delay={0.22} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
-            <LedgerRow label="현금 · 바우처 (USD)" value={5.11} decimals={2} prefix="$" unit="M" unitEn delay={0.34} start={started} />
+            <LedgerRow label="현금 · 교환권 (USD)" value={5.11} decimals={2} prefix="$" unit="M" unitEn krw="≈ 68억원" delay={0.34} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
-            <LedgerRow label="식량 가액 (USD)" value={16.04} decimals={2} prefix="$" unit="M" unitEn delay={0.46} start={started} />
+            <LedgerRow label="식량 가액 (USD)" value={16.04} decimals={2} prefix="$" unit="M" unitEn krw="≈ 213억원" delay={0.46} start={started} />
 
             {/* Orange footer box */}
             <div style={{
@@ -205,28 +206,39 @@ export default function Hero() {
             </div>
           </div>
         </div>
+        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, lineHeight: 1.6, color: 'var(--grey-500)', margin: '12px 2px 0' }}>
+          * 2025년 1월~12월 시행된 WFP 사업 내 한국 기여분 비율로 계산하여 산정
+        </p>
+        </div>
       </div>
     </section>
   )
 }
 
-function LedgerRow({ label, value, decimals = 0, prefix = '', unit, unitEn, delay = 0, start = true }) {
+function LedgerRow({ label, value, decimals = 0, prefix = '', unit, unitEn, delay = 0, start = true, krw }) {
   return (
     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
       <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, color: 'var(--grey-600)' }}>
         {label}
       </span>
-      <span className="num tnum" style={{ fontSize: 30, color: 'var(--midnight)' }}>
-        <CountUp value={value} decimals={decimals} prefix={prefix} delay={delay} start={start} />
-        <span style={{
-          fontFamily: unitEn ? 'var(--font-en)' : 'var(--font-kr)',
-          fontWeight: unitEn ? 600 : 500,
-          fontSize: 14,
-          color: 'var(--grey-600)',
-          marginLeft: 6,
-        }}>
-          {unit}
+      <span style={{ display: 'inline-block', textAlign: 'right' }}>
+        <span className="num tnum" style={{ fontSize: 30, color: 'var(--midnight)' }}>
+          <CountUp value={value} decimals={decimals} prefix={prefix} delay={delay} start={start} />
+          <span style={{
+            fontFamily: unitEn ? 'var(--font-en)' : 'var(--font-kr)',
+            fontWeight: unitEn ? 600 : 500,
+            fontSize: 14,
+            color: 'var(--grey-600)',
+            marginLeft: 6,
+          }}>
+            {unit}
+          </span>
         </span>
+        {krw && (
+          <span lang="ko" style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', marginTop: 2 }}>
+            {krw}
+          </span>
+        )}
       </span>
     </div>
   )

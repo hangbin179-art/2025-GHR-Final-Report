@@ -119,7 +119,7 @@ export default function DistributionCharts() {
           textTransform: 'uppercase',
           color: 'var(--midnight)',
           margin: 0,
-        }}>국가별 배분 현황 · Country Distribution Summary</p>
+        }}>국가별 배분 규모 비교 · DISTRIBUTION BY COUNTRY</p>
         <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: 0 }}>
           식량 8개국 · 현금 9개국 · USD 기준
         </p>
@@ -132,7 +132,7 @@ export default function DistributionCharts() {
           subtitle="식량 배분 실적이 있는 8개국 — 현물 식량 가액 합산"
           data={FOOD_COUNTRIES}
           color="var(--orange)"
-          note="DRC 남부 키부 단일 사업($5.05M)이 전체 식량 가액의 40%를 점유합니다."
+          note="DR 콩고 남부 키부 단일 사업($5.05M)이 전체 식량 가액의 40%를 점유합니다."
         />
         <div style={{ background: 'var(--field-200)', alignSelf: 'stretch' }} />
         <HBarChart

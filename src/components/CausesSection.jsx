@@ -39,12 +39,13 @@ export default function CausesSection() {
             <h2 lang="ko" style={{
               fontFamily: 'var(--font-kr)',
               fontWeight: 700,
-              fontSize: 36,
+              fontSize: 'clamp(27px, 3.3vw, 36px)',
               lineHeight: 1.25,
-              letterSpacing: '-0.015em',
+              letterSpacing: '-0.02em',
               color: 'var(--midnight)',
               margin: 0,
-              maxWidth: '24ch',
+              maxWidth: 'none',
+              whiteSpace: 'nowrap',
             }}>
               왜 세계는 아직도 굶주리는가.<br />
               한 가지 원인이 아닌, 세 개의 충돌입니다.
@@ -90,7 +91,7 @@ export default function CausesSection() {
               분쟁 및 불안정
             </h3>
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, flex: 1 }}>
-              콩고민주공화국·수단 등 내전이 장기화되며 대규모 난민이 발생합니다.
+              콩고민주공화국·수단 등 내전이 장기화되며 대규모 난민이<br />발생합니다.
               분쟁은 이주 → 인프라·시장 붕괴 → 지원 불안정 → 식량위기 심화의
               악순환을 만듭니다.
             </p>

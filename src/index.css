@@ -21,6 +21,12 @@ html { scroll-behavior: smooth; }
   .animate-background-gradient { animation: none; }
 }
 
+/* Country Grid 국가 상세 패널 — 열릴 때 위에서 살짝 슬라이드 (불투명도는 1로 유지해 항상 보이게) */
+@keyframes cgPanelIn {
+  from { transform: translateY(-10px); }
+  to   { transform: translateY(0); }
+}
+
 /* ============================================================
    Direction A — Design Tokens (WV × WFP 2025 식량위기 대시보드)
    ============================================================ */
