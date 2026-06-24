@@ -26,7 +26,7 @@ export const COUNTRIES = [
     activities: ['food', 'cash', 'nutrition'],
     projects: [
       { site: '남다르푸르 (통합 식량지원)', siteEn: 'South Darfur (Integrated Food Assistance)', title: 'South Darfur Integrated Food Assistance Project', lat: 11.00, lng: 24.90, food: 2276.3, ther: 15.3, cash: 0, val: 3121934, beneficiaries: 475967, korea: 40945, plannedTons: 3168, pbas: '223711' },
-      { site: '남코르도판', siteEn: 'South Kordofan', title: 'South Kordofan Integrated Food Assistance Project', lat: 12.20, lng: 30.20, food: 1025.7, ther: 17.4, cash: 324429, val: 1010325, beneficiaries: 249491, korea: 27339, plannedTons: 1624, pbas: '223710' },
+      { site: '남코르도판', siteEn: 'South Kordofan', title: 'South Kordofan Integrated Food Assistance Project', lat: 12.20, lng: 30.20, food: 1025.7, ther: 16.0, cash: 324429, val: 1010325, beneficiaries: 249491, korea: 27339, plannedTons: 1624, pbas: '223710' },
       { site: '남다르푸르 (영양)', siteEn: 'South Darfur (Nutrition)', title: 'South Darfur Community Nutrition Project', lat: 11.10, lng: 24.95, food: 20.1, ther: 20.1, cash: 0, val: 82059, beneficiaries: 33432, korea: 6636, plannedTons: 80, pbas: '223745' },
       { site: '백나일 (White Nile)', siteEn: 'White Nile', title: 'White Nile Integrated Food Assistance Project', lat: 13.05, lng: 32.55, food: 0, ther: 0, cash: 0, val: 0, beneficiaries: 0, korea: 0, plannedTons: 5320, pbas: '223856', note: '현지 정부 승인 지연으로 사업 미진행' },
     ],
@@ -86,7 +86,7 @@ export const COUNTRIES = [
     en: "Bangladesh · Cox's Bazar (현금)", region: '콕스바자르 · 현금 전용',
     activities: ['cash'],
     projects: [
-      { site: '콕스바자르 (전자바우처 E-Voucher)', siteEn: "Cox's Bazar", title: "Food Assistance via e-vouchers (Cox's Bazar)", lat: 21.43, lng: 92.00, food: 0, ther: 0, cash: 1885961, val: 0, beneficiaries: 209761, korea: 12880, plannedTons: 2, pbas: '223748' },
+      { site: '콕스바자르 (전자바우처 E-Voucher)', siteEn: "Cox's Bazar", title: "Food Assistance via e-vouchers (Cox's Bazar)", lat: 21.43, lng: 92.00, food: 0, ther: 0, cash: 1885961, val: 17, beneficiaries: 209761, korea: 12880, plannedTons: 2, pbas: '223748' },
     ],
   },
   {

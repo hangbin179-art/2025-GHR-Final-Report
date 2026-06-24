@@ -335,7 +335,7 @@ export const PROJECTS = [
     foodValue: 2298952,
     cashValue: 1691320,
     activities: { food: true, cash: true, nutrition: true, school: false, livelihood: false },
-    progress: { foodActualTons: 1025.7, foodPct: 63.2, cashActualKRW: 431490000, cashPct: 25.5, cashActualUSD: 324429, foodActualUSD: 1010325, nutritionKg: 17442.9 },
+    progress: { foodActualTons: 1025.7, foodPct: 63.2, cashActualKRW: 431490000, cashPct: 25.5, cashActualUSD: 324429, foodActualUSD: 1010325, nutritionKg: 16000 },
     photos: [],
   },
   {
