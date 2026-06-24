@@ -66,7 +66,7 @@ export default function InterventionsSection() {
             </p>
           </div>
           <div>
-            <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 54, lineHeight: 1.15, letterSpacing: '-0.025em', color: 'var(--midnight)', margin: 0, wordBreak: 'keep-all' }}>
+            <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: isMobile ? 30 : 54, lineHeight: 1.15, letterSpacing: '-0.025em', color: 'var(--midnight)', margin: 0, wordBreak: 'keep-all' }}>
               실제로 무엇이,<br />얼마나 전달되었나.
             </h2>
             <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 18, lineHeight: 1.85, color: 'var(--grey-800)', margin: '36px 0 0', wordBreak: 'keep-all', maxWidth: '46ch' }}>
@@ -85,7 +85,7 @@ export default function InterventionsSection() {
           <ScrollReveal from="left">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
             <div style={row}>
-              <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: 'var(--orange)', margin: 0, letterSpacing: '-0.04em' }}>01</p>
+              <p className="num" style={{ fontSize: isMobile ? 48 : 88, lineHeight: 0.85, color: 'var(--orange)', margin: 0, letterSpacing: '-0.04em' }}>01</p>
               <div>
                 <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>일반식량 배분</h3>
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>In-kind Food Distribution</p>
@@ -96,7 +96,7 @@ export default function InterventionsSection() {
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <p className="num tnum" style={{ fontSize: 72, color: 'var(--orange)', margin: 0, lineHeight: 0.85 }}>
+                <p className="num tnum" style={{ fontSize: isMobile ? 44 : 72, color: 'var(--orange)', margin: 0, lineHeight: 0.85 }}>
                   10,235<span style={{ fontSize: 28, color: 'var(--grey-500)', marginLeft: 4, fontWeight: 500, letterSpacing: 0 }}>톤</span>
                 </p>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>
@@ -133,7 +133,7 @@ export default function InterventionsSection() {
           <ScrollReveal from="right">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
             <div style={row}>
-              <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: TEAL, margin: 0, letterSpacing: '-0.04em' }}>02</p>
+              <p className="num" style={{ fontSize: isMobile ? 48 : 88, lineHeight: 0.85, color: TEAL, margin: 0, letterSpacing: '-0.04em' }}>02</p>
               <div>
                 <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>현금 / 교환권 배분</h3>
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Cash &amp; Voucher Assistance</p>
@@ -144,7 +144,7 @@ export default function InterventionsSection() {
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <p className="num tnum" style={{ fontSize: 72, color: TEAL, margin: 0, lineHeight: 0.85 }}>$5.1M</p>
+                <p className="num tnum" style={{ fontSize: isMobile ? 44 : 72, color: TEAL, margin: 0, lineHeight: 0.85 }}>$5.1M</p>
                 <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-500)', margin: '6px 0 0' }}>≈ 68억원</p>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>
                   cash &amp; voucher (USD)
@@ -177,7 +177,7 @@ export default function InterventionsSection() {
           <ScrollReveal from="left">
           <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
             <div style={row}>
-              <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: RED, margin: 0, letterSpacing: '-0.04em' }}>03</p>
+              <p className="num" style={{ fontSize: isMobile ? 48 : 88, lineHeight: 0.85, color: RED, margin: 0, letterSpacing: '-0.04em' }}>03</p>
               <div>
                 <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>영양실조 치료식 배분</h3>
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Therapeutic Food · RUTF / RUSF</p>
@@ -188,7 +188,7 @@ export default function InterventionsSection() {
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <p className="num tnum" style={{ fontSize: 72, color: RED, margin: 0, lineHeight: 0.85 }}>
+                <p className="num tnum" style={{ fontSize: isMobile ? 44 : 72, color: RED, margin: 0, lineHeight: 0.85 }}>
                   999.5<span style={{ fontSize: 28, color: 'var(--grey-500)', marginLeft: 4, fontWeight: 500, letterSpacing: 0 }}>톤</span>
                 </p>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>

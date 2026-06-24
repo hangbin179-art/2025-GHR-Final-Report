@@ -48,7 +48,7 @@ export default function CausesSection() {
               color: 'var(--midnight)',
               margin: 0,
               maxWidth: 'none',
-              whiteSpace: 'nowrap',
+              whiteSpace: isMobile ? 'normal' : 'nowrap',
             }}>
               왜 세계는 아직도 굶주리는가.<br />
               한 가지 원인이 아닌, 세 개의 충돌입니다.

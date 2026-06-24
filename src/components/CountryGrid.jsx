@@ -69,7 +69,19 @@ function Metric({ color, label, value }) {
 }
 
 // 재무 셀 — 한국 기여금 / WFP 기여금 / 총 사업비 (KRW 주, USD 보조)
-function FinanceCell({ label, krw, usd, color, emphasize }) {
+// 모바일: [라벨 ─ 금액] 가로 한 줄(세로 스택) · 데스크톱: 가운데 정렬 컬럼
+function FinanceCell({ label, krw, usd, color, emphasize, isMobile }) {
+  if (isMobile) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, padding: '9px 2px', borderTop: emphasize ? '1px solid var(--field-200)' : 'none' }}>
+        <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12.5, fontWeight: 700, color: 'var(--grey-600)' }}>{label}</span>
+        <span style={{ display: 'flex', alignItems: 'baseline', gap: 6, whiteSpace: 'nowrap' }}>
+          <span className="num tnum" style={{ fontSize: emphasize ? 19 : 16, fontWeight: emphasize ? 800 : 700, color: emphasize ? 'var(--midnight)' : color }}>{krw}</span>
+          <span style={{ fontFamily: 'var(--font-en)', fontSize: 10, color: 'var(--grey-500)' }}>{usd}</span>
+        </span>
+      </div>
+    )
+  }
   return (
     <div style={{ flex: 1, minWidth: 0, textAlign: 'center' }}>
       <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, fontWeight: 700, color: 'var(--grey-600)', margin: 0, whiteSpace: 'nowrap' }}>{label}</p>
@@ -263,12 +275,12 @@ export default function CountryGrid() {
             const m = eok(country.match), w = eok(country.wfpIncome), tot = +(m + w).toFixed(1)
             return (
             <div style={{ marginTop: 22, padding: isMobile ? '16px 14px' : '18px 22px', background: 'var(--field-50)', borderRadius: 10, border: '1px solid var(--field-200)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 14 }}>
-                <FinanceCell label="한국 기여금" krw={`${m.toFixed(1)}억원`} usd={fmtCash(country.match)} color="var(--orange)" />
-                <FinOp>+</FinOp>
-                <FinanceCell label="WFP 기여금" krw={`${w.toFixed(1)}억원`} usd={fmtCash(country.wfpIncome)} color="#0E7C7B" />
-                <FinOp>=</FinOp>
-                <FinanceCell label="총 사업비" krw={`${tot.toFixed(1)}억원`} usd={fmtCash(country.totalCost)} emphasize />
+              <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'center', gap: isMobile ? 0 : 14 }}>
+                <FinanceCell isMobile={isMobile} label="한국 기여금" krw={`${m.toFixed(1)}억원`} usd={fmtCash(country.match)} color="var(--orange)" />
+                {!isMobile && <FinOp>+</FinOp>}
+                <FinanceCell isMobile={isMobile} label="WFP 기여금" krw={`${w.toFixed(1)}억원`} usd={fmtCash(country.wfpIncome)} color="#0E7C7B" />
+                {!isMobile && <FinOp>=</FinOp>}
+                <FinanceCell isMobile={isMobile} label="총 사업비" krw={`${tot.toFixed(1)}억원`} usd={fmtCash(country.totalCost)} emphasize />
               </div>
               <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '12px 0 0', lineHeight: 1.6, textAlign: 'center' }}>
                 한국 기여금이 WFP 기여금을 견인해 조성된 총 사업비입니다. 식량·현금 배분 외 영양·학교급식·생계·물류·운영비가 포함되어, 아래 배분 실적과 총 사업비는 차이가 있습니다.
