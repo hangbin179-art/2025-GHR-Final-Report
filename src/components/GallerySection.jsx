@@ -166,6 +166,8 @@ function Slide({ s, onOpen }) {
 function Lightbox({ slides, idx, setIdx, onClose }) {
   const n = slides.length
   const s = slides[idx]
+  const [zoom, setZoom] = useState(false)
+  useEffect(() => { setZoom(false) }, [idx])
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') onClose()
@@ -201,16 +203,25 @@ function Lightbox({ slides, idx, setIdx, onClose }) {
       {n > 1 && <button aria-label="이전 사진" onClick={(e) => { e.stopPropagation(); setIdx((i) => (i - 1 + n) % n) }} style={{ ...navBtn, left: 20 }}><Arrow dir="prev" /></button>}
       {n > 1 && <button aria-label="다음 사진" onClick={(e) => { e.stopPropagation(); setIdx((i) => (i + 1) % n) }} style={{ ...navBtn, right: 20 }}><Arrow dir="next" /></button>}
       <figure onClick={(e) => e.stopPropagation()} style={{ margin: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'default' }}>
-        <img src={s.src} alt={`${s.country} ${s.site}`} style={{
-          maxWidth: '88vw', maxHeight: '78vh', objectFit: 'contain',
-          borderRadius: 8, boxShadow: '0 16px 50px rgba(0,0,0,0.55)',
-        }} />
+        <div style={{ overflow: zoom ? 'auto' : 'visible', maxWidth: '94vw', maxHeight: zoom ? '78vh' : 'none', borderRadius: 8, boxShadow: zoom ? '0 16px 50px rgba(0,0,0,0.55)' : 'none' }}>
+          <img
+            src={s.src}
+            alt={`${s.country} ${s.site}`}
+            onClick={(e) => { e.stopPropagation(); setZoom((z) => !z) }}
+            style={zoom
+              ? { display: 'block', height: '140vh', width: 'auto', maxWidth: 'none', cursor: 'zoom-out' }
+              : { display: 'block', maxWidth: '88vw', maxHeight: '78vh', objectFit: 'contain', borderRadius: 8, boxShadow: '0 16px 50px rgba(0,0,0,0.55)', cursor: 'zoom-in' }}
+          />
+        </div>
         <figcaption style={{ marginTop: 16, textAlign: 'center', maxWidth: '88vw' }}>
           <span style={{ display: 'inline-block', fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#fff', background: s.color, padding: '3px 8px', borderRadius: 4, marginBottom: 8 }}>{s.activity}</span>
           <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 18, color: '#fff', margin: 0 }}>{s.country} · {s.site}</p>
           {s.scene && <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'rgba(255,255,255,0.7)', margin: '6px 0 0' }}>{s.scene}</p>}
           {s.credit && <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, color: 'rgba(255,255,255,0.5)', margin: '6px 0 0' }}>{s.credit}</p>}
           <p className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '8px 0 0' }}>{idx + 1} / {n}</p>
+          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: '6px 0 0' }}>
+            {zoom ? '사진을 클릭하면 축소 · 스크롤로 상하좌우 이동' : '사진을 클릭하면 확대해서 자세히 볼 수 있어요'}
+          </p>
         </figcaption>
       </figure>
     </div>

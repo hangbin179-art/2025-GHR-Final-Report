@@ -3,7 +3,7 @@ import useIsMobile from '../lib/useIsMobile.js'
 const C = 301.6 // circle circumference at r=48
 
 const FOOD_PCT = 48.4   // 10,235 / 21,133
-const CASH_PCT = 47.7   // $5.1M / $10.7M
+const CASH_PCT = 63.4   // $5.1M / $8.05M (계획 현금 107억원, 실적/계획 KRW 기준)
 const NUT_PCT  = 59.5
 
 export default function ResultsCharts() {
@@ -47,7 +47,7 @@ export default function ResultsCharts() {
             value="$5.1"
             valueUnit="M"
             krw="≈ 68억원"
-            sub={`계획 $10.7M (≈142억원) 中 ${CASH_PCT}% **`}
+            sub={`계획 $8.05M (≈107억원) 中 ${CASH_PCT}% **`}
           />
           <DialCard
             color="#C8102E"
@@ -69,7 +69,7 @@ export default function ResultsCharts() {
           </p>
           <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: '8px 0 0', wordBreak: 'keep-all' }}>
             <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>**</span>
-            식량·현금 배분 집행률이 목표 대비 약 50% 수준에 머문 주요 사유 —{' '}
+            식량·현금 배분 집행률이 계획 목표에 미치지 못한 주요 사유 —{' '}
             <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>① 미국 USAID(국제개발처) 폐지</strong>에 따른 다수 사업의 축소 및 중단,{' '}
             <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② 수단·콩고민주공화국 등 분쟁 심화</strong>로 인한 현장 접근·물자 반입 제약,{' '}
             <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ 수단 화이트나일(White Nile) 사업</strong>의 현지 정부 승인 지연에 따른 사업 미진행 등 외부 요인으로 인한 배분 실적 하락 발생.

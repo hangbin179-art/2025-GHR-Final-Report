@@ -280,21 +280,19 @@ export default function CountryGrid() {
             {country.region}
           </p>
 
-          {/* 재무 구조 — 한국 매칭 + WFP 기여 = 총 사업비 (배분액과 다름을 명시) */}
-          {country.totalCost > 0 && (() => {
+          {/* 재무 구조 — 한국 매칭 기여금 →(레버리지) WFP 다자협력 총 사업비 (WFP 기여분 기준, 배분액과 다름을 명시) */}
+          {country.wfpIncome > 0 && (() => {
             const eok = (usd) => +(usd * 1330 / 1e8).toFixed(1)   // USD → 억원(소수1자리)
-            const m = eok(country.match), w = eok(country.wfpIncome), tot = +(m + w).toFixed(1)
+            const m = eok(country.match), w = eok(country.wfpIncome)
             return (
             <div style={{ marginTop: 22, padding: isMobile ? '16px 14px' : '18px 22px', background: 'var(--field-50)', borderRadius: 10, border: '1px solid var(--field-200)' }}>
               <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'center', gap: isMobile ? 0 : 14 }}>
-                <FinanceCell isMobile={isMobile} label="한국 기여금" krw={`${m.toFixed(1)}억원`} usd={fmtCash(country.match)} color="var(--orange)" />
-                {!isMobile && <FinOp>+</FinOp>}
-                <FinanceCell isMobile={isMobile} label="WFP 기여금" krw={`${w.toFixed(1)}억원`} usd={fmtCash(country.wfpIncome)} color="#0E7C7B" />
-                {!isMobile && <FinOp>=</FinOp>}
-                <FinanceCell isMobile={isMobile} label="총 사업비" krw={`${tot.toFixed(1)}억원`} usd={fmtCash(country.totalCost)} emphasize />
+                <FinanceCell isMobile={isMobile} label="한국 매칭 기여금" krw={`${m.toFixed(1)}억원`} usd={fmtCash(country.match)} color="var(--orange)" />
+                {!isMobile && <FinOp>→</FinOp>}
+                <FinanceCell isMobile={isMobile} label="WFP 다자협력 총 사업비" krw={`${w.toFixed(1)}억원`} usd={fmtCash(country.wfpIncome)} emphasize />
               </div>
               <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '12px 0 0', lineHeight: 1.6, textAlign: 'center' }}>
-                한국 기여금이 WFP 기여금을 견인해 조성된 총 사업비입니다. 식량·현금 배분 외 영양·학교급식·생계·물류·운영비가 포함되어, 아래 배분 실적과 총 사업비는 차이가 있습니다.
+                한국 매칭 기여금이 WFP 다자협력 사업비를 견인했습니다. 총 사업비는 WFP 기여분 기준이며, 식량·현금 배분 외 영양·학교급식·생계·물류·운영비가 포함되어 아래 배분 실적과는 차이가 있습니다.
               </p>
             </div>
             )

@@ -125,7 +125,7 @@ export const COUNTRIES = [
 
 // ─── 사업 재무보고 (USD) ──────────────────────────────────────
 // match = 한국(WV) 매칭금(자기부담) · wfpIncome = WFP 실제 수입 인식액(Actual Income to WVK)
-// 총 사업비 = match + wfpIncome. 출처: 사업 재무보고 표(2026-06). 배분 실적(food/cash/val)과는 별개.
+// 표기 '총 사업비'는 WFP 기여분(wfpIncome) 기준(전체 약 330억). match는 레버리지 매칭 시드(합산하지 않음). 출처: 사업 재무보고 표(2026-06). 배분 실적(food/cash/val)과는 별개.
 const FINANCE = {
   '223255': { match: 29805,  wfpIncome: 1541046 },
   '223748': { match: 10000,  wfpIncome: 1908676 },
