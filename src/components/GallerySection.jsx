@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import useIsMobile from '../lib/useIsMobile.js'
 
 /* 활동별 색상 토큰 */
@@ -163,6 +164,7 @@ function Lightbox({ slides, idx, setIdx, onClose }) {
   const n = slides.length
   const s = slides[idx]
   const [zoom, setZoom] = useState(false)
+  const [portrait, setPortrait] = useState(false)
   useEffect(() => { setZoom(false) }, [idx])
   useEffect(() => {
     const onKey = (e) => {
@@ -183,9 +185,9 @@ function Lightbox({ slides, idx, setIdx, onClose }) {
     color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
     cursor: 'pointer', zIndex: 5,
   }
-  return (
+  return createPortal(
     <div onClick={onClose} role="dialog" aria-modal="true" style={{
-      position: 'fixed', inset: 0, zIndex: 2000,
+      position: 'fixed', inset: 0, zIndex: 4000,
       background: 'rgba(8,9,18,0.92)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       padding: 24, cursor: 'zoom-out',
@@ -203,10 +205,11 @@ function Lightbox({ slides, idx, setIdx, onClose }) {
           <img
             src={s.src}
             alt={`${s.country} ${s.site}`}
+            onLoad={(e) => setPortrait(e.target.naturalHeight > e.target.naturalWidth)}
             onClick={(e) => { e.stopPropagation(); setZoom((z) => !z) }}
             style={zoom
               ? { display: 'block', height: '140vh', width: 'auto', maxWidth: 'none', cursor: 'zoom-out' }
-              : { display: 'block', maxWidth: '88vw', maxHeight: '78vh', objectFit: 'contain', borderRadius: 8, boxShadow: '0 16px 50px rgba(0,0,0,0.55)', cursor: 'zoom-in' }}
+              : { display: 'block', maxWidth: '90vw', maxHeight: portrait ? '74vh' : '62vh', objectFit: 'contain', borderRadius: 8, boxShadow: '0 16px 50px rgba(0,0,0,0.55)', cursor: 'zoom-in' }}
           />
         </div>
         <figcaption style={{ marginTop: 16, textAlign: 'center', maxWidth: '88vw' }}>
@@ -220,7 +223,8 @@ function Lightbox({ slides, idx, setIdx, onClose }) {
           </p>
         </figcaption>
       </figure>
-    </div>
+    </div>,
+    document.body
   )
 }
 
