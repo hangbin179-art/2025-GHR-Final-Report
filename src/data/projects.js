@@ -458,7 +458,7 @@ export const GLOBAL_KPIS = {
     cashActualKRW: 6790954000, // 현금/교환권 실적 (원)
     cashPct: 63.4, // 계획 대비
     cashActualUSD: 5105980, // 현금/교환권 실적 (USD)
-    nutritionKg: 999470, // 영양실조 치료식 (kg)
+    nutritionKg: 998110, // 영양실조 치료식 (kg)
   },
   // 월드비전이 WFP 협력 파트너로서 전달·운영한 사업 전체 규모 (USD)
   wfpDelivered: {

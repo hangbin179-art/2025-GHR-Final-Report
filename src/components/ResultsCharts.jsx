@@ -54,10 +54,10 @@ export default function ResultsCharts() {
             pct={NUT_PCT}
             label="NUTRITION"
             title="영양 치료식"
-            value="999.5"
+            value="998.1"
             valueUnit="톤"
-            sub="SAM/MAM 치료식 누계"
-            dialLabel="999.5t"
+            sub="급성 영양실조 치료식 누계"
+            dialLabel="998.1t"
           />
         </div>
 
@@ -75,7 +75,7 @@ export default function ResultsCharts() {
           <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>*</span>
           식량·현금 배분 집행률이 목표 대비 약 50% 수준에 머문 주요 사유 —{' '}
           <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>① 미국 USAID(국제개발처) 폐지</strong>에 따른 다수 사업의 축소 및 중단,{' '}
-          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② 수단 및 DRC 등 분쟁 심화</strong>로 인한 현장 접근·물자 반입 제약,{' '}
+          <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② 수단·콩고민주공화국 등 분쟁 심화</strong>로 인한 현장 접근·물자 반입 제약,{' '}
           <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ 수단 화이트나일(White Nile) 사업</strong>의 현지 정부 승인 지연에 따른 사업 미진행 등 외부 요인으로 인한 배분 실적 하락 발생.
         </p>
       </div>

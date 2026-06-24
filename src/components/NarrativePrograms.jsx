@@ -174,7 +174,7 @@ export default function NarrativePrograms() {
                 식량을 나눠주는 것을 넘어, 스스로 벌 수 있게 합니다. 케냐 <strong style={{ color: 'var(--midnight)' }}>마쿠에니·키투이
                 지속가능 식량체계 사업</strong>은 가뭄이 잦은 건조·반건조 지역에서 식량을 직접 배분하지 않는
                 ‘비식량’ 사업으로 설계되었습니다. 빈곤율이 각각 64.1%, 63.1%에 달하는 두 카운티에서 11,306명이
-                마을저축대출조합(VSLA)에 참여해 저축·소액대출·소득창출 기회를 얻었습니다.
+                마을저축그룹(VSLA)에 참여해 저축·소액대출·소득창출 기회를 얻었습니다.
               </p>
               <div style={{
                 background: GREEN_BG,
@@ -183,8 +183,8 @@ export default function NarrativePrograms() {
                 display: 'flex',
                 gap: 20,
               }}>
-                <StatChip value="11,306" unit="명" label="VSLA 참여 주민 (케냐)" accent={GREEN} />
-                <StatChip value="0.5→3" unit="ha" label="경작지 확대 (CAR Zaloua)" accent={GREEN} />
+                <StatChip value="11,306" unit="명" label="마을저축그룹 참여 주민 (케냐)" accent={GREEN} />
+                <StatChip value="0.5→3" unit="ha" label="경작지 확대 (중앙아프리카 자루아)" accent={GREEN} />
               </div>
             </div>
 
@@ -193,7 +193,7 @@ export default function NarrativePrograms() {
 
               {/* Kenya SFSP */}
               <div>
-                <PhotoSlot ratio="16/10" accent={GREEN} caption="사진 캡션 · 마쿠에니 VSLA 그룹의 저축 모임. 추후 현장 사진으로 교체 예정." />
+                <PhotoSlot ratio="16/10" accent={GREEN} caption="사진 캡션 · 마쿠에니 마을저축그룹의 저축 모임. 추후 현장 사진으로 교체 예정." />
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: GREEN, margin: '16px 0 10px' }}>
                   Kenya · 마쿠에니 · 키투이
                 </p>
@@ -209,11 +209,11 @@ export default function NarrativePrograms() {
               <div>
                 <PhotoSlot ratio="16/10" accent={GREEN} caption="사진 캡션 · 자루아 농업그룹의 땅콩·벼 경작지. 추후 현장 사진으로 교체 예정." />
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: GREEN, margin: '16px 0 10px' }}>
-                  CAR · 부아르 · 방가수 · 자산조성지원(FFA)
+                  Central African Rep. · 부아르 · 방가수 · 생계 역량 강화 및 자산 조성 기회 제공
                 </p>
                 <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                   중앙아프리카공화국 음보무·우아카 주에서는 <strong style={{ color: 'var(--midnight)' }}>조건부 현금</strong>을 통한
-                  자산조성지원을 운영했습니다. 자루아 마을 농업그룹의 피에르 파리 씨는 경작지를 0.5헥타르에서 3헥타르로
+                  생계 역량 강화 및 자산 조성 기회 제공을 운영했습니다. 자루아 마을 농업그룹의 피에르 파리 씨는 경작지를 0.5헥타르에서 3헥타르로
                   넓혀 땅콩과 벼를 심었습니다. 바지코 마을 주민들은 현금근로(Cash for Work)로 농업용 도로를 보수하고
                   농기구·장비를 지원받아, 농산물 운반과 시장 접근이 한결 수월해졌습니다.
                 </p>

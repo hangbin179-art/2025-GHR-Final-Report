@@ -180,16 +180,16 @@ export default function InterventionsSection() {
               <p className="num" style={{ fontSize: isMobile ? 48 : 88, lineHeight: 0.85, color: RED, margin: 0, letterSpacing: '-0.04em' }}>03</p>
               <div>
                 <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>영양실조 치료식 배분</h3>
-                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Therapeutic Food · RUTF / RUSF</p>
+                <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Therapeutic &amp; Supplementary Food</p>
                 <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
-                  5세 미만 아동·임산부·수유부에게 플럼피넛(RUTF)·중등도 치료식(RUSF)을 배분합니다.
-                  MUAC 테이프로 SAM/MAM을 진단한 후 지급하며, 마을 어머니 자조그룹이 추적 관리합니다.
-                  9개 사업에서 999.5톤이 배분되었습니다.
+                  5세 미만 아동·임산부·수유부에게 플럼피넛 등 영양실조치료 보충식을 배분합니다.
+                  상완위 둘레 측정법으로 중증·중등도 급성 영양실조를 진단한 후 지급하며, 마을 어머니 자조그룹이 추적 관리합니다.
+                  9개 사업에서 998.1톤이 배분되었습니다.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <p className="num tnum" style={{ fontSize: isMobile ? 44 : 72, color: RED, margin: 0, lineHeight: 0.85 }}>
-                  999.5<span style={{ fontSize: 28, color: 'var(--grey-500)', marginLeft: 4, fontWeight: 500, letterSpacing: 0 }}>톤</span>
+                  998.1<span style={{ fontSize: 28, color: 'var(--grey-500)', marginLeft: 4, fontWeight: 500, letterSpacing: 0 }}>톤</span>
                 </p>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>
                   therapeutic food
@@ -206,13 +206,13 @@ export default function InterventionsSection() {
             <FieldStory
               accent={RED}
               eyebrow="Field Story · 에티오피아 티그라이"
-              caption="사진 캡션 · 티그라이 TSFP 영양식 배분 및 상담 현장. 추후 현장 사진으로 교체 예정."
+              caption="사진 캡션 · 티그라이 표적보충영양사업 영양식 배분 및 상담 현장. 추후 현장 사진으로 교체 예정."
               quote="제대로 먹지 못해 아기 건강이 늘 걱정이었어요. 이제는 더 건강해졌고, 아이를 돌보는 데 자신감이 생겼습니다."
-              quoteSource="티르하스 체가이 · 티그라이 아디하위 IDP 캠프, 수유모"
+              quoteSource="티르하스 체가이 · 티그라이 아디하위 국내 실향민 캠프, 수유모"
             >
               2년간의 봉쇄로 영양 위기에 놓인 에티오피아 티그라이에서, WFP의 <strong style={{ color: 'var(--midnight)' }}>표적보충영양사업(TSFP)</strong>은
               76개 배분소를 통해 19,122명 — 5세 미만 아동 12,906명과 임산부·수유부 6,216명 — 에게 영양식을 전달했습니다.
-              수유모 <strong style={{ color: 'var(--midnight)' }}>티르하스 체가이(20세)</strong>는 중등도 영양실조(MUAC 22.7cm)로
+              수유모 <strong style={{ color: 'var(--midnight)' }}>티르하스 체가이(20세)</strong>는 중등도 영양실조(상완위 둘레 22.7cm)로
               입소해, 격주로 받은 <strong style={{ color: RED }}>영양강화식(CSB++)</strong>과 모유수유·위생 상담을 통해 한 달 만에
               23.3cm로 회복하고 퇴소했습니다.
             </FieldStory>

@@ -122,7 +122,7 @@ export default function ProjectTable() {
       </div>
 
       <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '14px 0 0', lineHeight: 1.6 }}>
-        식량 가액은 배분 식량의 시장가치(USD) 환산액입니다. 케냐는 현물·현금 배분 없이 마을저축대출조합(VSLA)·작물보험 등 생계 역량 강화로 운영된 사업입니다.
+        식량 가액은 배분 식량의 시장가치(USD) 환산액입니다. 케냐는 현물·현금 배분 없이 마을저축그룹(VSLA)·작물보험 등 생계 역량 강화로 운영된 사업입니다.
       </p>
     </div>
   )

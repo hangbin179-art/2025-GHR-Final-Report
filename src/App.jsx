@@ -93,24 +93,36 @@ Result Report · 2025
           {/* Programme at a glance */}
           <div>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', margin: '0 0 12px', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-              Programme at a glance
+              <span lang="ko" style={{ fontFamily: 'var(--font-kr)', letterSpacing: 0 }}>사업 한눈에 보기</span> · Programme at a glance
             </p>
             <dl style={{ display: 'flex', flexDirection: 'column', gap: 8, fontFamily: 'var(--font-en)', fontSize: 12, color: 'rgba(255,255,255,0.65)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <dt style={{ color: 'rgba(255,255,255,0.4)' }}>Countries / Projects</dt>
-                <dd style={{ margin: 0, color: '#fff' }}>{GLOBAL_KPIS.countries} / {GLOBAL_KPIS.projects}</dd>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
+                <dt lang="ko" style={{ fontFamily: 'var(--font-kr)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.3 }}>
+                  국가 / 사업
+                  <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>Countries / Projects</span>
+                </dt>
+                <dd style={{ margin: 0, color: '#fff', whiteSpace: 'nowrap' }}>{GLOBAL_KPIS.countries} / {GLOBAL_KPIS.projects}</dd>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <dt style={{ color: 'rgba(255,255,255,0.4)' }}>Food distributed</dt>
-                <dd style={{ margin: 0, color: '#fff' }}>{num(GLOBAL_KPIS.result.foodActualTons)}톤</dd>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
+                <dt lang="ko" style={{ fontFamily: 'var(--font-kr)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.3 }}>
+                  식량 배분량
+                  <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>Food distributed</span>
+                </dt>
+                <dd style={{ margin: 0, color: '#fff', whiteSpace: 'nowrap' }}>{num(GLOBAL_KPIS.result.foodActualTons)}톤</dd>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <dt style={{ color: 'rgba(255,255,255,0.4)' }}>Leverage (WV→WFP)</dt>
-                <dd style={{ margin: 0, color: 'var(--orange)' }}>{multiple(GLOBAL_KPIS.leverage)}</dd>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
+                <dt lang="ko" style={{ fontFamily: 'var(--font-kr)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.3 }}>
+                  자금 증대 효과
+                  <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>Leverage · WV→WFP</span>
+                </dt>
+                <dd style={{ margin: 0, color: 'var(--orange)', whiteSpace: 'nowrap' }}>{multiple(GLOBAL_KPIS.leverage)}</dd>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <dt style={{ color: 'rgba(255,255,255,0.4)' }}>WFP income (actual)</dt>
-                <dd style={{ margin: 0, color: '#fff' }}>{krwThousandToUsd(GLOBAL_KPIS.wfpActualIncome)}</dd>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
+                <dt lang="ko" style={{ fontFamily: 'var(--font-kr)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.3 }}>
+                  WFP 사업 수입 (실적)
+                  <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>WFP income · actual</span>
+                </dt>
+                <dd style={{ margin: 0, color: '#fff', whiteSpace: 'nowrap' }}>{krwThousandToUsd(GLOBAL_KPIS.wfpActualIncome)}</dd>
               </div>
             </dl>
           </div>
@@ -118,7 +130,7 @@ Result Report · 2025
           {/* Sources */}
           <div>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', margin: '0 0 12px', paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-              Sources &amp; Notice
+              <span lang="ko" style={{ fontFamily: 'var(--font-kr)', letterSpacing: 0 }}>출처 및 안내</span> · Sources &amp; Notice
             </p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
               계획 수치는 제안서(2025.03), 배분 실적은 (2025.1~2025.12) 누적 기준입니다.
@@ -126,6 +138,7 @@ Result Report · 2025
             </p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', margin: '8px 0 0' }}>
               출처: Hunger Hotspots (WFP &amp; FAO, 2025)<br />
+              「In the Shadow of Hunger」 (WFP &amp; World Vision, 2026)<br />
               문의: 인도적지원팀 조항빈 (hangbin_cho@worldvision.or.kr)
             </p>
           </div>

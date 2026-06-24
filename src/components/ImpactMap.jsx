@@ -44,7 +44,7 @@ export default function ImpactMap() {
       zoom: 3,
       minZoom: 2,
       maxZoom: 8,
-      scrollWheelZoom: false,
+      scrollWheelZoom: true,
       attributionControl: true,
       worldCopyJump: true,
     })
@@ -86,10 +86,21 @@ export default function ImpactMap() {
       if (p.cash > 0) rows.push(`<div class="pop-row"><span>현금·교환권</span><strong style="color:#0E7C7B">${fmtUsd(p.cash)} <span style="font-weight:400;color:#9a9a9a;font-size:11px">(${fmtKrw(p.cash)})</span></strong></div>`)
       if (p.ther > 0) rows.push(`<div class="pop-row"><span>치료식</span><strong style="color:#C8102E">${p.ther.toFixed(1)} 톤</strong></div>`)
 
+      // 배분 실적 블록 — 케냐(223864)는 현물·현금 배분 없는 생계 역량 강화 사업이라 별도 표기
+      let bodyHtml
+      if (rows.length) {
+        bodyHtml = `<div class="pop-rows">${rows.join('')}</div>`
+      } else if (p.pbas === '223864') {
+        bodyHtml = `<div class="pop-rows"><div class="pop-row"><span>총 사업비</span><strong>2.2억원</strong></div></div>
+         <p style="font-size:11px;line-height:1.55;color:#6b6b6b;margin:8px 0 0">저축 그룹 운영·비즈니스 교육 등 생계 역량 강화 사업 진행</p>`
+      } else {
+        bodyHtml = `<div class="pop-rows"><div class="pop-row"><span>배분 실적</span><strong>집행 준비 중</strong></div></div>`
+      }
+
       L.marker([p.lat, p.lng], { icon }).bindPopup(
         `<p class="pop-eyebrow">${p.countryEn} · ${p.siteEn}</p>
          <p class="pop-name">${p.country}</p>
-         <div class="pop-rows">${rows.join('') || '<div class="pop-row"><span>배분 실적</span><strong>집행 준비 중</strong></div>'}</div>`
+         ${bodyHtml}`
       ).on('click', () => window.dispatchEvent(new CustomEvent('cg-select-country', { detail: p.country }))).addTo(map)
     })
 

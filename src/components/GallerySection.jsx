@@ -19,7 +19,7 @@ const SLIDES = [
   { pbas: '223864', country: '케냐',           site: '마쿠에니·키투이',  activity: '생계 역량 강화',     color: GREEN,  src: null },
   { pbas: '223707', country: '에티오피아',     site: '티그라이·아파르',  activity: '영양 치료식',        color: RED,    src: null },
   { pbas: '223748', country: '방글라데시',     site: '콕스바자르',       activity: '현금 · 바우처',      color: TEAL,   src: null },
-  { pbas: '223999', country: '중앙아프리카공화국', site: '부아르·방가수', activity: '자산조성지원(FFA)', color: GREEN,  src: null },
+  { pbas: '223999', country: '중앙아프리카공화국', site: '부아르·방가수', activity: '생계 역량 강화 및 자산 조성 기회 제공', color: GREEN,  src: null },
   { pbas: '223255', country: '아프가니스탄',   site: '고르·바드기스',    activity: '식량 배분',          color: ORANGE, src: null },
   { pbas: '223711', country: '수단',           site: '남다르푸르',       activity: '통합 식량지원',      color: ORANGE, src: null },
 ]

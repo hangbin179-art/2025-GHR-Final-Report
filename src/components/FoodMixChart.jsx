@@ -3,17 +3,17 @@ import useIsMobile from '../lib/useIsMobile.js'
 // 2025년 배분 식량 종류(톤). 출처: 사업 식량 배분 실적표(영양치료식 포함).
 const FOOD = [
   { name: '옥수수',         t: 2947.3, color: '#FF5515', note: '주식 탄수화물·열량원. 가뭄에 강해 수단·DR콩고 등 아프리카 현장에서 주력으로 배분.' },
-  { name: '수수',           t: 2652.2, color: '#C2410C', note: '글루텐프리 곡물·철분원. 건조지대에서 현지 조달이 쉬워 전년 대비 약 4배 늘었습니다.' },
-  { name: '콩 (렌틸 등)',   t: 1285.9, color: '#2F7D4F', note: '단백질·철분·식이섬유 공급원. 곡물과 함께 배분해 부족한 단백질을 보충.' },
-  { name: '영양실조 치료식', t: 999.5,  color: '#C8102E', note: '5세 미만·임산부용 고열량 치료식(플럼피넛·CSB++). 에티오피아·DR콩고 영양사업에 집중.' },
-  { name: '밀',             t: 917.6,  color: '#E0A92E', note: '탄수화물 주식. 수입 의존이 커 전년 대비 절반 수준으로 줄었습니다.' },
-  { name: '식용유',         t: 465.1,  color: '#F4C430' },
-  { name: '쌀',             t: 388.7,  color: '#B6A98F' },
+  { name: '수수',           t: 2808.5, color: '#C2410C', note: '글루텐프리 곡물·철분원. 건조지대에서 현지 조달이 쉬워 전년 대비 약 4배 늘었습니다.' },
+  { name: '콩 (렌틸 등)',   t: 1278.6, color: '#2F7D4F', note: '단백질·철분·식이섬유 공급원. 곡물과 함께 배분해 부족한 단백질을 보충.' },
+  { name: '영양실조 치료식', t: 998.1,  color: '#C8102E', note: '5세 미만·임산부용 고열량 치료식(플럼피넛·영양강화식). 에티오피아·DR콩고 영양사업에 집중.' },
+  { name: '밀',             t: 828.0,  color: '#E0A92E', note: '탄수화물 주식. 수입 의존이 커 전년 대비 절반 수준으로 줄었습니다.' },
+  { name: '식용유',         t: 461.7,  color: '#F4C430' },
+  { name: '쌀',             t: 357.1,  color: '#B6A98F' },
   { name: '식량 키트',      t: 349.9,  color: '#6B7280' },
   { name: '기타',           t: 125.6,  color: '#A8A29E' },
-  { name: '소금',           t: 80.2,   color: '#D6D3CD' },
+  { name: '소금',           t: 80.3,   color: '#D6D3CD' },
 ]
-const TOTAL = FOOD.reduce((s, d) => s + d.t, 0) // ≈ 10,212톤
+const TOTAL = FOOD.reduce((s, d) => s + d.t, 0) // = 10,235.1톤
 const MAJOR = FOOD.slice(0, 5)
 
 // 도넛 세그먼트 path — 12시 방향(-90°)에서 시계방향
@@ -97,7 +97,7 @@ export default function FoodMixChart() {
           </p>
 
           <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12.5, lineHeight: 1.65, color: 'var(--grey-700)', margin: '16px 0 0', padding: '12px 14px', background: 'var(--field-50)', borderRadius: 8, borderLeft: '3px solid var(--orange)' }}>
-            <strong style={{ color: 'var(--midnight)' }}>전년 대비 식량 배분량 약 70% 증가</strong> (2024년 6,018톤 → 2025년 10,212톤). 수입 밀 비중을 줄이고, 가뭄에 강하고 역내 조달이 쉬운 <strong style={{ color: 'var(--orange)' }}>수수·옥수수</strong> 중심으로 전환됐습니다.
+            <strong style={{ color: 'var(--midnight)' }}>전년 대비 식량 배분량 약 70% 증가</strong> (2024년 6,018톤 → 2025년 10,235.1톤). 수입 밀 비중을 줄이고, 가뭄에 강하고 역내 조달이 쉬운 <strong style={{ color: 'var(--orange)' }}>수수·옥수수</strong> 중심으로 전환됐습니다.
           </p>
         </div>
       </div>

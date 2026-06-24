@@ -16,7 +16,7 @@ export const COUNTRIES = [
     activities: ['food', 'nutrition'],
     projects: [
       { site: '남부키부 (South Kivu)', siteEn: 'South Kivu', title: 'DRC South Kivu Integrated Food Assistance 2025', lat: -2.50, lng: 28.90, food: 3088.2, ther: 74.9, cash: 0, val: 5050526, beneficiaries: 152882, korea: 37522, plannedTons: 3488, pbas: '223847' },
-      { site: '탕가니카 (Tanganyika)', siteEn: 'Tanganyika', title: 'DRC Tanganyika GFD & Nutrition 2025', lat: -6.00, lng: 29.70, food: 632.6, ther: 0, cash: 0, val: 1093743, beneficiaries: 77122, korea: 15503, plannedTons: 1549, pbas: '223796' },
+      { site: '탕가니카 (Tanganyika)', siteEn: 'Tanganyika', title: 'DRC Tanganyika General Food Distribution (식량 배분) & Nutrition 2025', lat: -6.00, lng: 29.70, food: 632.6, ther: 0, cash: 0, val: 1093743, beneficiaries: 77122, korea: 15503, plannedTons: 1549, pbas: '223796' },
       { site: '카사이 · 루이자 (Kasai · Luiza)', siteEn: 'Kasai · Luiza', title: 'DRC Kasai Luiza Nutrition 2025', lat: -5.90, lng: 22.40, food: 76.2, ther: 76.2, cash: 0, val: 344228, beneficiaries: 66367, korea: 12207, plannedTons: 37, pbas: '224041' },
     ],
   },
@@ -25,9 +25,9 @@ export const COUNTRIES = [
     en: 'Sudan · S. Darfur, S. Kordofan, White Nile', region: '남다르푸르 · 남코르도판 · 백나일',
     activities: ['food', 'cash', 'nutrition'],
     projects: [
-      { site: '남다르푸르 (IFA)', siteEn: 'South Darfur (IFA)', title: 'South Darfur IFA Project', lat: 11.00, lng: 24.90, food: 2276.3, ther: 15.3, cash: 0, val: 3121934, beneficiaries: 475967, korea: 40945, plannedTons: 3168, pbas: '223711' },
-      { site: '남코르도판', siteEn: 'South Kordofan', title: 'South Kordofan IFA Project', lat: 12.20, lng: 30.20, food: 1025.7, ther: 17.4, cash: 324429, val: 1010325, beneficiaries: 249491, korea: 27339, plannedTons: 1624, pbas: '223710' },
-      { site: '남다르푸르 (영양)', siteEn: 'South Darfur (Nutr.)', title: 'South Darfur Community Nutrition Project', lat: 11.10, lng: 24.95, food: 20.1, ther: 20.1, cash: 0, val: 82059, beneficiaries: 33432, korea: 6636, plannedTons: 80, pbas: '223745' },
+      { site: '남다르푸르 (통합 식량지원)', siteEn: 'South Darfur (Integrated Food Assistance)', title: 'South Darfur Integrated Food Assistance Project', lat: 11.00, lng: 24.90, food: 2276.3, ther: 15.3, cash: 0, val: 3121934, beneficiaries: 475967, korea: 40945, plannedTons: 3168, pbas: '223711' },
+      { site: '남코르도판', siteEn: 'South Kordofan', title: 'South Kordofan Integrated Food Assistance Project', lat: 12.20, lng: 30.20, food: 1025.7, ther: 17.4, cash: 324429, val: 1010325, beneficiaries: 249491, korea: 27339, plannedTons: 1624, pbas: '223710' },
+      { site: '남다르푸르 (영양)', siteEn: 'South Darfur (Nutrition)', title: 'South Darfur Community Nutrition Project', lat: 11.10, lng: 24.95, food: 20.1, ther: 20.1, cash: 0, val: 82059, beneficiaries: 33432, korea: 6636, plannedTons: 80, pbas: '223745' },
       { site: '백나일 (White Nile)', siteEn: 'White Nile', title: 'White Nile Integrated Food Assistance Project', lat: 13.05, lng: 32.55, food: 0, ther: 0, cash: 0, val: 0, beneficiaries: 0, korea: 0, plannedTons: 5320, pbas: '223856', note: '현지 정부 승인 지연으로 사업 미진행' },
     ],
   },
@@ -94,7 +94,7 @@ export const COUNTRIES = [
     en: 'Colombia · Valle del Cauca (현금)', region: '바예델카우카 · 현금 전용',
     activities: ['cash'],
     projects: [
-      { site: '바예델카우카', siteEn: 'Valle del Cauca', title: 'Valle Del Cauca CBT & Capacity Building', lat: 3.40, lng: -76.50, food: 0, ther: 0, cash: 1456689, val: 0, beneficiaries: 15635, korea: 10132, plannedTons: 0, pbas: '223799' },
+      { site: '바예델카우카', siteEn: 'Valle del Cauca', title: 'Valle Del Cauca Cash Transfer (현금 및 바우처 배분) & Capacity Building', lat: 3.40, lng: -76.50, food: 0, ther: 0, cash: 1456689, val: 0, beneficiaries: 15635, korea: 10132, plannedTons: 0, pbas: '223799' },
     ],
   },
   {
@@ -102,7 +102,7 @@ export const COUNTRIES = [
     en: 'CAR · Bambari, Bouar (생계)', region: '밤바리 · 부아르 · 생계',
     activities: ['cash', 'livelihood'],
     projects: [
-      { site: '밤바리 · 부아르 (자산조성지원 FFA)', siteEn: 'Bambari · Bouar', title: 'CAR Resilience Programme 2025', lat: 5.70, lng: 20.70, food: 0, ther: 0, cash: 87318, val: 0, beneficiaries: 26630, korea: 3277, plannedTons: 0, pbas: '223999' },
+      { site: '밤바리 · 부아르 (생계 역량 강화 및 자산 조성 기회 제공)', siteEn: 'Bambari · Bouar', title: 'CAR Resilience Programme 2025', lat: 5.70, lng: 20.70, food: 0, ther: 0, cash: 87318, val: 0, beneficiaries: 26630, korea: 3277, plannedTons: 0, pbas: '223999' },
     ],
   },
   {
@@ -118,7 +118,7 @@ export const COUNTRIES = [
     en: 'Kenya · Makueni, Kitui', region: '마쿠에니 · 키투이',
     activities: ['livelihood'],
     projects: [
-      { site: '마쿠에니 · 키투이 (VSLA · 작물보험)', siteEn: 'Makueni · Kitui', title: 'Sustainable Food Systems Project', lat: -1.80, lng: 37.60, food: 0, ther: 0, cash: 0, val: 0, beneficiaries: 64080, korea: 64080, plannedTons: 0, pbas: '223864', note: '저축그룹 운영비 및 가축 구입 등 생계 역량 강화 활동 사업비' },
+      { site: '마쿠에니 · 키투이 (마을저축그룹 · 작물보험)', siteEn: 'Makueni · Kitui', title: 'Sustainable Food Systems Project', lat: -1.80, lng: 37.60, food: 0, ther: 0, cash: 0, val: 0, beneficiaries: 64080, korea: 64080, plannedTons: 0, pbas: '223864', note: '저축그룹 운영비 및 가축 구입 등 생계 역량 강화 활동 사업비' },
     ],
   },
 ]
@@ -189,4 +189,4 @@ export const ALL_PROJECTS = COUNTRIES.flatMap((c) =>
 )
 
 // 배분 실적 공식 합계 (그랜드 토탈 — 보고서 확정 수치)
-export const TOTALS = { food: 10235.1, foodVal: 16038579, cash: 5105981, ther: 999.5 }
+export const TOTALS = { food: 10235.1, foodVal: 16038579, cash: 5105981, ther: 998.1 }
