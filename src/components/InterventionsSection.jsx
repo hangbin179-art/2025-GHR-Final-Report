@@ -2,6 +2,7 @@ import ProjectTable from './ProjectTable.jsx'
 import DistributionCharts from './DistributionCharts.jsx'
 import NarrativePrograms, { PhotoSlot, Quote } from './NarrativePrograms.jsx'
 import ScrollReveal from './ScrollReveal.jsx'
+import FoodMixChart from './FoodMixChart.jsx'
 import useIsMobile from '../lib/useIsMobile.js'
 
 const TEAL = '#0E7C7B'
@@ -123,6 +124,8 @@ export default function InterventionsSection() {
               배분했습니다. 식량 지원으로 끼니 걱정을 던 하와는 시장 여성들에게서 <strong style={{ color: 'var(--orange)' }}>비누
               만드는 법</strong>을 배워 작은 사업을 시작했고, 지금은 다른 피난 여성들을 고용해 함께 생계를 꾸립니다.
             </FieldStory>
+
+            <FoodMixChart />
           </article>
           </ScrollReveal>
 

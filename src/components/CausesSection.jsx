@@ -98,7 +98,7 @@ export default function CausesSection() {
               분쟁은 이주 → 인프라·시장 붕괴 → 지원 불안정 → 식량위기 심화의
               악순환을 만듭니다.
             </p>
-            <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'baseline', gap: 10 }}>
+            <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span className="num" style={{ fontSize: 42, color: 'var(--red-800)' }}>
                 15<span style={{ fontSize: 24, color: 'var(--grey-500)' }}>/16</span>
               </span>
@@ -145,7 +145,7 @@ export default function CausesSection() {
               잦은 가뭄과 홍수, 불규칙한 날씨가 흉작과 농업 피해로 이어집니다.
               기후 충격은 취약 지역의 식량 생산성을 직접적으로 떨어뜨립니다.
             </p>
-            <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'baseline', gap: 10 }}>
+            <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 30, color: 'var(--blue-900)', letterSpacing: '-0.02em' }}>
                 가뭄·홍수
               </span>
@@ -193,7 +193,7 @@ export default function CausesSection() {
               수요는 늘지만 인도적지원 자금은 줄어, 배급량이 하루 권장 칼로리의
               50% 미만까지 축소되기도 합니다.
             </p>
-            <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'baseline', gap: 10 }}>
+            <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span className="num" style={{ fontSize: 42, color: 'var(--orange-900)' }}>
                 &lt;50<span style={{ fontSize: 24 }}>%</span>
               </span>
@@ -220,7 +220,7 @@ export default function CausesSection() {
               <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 'clamp(22px, 2.6vw, 30px)', lineHeight: 1.3, letterSpacing: '-0.02em', color: 'var(--midnight)', margin: 0 }}>
                 위기가 깊어질수록, 그 그늘은 아이들에게 가장 먼저 드리워집니다.
               </h3>
-              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.7, color: 'var(--grey-600)', margin: '12px 0 0', maxWidth: '62ch' }}>
+              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.7, color: 'var(--grey-600)', margin: '12px 0 0' }}>
                 WFP와 월드비전이 8개 식량위기국에서 함께 수행한 공동연구 「In the Shadow of Hunger」(2026)는,
                 식량 불안정과 배급 삭감이 아동에게 남기는 충격을 분석했습니다.
               </p>
@@ -300,7 +300,7 @@ function ImpactCard({ eyebrow, accent, accentBg, title, body, stat, statLabel, i
       <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, flex: 1 }}>
         {body}
       </p>
-      <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'baseline', gap: 10 }}>
+      <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
         <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 28, color: accent, letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
           {stat}
         </span>

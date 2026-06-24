@@ -1,5 +1,5 @@
 const NAV = [
-  { href: '#sec-causes',  num: '01', label: '원인' },
+  { href: '#sec-causes',  num: '01', label: '원인·영향' },
   { href: '#sec-where',   num: '02', label: '현장' },
   { href: '#sec-what',    num: '03', label: '활동' },
   { href: '#sec-result',  num: '04', label: '성과' },
