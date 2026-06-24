@@ -287,6 +287,8 @@ const ACTIVITIES = [
     panelNote: "케냐 등에서 저축 그룹·종자·기술로 '다음 위기'를 견디는 힘을 길렀습니다.",
   },
 ]
+// 활동별 대표 현장 사진 (public/gallery) — 식량/현금/영양/학교/생계 순
+const ACT_PHOTOS = ['223847-1', '223748-3', '223707-1', '223806-1', '223864-1']
 ACTIVITIES.forEach((a, idx) => {
   const s = pres.addSlide(); s.background = { color: WHITE }
   header(s, `03  ·  WHAT  —  핵심 활동  ${idx + 1} / 5`, a.name, a.c)
@@ -297,18 +299,18 @@ ACTIVITIES.forEach((a, idx) => {
   // 불릿
   s.addText(a.points.map((p) => ({ text: p, options: { bullet: { code: '2022', indent: 14 }, breakLine: true, paraSpaceAfter: 11 } })),
     { x: ML + 0.28, y: 2.92, w: 7.5, h: 2.7, fontFace: KR, fontSize: 13.5, color: G6, lineSpacingMultiple: 1.14, valign: 'top' })
-  // 우측 컬러 패널(핵심 지표 + 현장 메모)
-  const px = 8.62, pw = 4.06, py = 1.82, ph = 3.72
-  s.addShape(RR, { x: px, y: py, w: pw, h: ph, fill: { color: a.c }, rectRadius: 0.1, shadow: softShadow() })
-  s.addText('핵심 지표', { x: px + 0.3, y: py + 0.28, w: pw - 0.6, h: 0.3, fontFace: KR, fontSize: 11, bold: true, color: 'FFFFFF', transparency: 25, charSpacing: 1 })
-  const bigSize = /\d/.test(a.statBig) ? 46 : 30
+  // 우측: 실제 활동 사진 + 컬러 지표 바
+  const px = 8.62, pw = 4.06, py = 1.82
+  const photoH = 2.28, barY = py + photoH, barH = 1.44
+  s.addImage({ path: `${PUB}/gallery/${ACT_PHOTOS[idx]}.jpg`, x: px, y: py, w: pw, h: photoH, sizing: { type: 'cover', w: pw, h: photoH }, shadow: softShadow() })
+  s.addShape(RR, { x: px, y: barY, w: pw, h: barH, fill: { color: a.c }, rectRadius: 0.08 })
+  s.addText('핵심 지표', { x: px + 0.3, y: barY + 0.16, w: pw - 0.6, h: 0.26, fontFace: KR, fontSize: 10.5, bold: true, color: 'FFFFFF', transparency: 25, charSpacing: 1 })
+  const bigSize = /\d/.test(a.statBig) ? 32 : 24
   s.addText([
-    { text: a.statBig, options: { fontSize: bigSize, bold: true, color: WHITE, breakLine: true } },
-    ...(a.statUnit ? [{ text: a.statUnit, options: { fontSize: 16, bold: true, color: 'FFE9E0', breakLine: true } }] : []),
-  ], { x: px + 0.25, y: py + 0.62, w: pw - 0.5, h: 1.35, align: 'center', valign: 'middle', fontFace: KR })
-  s.addText(a.statLabel, { x: px + 0.3, y: py + 2.02, w: pw - 0.6, h: 0.5, align: 'center', fontFace: KR, fontSize: 12.5, color: 'F7F2F0', lineSpacingMultiple: 1.1 })
-  s.addShape(LN, { x: px + 0.42, y: py + 2.66, w: pw - 0.84, h: 0, line: { color: 'FFFFFF', width: 0.75, transparency: 45 } })
-  s.addText(a.panelNote, { x: px + 0.32, y: py + 2.78, w: pw - 0.64, h: 0.85, fontFace: KR, fontSize: 12, color: 'FBEFEA', lineSpacingMultiple: 1.16, valign: 'top' })
+    { text: a.statBig, options: { fontSize: bigSize, bold: true, color: WHITE } },
+    ...(a.statUnit ? [{ text: '  ' + a.statUnit, options: { fontSize: 13, bold: true, color: 'FFE9E0' } }] : []),
+  ], { x: px + 0.3, y: barY + 0.44, w: pw - 0.6, h: 0.58, fontFace: KR, valign: 'middle' })
+  s.addText(a.statLabel, { x: px + 0.3, y: barY + 1.02, w: pw - 0.6, h: 0.36, fontFace: KR, fontSize: 10.5, color: 'F7F2F0', lineSpacingMultiple: 1.05, valign: 'top' })
   // 하단 '사업 형태' 번호 플로우
   s.addText('사업 형태', { x: ML, y: 5.82, w: 3, h: 0.3, fontFace: KR, fontSize: 12, bold: true, color: G6 })
   const stepN = a.steps.length, flowW = 11.9, segW = flowW / stepN, cyc = 6.36
@@ -386,7 +388,7 @@ ACTIVITIES.forEach((a, idx) => {
   // 3개 성과 카드
   const dials = [
     { title: '식량 배분', val: '10,235.1', unit: '톤', pct: 48.4, sub: '계획 21,133톤 中 48.4%', c: ORANGE },
-    { title: '현금·교환권', val: '$5.1M', unit: '≈68억원', pct: 47.7, sub: '계획 $10.7M 中 47.7%', c: TEAL },
+    { title: '현금·교환권', val: '$5.1M', unit: '≈68억원', pct: 63.4, sub: '계획 $8.05M 中 63.4%', c: TEAL },
     { title: '영양 치료식', val: '998.1', unit: '톤', pct: 100, sub: '급성 영양실조 치료식 누계', c: RED, noPct: true },
   ]
   const gx = 0.34, cardW = (CW - gx * 2) / 3, cardH = 1.72, y0 = 1.78
@@ -424,7 +426,7 @@ ACTIVITIES.forEach((a, idx) => {
   // 각주
   s.addText([
     { text: '*  다자기구협력사업 특성상 사업 규모·일정은 글로벌 인도적지원 필요 상황, 도너(WFP) 자금 상황 및 식량 수급에 따라 변동될 수 있습니다.', options: { breakLine: true, paraSpaceAfter: 5 } },
-    { text: '**  식량·현금 집행률이 약 50% 수준인 주요 사유 — ① 미국 USAID(국제개발처) 폐지에 따른 사업 축소·중단, ② 수단·콩고민주공화국 등 분쟁 심화, ③ 수단 화이트나일(White Nile) 사업의 현지 정부 승인 지연.', options: {} },
+    { text: '**  식량·현금 배분 집행률이 계획 목표에 미치지 못한 주요 사유 — ① 미국 USAID(국제개발처) 폐지에 따른 사업 축소·중단, ② 수단·콩고민주공화국 등 분쟁 심화, ③ 수단 화이트나일(White Nile) 사업의 현지 정부 승인 지연.', options: {} },
   ], { x: ML, y: 5.62, w: CW, h: 1.25, fontFace: KR, fontSize: 10.5, color: G6, lineSpacingMultiple: 1.08, valign: 'top' })
   footer(s, 11)
 }
@@ -435,31 +437,31 @@ ACTIVITIES.forEach((a, idx) => {
 {
   const s = pres.addSlide(); s.background = { color: WHITE }
   header(s, '05  ·  GALLERY', '현장의 기록', ORANGE)
+  s.addText('10개국 현장 사진 — 식량·현금·영양·학교·생계 전 활동의 기록', { x: ML + 0.26, y: 1.34, w: 11.6, h: 0.3, fontFace: KR, fontSize: 12, color: G6 })
   // 사진 + 오버레이 캡션
-  const cap = (x, y, w, h, tag, place, credit, big) => {
-    const strip = big ? 0.74 : 0.56
-    s.addShape(RECT, { x, y: y + h - strip, w, h: strip, fill: { color: MID, transparency: 14 } })
+  const cap = (x, y, w, h, tag, place, credit) => {
+    const strip = 0.56
+    s.addShape(RECT, { x, y: y + h - strip, w, h: strip, fill: { color: MID, transparency: 12 } })
     s.addText([
-      { text: tag + '    ', options: { color: ORANGE, bold: true, fontSize: big ? 12.5 : 10.5 } },
-      { text: place, options: { color: WHITE, bold: true, fontSize: big ? 14 : 11.5 } },
-    ], { x: x + 0.2, y: y + h - strip + (big ? 0.12 : 0.07), w: w - 0.35, h: big ? 0.34 : 0.28, fontFace: KR, valign: 'middle' })
-    s.addText(credit, { x: x + 0.2, y: y + h - (big ? 0.26 : 0.21), w: w - 0.4, h: 0.18, fontFace: EN, fontSize: big ? 8.5 : 7.5, color: 'DCDCDC' })
+      { text: tag + '   ', options: { color: ORANGE, bold: true, fontSize: 10 } },
+      { text: place, options: { color: WHITE, bold: true, fontSize: 11.5 } },
+    ], { x: x + 0.16, y: y + h - strip + 0.06, w: w - 0.3, h: 0.26, fontFace: KR, valign: 'middle' })
+    s.addText(credit, { x: x + 0.16, y: y + h - 0.2, w: w - 0.3, h: 0.16, fontFace: EN, fontSize: 7, color: 'D9D9D9' })
   }
-  const y0 = 1.6, bigW = 6.45, bigH = 5.12
-  // 큰 사진(좌)
-  s.addImage({ path: `${PUB}/gallery/drc-southkivu.jpg`, x: ML, y: y0, w: bigW, h: bigH, sizing: { type: 'cover', w: bigW, h: bigH }, shadow: shadow() })
-  cap(ML, y0, bigW, bigH, '일반식량 배분', '콩고민주공화국 · 남부 키부', '© World Vision · DR Congo 2025', true)
-  // 작은 사진 3장(우, 세로 스택)
-  const sx = ML + bigW + 0.3, sw = CW - bigW - 0.3, sh = (bigH - 0.3 * 2) / 3
-  const small = [
-    [`${PUB}/gallery/afghanistan-ghor.jpg`, '식량 배분', '아프가니스탄 · 고르·바드기스', '© World Vision · Afghanistan 2025'],
-    [`${PUB}/gallery/ethiopia-tigray.jpg`, '영양 치료식', '에티오피아 · 티그라이', '© World Vision · Ethiopia 2025'],
-    [`${PUB}/gallery/bangladesh-coxsbazar.jpg`, '현금·교환권', '방글라데시 · 콕스바자르', '© World Vision · Bangladesh 2025'],
+  const galleryPhotos = [
+    ['223756-1', '생계 역량 강화', '남수단 · 파쇼다', 'South Sudan'],
+    ['223999-1', '현금 배분', '중앙아프리카 · 부아르', 'CAR'],
+    ['223255-1', '일반식량 배분', '아프가니스탄 · 고르', 'Afghanistan'],
+    ['223766-1', '일반식량 배분', '우간다 · 비디비디', 'Uganda'],
+    ['223745-2', '영양 치료식', '수단 · 남다르푸르', 'Sudan'],
+    ['223806-2', '학교 급식', '베네수엘라 · 줄리아', 'Venezuela'],
   ]
-  small.forEach((p, i) => {
-    const py = y0 + i * (sh + 0.3)
-    s.addImage({ path: p[0], x: sx, y: py, w: sw, h: sh, sizing: { type: 'cover', w: sw, h: sh }, shadow: shadow() })
-    cap(sx, py, sw, sh, p[1], p[2], p[3], false)
+  const cols = 3, gpx = 0.3, gpy = 0.32, gy0 = 1.72, gph = 2.3
+  const gpw = (CW - gpx * (cols - 1)) / cols
+  galleryPhotos.forEach((p, i) => {
+    const x = ML + (i % cols) * (gpw + gpx), y = gy0 + Math.floor(i / cols) * (gph + gpy)
+    s.addImage({ path: `${PUB}/gallery/${p[0]}.jpg`, x, y, w: gpw, h: gph, sizing: { type: 'cover', w: gpw, h: gph }, shadow: shadow() })
+    cap(x, y, gpw, gph, p[1], p[2], `© World Vision · ${p[3]} 2025`)
   })
   footer(s, 12)
 }
