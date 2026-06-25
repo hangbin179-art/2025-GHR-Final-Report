@@ -114,9 +114,9 @@ export default function InterventionsSection() {
 
             <FieldStory
               accent="var(--orange)"
-              eyebrow="Field Story · 수단 남코르도판"
-              photo="/gallery/223710-1.jpg"
-              caption="남코르도판 알 아바시야 식량배분소(FDP) — WFP·월드비전 식량 배분 현장."
+              eyebrow="Field Story · 수단"
+              photo="/gallery/223711-3.jpg"
+              caption="수단 남다르푸르 식량 배분 현장 — 트럭으로 반입된 식량이 분배소에서 배분을 기다립니다."
               quote="아이들이 더는 굶지 않게 되자, 비로소 내일을 계획할 수 있었습니다."
               quoteSource="하와 이스마일 · 아부주바이하 캠프, 네 자녀의 어머니"
             >
