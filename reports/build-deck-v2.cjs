@@ -63,7 +63,7 @@ function progress(s, x, y, w, pct, color) {
   s.addText('최종 결과보고  ·  FINAL REPORT', { x: 0.8, y: 5.74, w: 10, h: 0.42, fontFace: KR, fontSize: 17, color: 'EDEDED' })
   // 하단 KPI 리본
   s.addShape(LN, { x: 0.82, y: 6.42, w: 3.1, h: 0, line: { color: ORANGE, width: 2 } })
-  const kpis = [['13개국', '20개 사업'], ['10,235톤', '식량 배분'], ['$5.1M', '현금·교환권'], ['330억원', '총 사업비']]
+  const kpis = [['13개국', '20개 사업'], ['10,235톤', '식량 배분'], ['$5.1M', '현금·교환권'], ['336억원', '총 사업비']]
   const rx = 0.8, rw = 11.3, cw = rw / kpis.length
   kpis.forEach((k, i) => {
     const x = rx + i * cw
@@ -85,8 +85,8 @@ function progress(s, x, y, w, pct, color) {
     { label: '식량 배분', num: '10,235.1', unit: '톤', c: ORANGE, note: '계획 21,133톤의 48% 집행' },
     { label: '영양 치료식', num: '998.1', unit: '톤', c: RED, note: '식량 배분량에 포함된 치료식' },
     { label: '현금·교환권', num: '$5.1M', unit: '≈ 68억원', c: TEAL, note: '시장 기능 회복 지역 대상' },
-    { label: '자금 레버리지', num: '25.6배', unit: '한국 기여 대비', c: ORANGE, note: '12.9억원 → 330억원으로 확장' },
-    { label: '총 사업비', num: '$24.8M', unit: '≈ 330억원', c: MID, note: 'WFP 다자협력으로 집행' },
+    { label: '자금 레버리지', num: '24배', unit: '한국 기여 대비', c: ORANGE, note: '14.0억원 → 336억원으로 확장' },
+    { label: '총 사업비', num: '$25.3M', unit: '≈ 336억원', c: MID, note: 'WFP 다자협력으로 집행' },
     { label: '사업 규모', num: '13개국', unit: '20개 사업', c: GREEN, note: '아프리카·중동·아시아 전역' },
   ]
   const gx = 0.36, gy = 0.4, cardW = (CW - gx * 2) / 3, cardH = 2.25, x0 = ML, y0 = 1.92
@@ -408,20 +408,20 @@ ACTIVITIES.forEach((a, idx) => {
   const by = 3.74, bh = 1.62
   s.addShape(RR, { x: ML, y: by, w: CW, h: bh, fill: { color: MID }, rectRadius: 0.1, shadow: softShadow() })
   s.addText('자금 레버리지', { x: ML + 0.4, y: by + 0.26, w: 3.4, h: 0.3, fontFace: KR, fontSize: 13, bold: true, color: 'C9C9D2' })
-  s.addText('25.6×', { x: ML + 0.36, y: by + 0.5, w: 3.2, h: 0.95, fontFace: KR, fontSize: 56, bold: true, color: ORANGE })
-  // 흐름: 12.9억 → 330억
+  s.addText('24×', { x: ML + 0.36, y: by + 0.5, w: 3.2, h: 0.95, fontFace: KR, fontSize: 56, bold: true, color: ORANGE })
+  // 흐름: 14.0억 → 336억
   const fx = ML + 4.0
   s.addShape(RR, { x: fx, y: by + 0.42, w: 2.7, h: 0.78, fill: { color: 'FFFFFF', transparency: 86 }, rectRadius: 0.08 })
   s.addText([
     { text: '한국 기여 (매칭)', options: { fontSize: 10, color: 'B9B9C4', breakLine: true } },
-    { text: '12.9억원', options: { fontSize: 19, bold: true, color: WHITE } },
+    { text: '14.0억원', options: { fontSize: 19, bold: true, color: WHITE } },
   ], { x: fx + 0.2, y: by + 0.5, w: 2.3, h: 0.62, fontFace: KR, valign: 'middle' })
   s.addText('→', { x: fx + 2.7, y: by + 0.42, w: 0.9, h: 0.78, align: 'center', valign: 'middle', fontFace: EN, fontSize: 30, bold: true, color: ORANGE })
   s.addShape(RR, { x: fx + 3.6, y: by + 0.42, w: 4.05, h: 0.78, fill: { color: ORANGE }, rectRadius: 0.08 })
   s.addText([
     { text: 'WFP 다자협력 총 사업비', options: { fontSize: 10, color: 'FFE0D4', breakLine: true } },
-    { text: '330억원  ', options: { fontSize: 22, bold: true, color: WHITE } },
-    { text: '($24.8M)', options: { fontSize: 13, bold: true, color: 'FFE9E0' } },
+    { text: '336억원  ', options: { fontSize: 22, bold: true, color: WHITE } },
+    { text: '($25.3M)', options: { fontSize: 13, bold: true, color: 'FFE9E0' } },
   ], { x: fx + 3.82, y: by + 0.48, w: 3.7, h: 0.66, fontFace: KR, valign: 'middle' })
   // 각주
   s.addText([
