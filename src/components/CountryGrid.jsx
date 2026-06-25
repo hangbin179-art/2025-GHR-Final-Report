@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { Wheat, Banknote, HeartPulse, GraduationCap, Sprout, X } from 'lucide-react'
 import { AnimatedGradient } from './AnimatedGradient.jsx'
 import { usdToKrwLabel } from '../lib/format.js'
@@ -35,22 +36,23 @@ function fmtCash(n) {
 }
 
 // 활동 아이콘 — 하는 활동은 컬러, 안 하는 활동은 회색
-function ActivityChip({ def, active }) {
+function ActivityChip({ def, active, isMobile }) {
   const { Icon, label, color } = def
+  const sz = isMobile ? 44 : 50
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, flex: 1, minWidth: 60 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, flex: 1, minWidth: 0 }}>
       <div style={{
-        width: 50, height: 50, borderRadius: 14,
+        width: sz, height: sz, borderRadius: 14,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: active ? `${color}1A` : '#f1f0ee',
         color: active ? color : '#c2c0bb',
         border: active ? `1.5px solid ${color}59` : '1.5px solid var(--field-200)',
-        transition: 'all 0.2s ease',
+        transition: 'all 0.2s ease', flexShrink: 0,
       }}>
-        <Icon size={23} strokeWidth={2} />
+        <Icon size={isMobile ? 20 : 23} strokeWidth={2} />
       </div>
       <span lang="ko" style={{
-        fontFamily: 'var(--font-kr)', fontSize: 11, textAlign: 'center',
+        fontFamily: 'var(--font-kr)', fontSize: 11, textAlign: 'center', lineHeight: 1.25,
         fontWeight: active ? 700 : 500, color: active ? 'var(--midnight)' : 'var(--grey-500)',
       }}>
         {label}
@@ -95,17 +97,17 @@ function FinOp({ children }) {
   return <span className="num" style={{ fontSize: 16, color: 'var(--field-300)', flex: '0 0 auto' }}>{children}</span>
 }
 
-function ProjectRow({ p }) {
+function ProjectRow({ p, isMobile }) {
   // 분배 실적이 전무하지만 계획 물량이 있던 사업(예: 백나일 미진행)은 빨강, 그 외(생계 등)는 회색
   const undelivered = !(p.food > 0) && !(p.cash > 0) && !(p.ther > 0) && p.plannedTons > 0
   return (
     <div style={{ padding: '14px 0', borderBottom: '1px solid var(--field-200)' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'center' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr auto', gap: isMobile ? 8 : 16, alignItems: isMobile ? 'start' : 'center' }}>
         <div style={{ minWidth: 0 }}>
           <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--midnight)' }}>{p.site}</span>
           {p.title && <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-500)', marginTop: 2 }}>{p.title}</span>}
         </div>
-        <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'baseline' }}>
+        <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', justifyContent: isMobile ? 'flex-start' : 'flex-end', alignItems: 'baseline' }}>
           {p.food > 0 && p.ther > 0 ? (
             /* 치료식 무게는 식량 배분량에 포함되는 부분집합 → "식량 N톤 중 치료식 N톤"으로 표기 */
             <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 7 }}>
@@ -130,16 +132,46 @@ function ProjectRow({ p }) {
 export default function CountryGrid() {
   const isMobile = useIsMobile()
   const [selected, setSelected] = useState(null)
-  const panelRef = useRef(null)
+  const firstZoom = useRef(true)
+  const drawerRef = useRef(null)
   const country = COUNTRIES.find((c) => c.name === selected)
 
-  // 선택 시 패널을 화면 안으로 부드럽게 스크롤
+  // 국가 선택 시 → 지도에게 해당 국가로 확대(zoom)하라고 알림 (ImpactMap이 수신).
+  // 보고 있는 화면은 그대로 두고 지도만 제자리에서 확대된다(사용자 요청). 닫을 땐 자동 축소하지 않음.
+  useEffect(() => {
+    if (firstZoom.current) { firstZoom.current = false; return }
+    if (selected) window.dispatchEvent(new CustomEvent('cg-zoom-country', { detail: selected }))
+  }, [selected])
+
+  // 상세 드로어가 열려 있는 동안: 배경 스크롤 잠금(이전 값 복원) + Esc 닫기 + 포커스 이동/트랩/복원
   useEffect(() => {
     if (!selected) return
-    const t = setTimeout(() => {
-      if (panelRef.current) panelRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
-    }, 80)
-    return () => clearTimeout(t)
+    const prevFocus = document.activeElement
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const drawer = drawerRef.current
+    const getFocusables = () => (drawer
+      ? Array.from(drawer.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')).filter((el) => !el.hasAttribute('disabled'))
+      : [])
+    // 포커스를 드로어 안으로 이동 (닫기 버튼 우선)
+    const f = getFocusables()
+    ;(f[0] || drawer)?.focus()
+    const onKey = (e) => {
+      if (e.key === 'Escape') { setSelected(null); return }
+      if (e.key !== 'Tab' || !drawer) return
+      const items = getFocusables()
+      if (!items.length) { e.preventDefault(); drawer.focus(); return }
+      const first = items[0], last = items[items.length - 1]
+      const active = document.activeElement
+      if (e.shiftKey && (active === first || active === drawer)) { e.preventDefault(); last.focus() }
+      else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus() }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prevOverflow
+      if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus()
+    }
   }, [selected])
 
   // 지도 마커 클릭 → 해당 국가 상세 열기 (ImpactMap에서 발생시키는 이벤트 수신)
@@ -156,7 +188,7 @@ export default function CountryGrid() {
       <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '0 0 16px' }}>
         Country Grid · 13개국 직접 비교
         <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 600, textTransform: 'none', letterSpacing: 0, color: 'var(--orange)', marginLeft: 8 }}>
-          · 카드를 클릭하면 사업 상세가 열립니다
+          · 카드를 클릭하면 지도가 확대되고 사업 개요가 옆에서 열립니다
         </span>
       </p>
       <div style={{ position: 'relative', border: '1px solid var(--field-200)', borderRadius: 8, overflow: 'hidden' }}>
@@ -228,9 +260,9 @@ export default function CountryGrid() {
                   <div style={{ height: '100%', width: `${barPct}%`, background: barColor, borderRadius: 2 }} />
                 </div>
               )}
-              {/* 클릭 가능 표시 */}
+              {/* 클릭 가능 표시 — 옆(사이드 드로어)으로 열림을 암시하는 › */}
               <span aria-hidden style={{ position: 'absolute', bottom: 6, right: 10, fontSize: 13, lineHeight: 1, fontWeight: 700, color: isSel ? 'var(--orange)' : '#c2c0bb' }}>
-                {isSel ? '▾' : '›'}
+                ›
               </span>
             </div>
           )
@@ -238,86 +270,104 @@ export default function CountryGrid() {
         </div>
       </div>
 
-      {/* 선택된 국가 상세 패널 */}
-      {country && (
+      {/* 선택된 국가 상세 — 우측 사이드 드로어 (createPortal로 body 최상위에 오버레이) */}
+      {country && createPortal(
         <div
-          ref={panelRef}
-          key={country.name}
+          className="cg-scrim"
+          onClick={() => setSelected(null)}
           style={{
-            marginTop: 24,
-            background: '#fff',
-            border: '1px solid var(--field-200)',
-            borderRadius: 12,
-            padding: isMobile ? '22px 18px 24px' : '28px 32px 32px',
-            position: 'relative',
-            animation: 'cgPanelIn 0.34s ease-out',
+            position: 'fixed', inset: 0, zIndex: 3000,
+            background: 'rgba(17,18,34,0.42)',
+            display: 'flex', justifyContent: 'flex-end',
+            animation: 'cgScrimIn 0.25s ease-out',
           }}
         >
-          <button
-            onClick={() => setSelected(null)}
-            aria-label="상세 닫기"
+          <div
+            className="cg-drawer"
+            key={country.name}
+            ref={drawerRef}
+            tabIndex={-1}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${country.name} 사업 개요`}
+            onClick={(e) => e.stopPropagation()}
             style={{
-              position: 'absolute', top: 18, right: 18, width: 34, height: 34, borderRadius: 999,
-              border: '1px solid var(--field-200)', background: '#fff', cursor: 'pointer',
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--grey-600)',
+              width: 'min(500px, 93vw)', background: '#fff', outline: 'none',
+              boxShadow: '-14px 0 44px rgba(17,18,34,0.24)',
+              display: 'flex', flexDirection: 'column', position: 'relative',
+              animation: 'cgDrawerIn 0.32s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
           >
-            <X size={17} />
-          </button>
+            <button
+              onClick={() => setSelected(null)}
+              aria-label="상세 닫기"
+              style={{
+                position: 'absolute', top: 14, right: 14, zIndex: 2, width: 34, height: 34, borderRadius: 999,
+                border: '1px solid var(--field-200)', background: '#fff', cursor: 'pointer',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: 'var(--grey-600)',
+                boxShadow: '0 1px 4px rgba(17,18,34,0.1)',
+              }}
+            >
+              <X size={17} />
+            </button>
 
-          <p style={{ fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--orange)', margin: '0 0 10px' }}>
-            Country Detail · 국가별 사업 개요
-          </p>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
-            <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 28, color: 'var(--midnight)', margin: 0, letterSpacing: '-0.02em' }}>
-              {country.name}
-            </h3>
-            <span style={{ fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 600, color: 'var(--grey-600)' }}>
-              {country.en.split('·')[0].trim()}
-            </span>
-          </div>
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-600)', margin: '6px 0 0' }}>
-            {country.region}
-          </p>
-
-          {/* 재무 구조 — 한국 매칭 기여금 →(레버리지) WFP 다자협력 총 사업비 (WFP 기여분 기준, 배분액과 다름을 명시) */}
-          {country.wfpIncome > 0 && (() => {
-            const eok = (usd) => +(usd * 1330 / 1e8).toFixed(1)   // USD → 억원(소수1자리)
-            const m = eok(country.match), w = eok(country.wfpIncome)
-            return (
-            <div style={{ marginTop: 22, padding: isMobile ? '16px 14px' : '18px 22px', background: 'var(--field-50)', borderRadius: 10, border: '1px solid var(--field-200)' }}>
-              <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'center', gap: isMobile ? 0 : 14 }}>
-                <FinanceCell isMobile={isMobile} label="한국 매칭 기여금" krw={`${m.toFixed(1)}억원`} usd={fmtCash(country.match)} color="var(--orange)" />
-                {!isMobile && <FinOp>→</FinOp>}
-                <FinanceCell isMobile={isMobile} label="WFP 다자협력 총 사업비" krw={`${w.toFixed(1)}억원`} usd={fmtCash(country.wfpIncome)} emphasize />
-              </div>
-              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '12px 0 0', lineHeight: 1.6, textAlign: 'center' }}>
-                한국 매칭 기여금이 WFP 다자협력 사업비를 견인했습니다. 총 사업비는 WFP 기여분 기준이며, 식량·현금 배분 외 영양·학교급식·생계·물류·운영비가 포함되어 아래 배분 실적과는 차이가 있습니다.
+            <div className="panel-scroll" style={{ overflowY: 'auto', WebkitOverflowScrolling: 'touch', flex: 1, padding: isMobile ? '24px 18px 40px' : '30px 32px 40px' }}>
+              <p style={{ fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--orange)', margin: '0 0 10px' }}>
+                Country Detail · 국가별 사업 개요
               </p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap', paddingRight: 40 }}>
+                <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 28, color: 'var(--midnight)', margin: 0, letterSpacing: '-0.02em' }}>
+                  {country.name}
+                </h3>
+                <span style={{ fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 600, color: 'var(--grey-600)' }}>
+                  {country.en.split('·')[0].trim()}
+                </span>
+              </div>
+              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-600)', margin: '6px 0 0' }}>
+                {country.region}
+              </p>
+
+              {/* 재무 구조 — 한국 매칭 기여금 →(레버리지) WFP 다자협력 총 사업비 */}
+              {country.wfpIncome > 0 && (() => {
+                const eok = (usd) => +(usd * 1330 / 1e8).toFixed(1)   // USD → 억원(소수1자리)
+                const m = eok(country.match), w = eok(country.wfpIncome)
+                return (
+                <div style={{ marginTop: 22, padding: isMobile ? '16px 14px' : '18px 22px', background: 'var(--field-50)', borderRadius: 10, border: '1px solid var(--field-200)' }}>
+                  <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'center', gap: isMobile ? 0 : 14 }}>
+                    <FinanceCell isMobile={isMobile} label="한국 매칭 기여금" krw={`${m.toFixed(1)}억원`} usd={fmtCash(country.match)} color="var(--orange)" />
+                    {!isMobile && <FinOp>→</FinOp>}
+                    <FinanceCell isMobile={isMobile} label="WFP 다자협력 총 사업비" krw={`${w.toFixed(1)}억원`} usd={fmtCash(country.wfpIncome)} emphasize />
+                  </div>
+                  <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '12px 0 0', lineHeight: 1.6, textAlign: 'center' }}>
+                    한국 매칭 기여금이 WFP 다자협력 사업비를 견인했습니다. 총 사업비는 WFP 기여분 기준이며, 식량·현금 배분 외 영양·학교급식·생계·물류·운영비가 포함되어 아래 배분 실적과는 차이가 있습니다.
+                  </p>
+                </div>
+                )
+              })()}
+
+              {/* 5대 활동 */}
+              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', margin: '24px 0 14px' }}>
+                진행 활동 <span style={{ fontWeight: 400, color: 'var(--grey-500)' }}>· 색이 들어온 활동을 수행합니다</span>
+              </p>
+              <div style={{ display: 'flex', gap: 8 }}>
+                {ACTIVITY_DEFS.map((def) => (
+                  <ActivityChip key={def.key} def={def} active={country.activities.includes(def.key)} isMobile={isMobile} />
+                ))}
+              </div>
+
+              {/* 사업별 배분 실적 */}
+              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', margin: '28px 0 4px' }}>
+                사업별 배분 실적 <span style={{ fontWeight: 400, color: 'var(--grey-500)' }}>· {country.projects.length}개 사업</span>
+              </p>
+              <div style={{ borderTop: '2px solid var(--midnight)' }}>
+                {country.projects.map((p) => (
+                  <ProjectRow key={p.site} p={p} isMobile={isMobile} />
+                ))}
+              </div>
             </div>
-            )
-          })()}
-
-          {/* 5대 활동 */}
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', margin: '24px 0 14px' }}>
-            진행 활동 <span style={{ fontWeight: 400, color: 'var(--grey-500)' }}>· 색이 들어온 활동을 수행합니다</span>
-          </p>
-          <div style={{ display: 'flex', gap: 10, maxWidth: 520 }}>
-            {ACTIVITY_DEFS.map((def) => (
-              <ActivityChip key={def.key} def={def} active={country.activities.includes(def.key)} />
-            ))}
           </div>
-
-          {/* 사업별 배분 실적 */}
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', margin: '28px 0 4px' }}>
-            사업별 배분 실적 <span style={{ fontWeight: 400, color: 'var(--grey-500)' }}>· {country.projects.length}개 사업</span>
-          </p>
-          <div style={{ borderTop: '2px solid var(--midnight)' }}>
-            {country.projects.map((p) => (
-              <ProjectRow key={p.site} p={p} />
-            ))}
-          </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

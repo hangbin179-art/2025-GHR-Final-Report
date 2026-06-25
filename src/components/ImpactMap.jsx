@@ -105,11 +105,25 @@ export default function ImpactMap() {
           { direction: 'top', offset: [0, -(size / 2) - 4], opacity: 1, className: 'wv-tip' }
         )
         .addTo(map)
-      // 마우스 오버 → 상세 툴팁(Leaflet 자동 표시/숨김) / 클릭 → 아래 국가 그리드로 이동
+      // 마우스 오버 → 상세 툴팁(Leaflet 자동) / 클릭 → 해당 국가 상세 드로어 열기(+지도 확대)
       marker.on('click', () => window.dispatchEvent(new CustomEvent('cg-select-country', { detail: p.country })))
     })
 
+    // CountryGrid에서 국가 선택 시 → 해당 국가 사업지들로 지도 확대 (화면 이동 없이 지도만 fly)
+    const onZoomCountry = (e) => {
+      const name = e.detail
+      if (!name) return
+      const pts = ALL_PROJECTS
+        .filter((p) => p.country === name && p.lat != null && p.lng != null)
+        .map((p) => [p.lat, p.lng])
+      if (!pts.length) return
+      const bounds = L.latLngBounds(pts)
+      map.flyToBounds(bounds, { padding: [50, 50], maxZoom: 6, duration: 0.9 })
+    }
+    window.addEventListener('cg-zoom-country', onZoomCountry)
+
     return () => {
+      window.removeEventListener('cg-zoom-country', onZoomCountry)
       map.remove()
       instanceRef.current = null
     }
@@ -175,7 +189,7 @@ export default function ImpactMap() {
                 <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-700)', fontWeight: 600 }}>20t → 3,200t</span>
               </div>
               <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-600)', margin: '10px 0 0', lineHeight: 1.5 }}>
-                마커에 마우스를 올리면 상세 실적이 표시되고, 클릭하면 아래 국가별 표로 이동합니다.
+                마커에 마우스를 올리면 상세 실적이 표시되고, 클릭하면 해당 국가 사업 개요가 옆에서 열립니다.
               </p>
             </div>
           </div>
