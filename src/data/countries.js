@@ -15,7 +15,7 @@ export const COUNTRIES = [
     en: 'DR Congo · S. Kivu, Tanganyika, Kasai', region: '남부키부 · 탕가니카 · 카사이',
     activities: ['food', 'nutrition', 'livelihood'],
     projects: [
-      { site: '남부키부 (South Kivu)', siteEn: 'South Kivu', title: 'DRC South Kivu Integrated Food Assistance 2025', lat: -2.50, lng: 28.90, food: 3088.2, ther: 74.9, cash: 0, val: 5050516, beneficiaries: 152882, korea: 37522, plannedTons: 3488, pbas: '223847' }, // val·총사업비 재무보고(WFP REPORT·Korea) 반영
+      { site: '남부키부 (South Kivu)', siteEn: 'South Kivu', title: 'DRC South Kivu Integrated Food Assistance 2025', lat: -2.50, lng: 28.90, food: 3088.2, ther: 74.9, cash: 0, val: 5050526, beneficiaries: 152882, korea: 37522, plannedTons: 3488, pbas: '223847' }, // val=결과보고 PIVOT(CSSValue); 총사업비는 FINANCE에서 재무보고 기준
       { site: '탕가니카 (Tanganyika)', siteEn: 'Tanganyika', title: 'DRC Tanganyika General Food Distribution (식량 배분) & Nutrition 2025', lat: -6.00, lng: 29.70, food: 632.6, ther: 0, cash: 0, val: 1093743, beneficiaries: 77122, korea: 15503, plannedTons: 1549, pbas: '223796' },
       { site: '카사이 · 루이자 (Kasai · Luiza)', siteEn: 'Kasai · Luiza', title: 'DRC Kasai Luiza Nutrition 2025', lat: -5.90, lng: 22.40, food: 76.2, ther: 76.2, cash: 0, val: 344228, beneficiaries: 66367, korea: 12207, plannedTons: 37, pbas: '224041' },
     ],
@@ -26,7 +26,7 @@ export const COUNTRIES = [
     activities: ['food', 'cash', 'nutrition'],
     projects: [
       { site: '남다르푸르 (통합 식량지원)', siteEn: 'South Darfur (Integrated Food Assistance)', title: 'South Darfur Integrated Food Assistance Project', lat: 11.00, lng: 24.90, food: 2276.3, ther: 15.3, cash: 0, val: 3121934, beneficiaries: 475967, korea: 40945, plannedTons: 3168, pbas: '223711' },
-      { site: '남코르도판', siteEn: 'South Kordofan', title: 'South Kordofan Integrated Food Assistance Project', lat: 12.20, lng: 30.20, food: 1025.7, ther: 16.0, cash: 324428, val: 834107, beneficiaries: 249491, korea: 27339, plannedTons: 1624, pbas: '223710' }, // 식량가치 재무보고(WFP REPORT·Korea) 반영
+      { site: '남코르도판', siteEn: 'South Kordofan', title: 'South Kordofan Integrated Food Assistance Project', lat: 12.20, lng: 30.20, food: 1025.7, ther: 16.0, cash: 324429, val: 1010325, beneficiaries: 249491, korea: 27339, plannedTons: 1624, pbas: '223710' }, // val=결과보고 PIVOT(CSSValue); 정리표 운송용 재무약정값은 build-2025-actuals.mjs FIN_FOOD
       { site: '남다르푸르 (영양)', siteEn: 'South Darfur (Nutrition)', title: 'South Darfur Community Nutrition Project', lat: 11.10, lng: 24.95, food: 20.1, ther: 20.1, cash: 0, val: 82059, beneficiaries: 33432, korea: 6636, plannedTons: 80, pbas: '223745' },
       { site: '백나일 (White Nile)', siteEn: 'White Nile', title: 'White Nile Integrated Food Assistance Project', lat: 13.05, lng: 32.55, food: 0, ther: 0, cash: 0, val: 0, beneficiaries: 0, korea: 0, plannedTons: 5320, pbas: '223856', note: '현지 정부 승인 지연으로 사업 미진행' },
     ],
@@ -69,7 +69,7 @@ export const COUNTRIES = [
     activities: ['food', 'cash', 'nutrition', 'school', 'livelihood'],
     projects: [
       { site: '파쇼다 · 파니캉', siteEn: 'Fashoda · Panyikang', title: 'Fashoda and Panyikang FA Project', lat: 10.00, lng: 32.00, food: 301.1, ther: 0.5, cash: 397930, val: 518775, beneficiaries: 63970, korea: 21065, plannedTons: 621, pbas: '223756' },
-      { site: '렌크 · 마뇨', siteEn: 'Renk · Manyo', title: 'Renk and Manyo Food Assistance Project', lat: 11.75, lng: 32.80, food: 81.2, ther: 0, cash: 0, val: 136514, beneficiaries: 43370, korea: 4620, plannedTons: 103, pbas: '223758' }, // val·총사업비 재무보고(WFP REPORT·Korea) 반영
+      { site: '렌크 · 마뇨', siteEn: 'Renk · Manyo', title: 'Renk and Manyo Food Assistance Project', lat: 11.75, lng: 32.80, food: 81.2, ther: 0, cash: 0, val: 136515, beneficiaries: 43370, korea: 4620, plannedTons: 103, pbas: '223758' }, // val=결과보고 PIVOT(CSSValue); 총사업비는 FINANCE에서 재무보고 기준
       { site: '주바 · 얌비오 (자립형 학교급식)', siteEn: 'Juba · Yambio', title: 'Juba and Yambio School Feeding and Nutrition Project', lat: 4.85, lng: 31.60, food: 29.6, ther: 0, cash: 141103, val: 253929, beneficiaries: 47468, korea: 5678, plannedTons: 33, pbas: '223753' },
     ],
   },
@@ -189,4 +189,4 @@ export const ALL_PROJECTS = COUNTRIES.flatMap((c) =>
 )
 
 // 배분 실적 공식 합계 (그랜드 토탈 — 보고서 확정 수치)
-export const TOTALS = { food: 10235.1, foodVal: 15862351, cash: 5105980, ther: 998.1 }
+export const TOTALS = { food: 10235.1, foodVal: 16038579, cash: 5105981, ther: 998.1 }

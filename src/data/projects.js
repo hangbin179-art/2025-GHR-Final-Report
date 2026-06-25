@@ -159,7 +159,7 @@ export const PROJECTS = [
     foodValue: 8050918,
     cashValue: 0,
     activities: { food: true, cash: false, nutrition: true, school: false, livelihood: false },
-    progress: { foodActualTons: 3088.2, foodPct: 88.5, foodActualUSD: 5050516, nutritionKg: 74866.7 },
+    progress: { foodActualTons: 3088.2, foodPct: 88.5, foodActualUSD: 5050526, nutritionKg: 74866.7 },
     photos: [],
   },
   {
@@ -277,7 +277,7 @@ export const PROJECTS = [
     foodValue: 269973,
     cashValue: 464155,
     activities: { food: true, cash: true, nutrition: false, school: false, livelihood: false },
-    progress: { foodActualTons: 81.2, foodPct: 78.8, cashActualKRW: 0, cashPct: 0.0, foodActualUSD: 136514 },
+    progress: { foodActualTons: 81.2, foodPct: 78.8, cashActualKRW: 0, cashPct: 0.0, foodActualUSD: 136515 },
     note: 'USAID 폐지·자금 삭감으로 현금(CBT) 미진행, 식량배분 누적 78.8% 달성',
     photos: [],
   },
@@ -335,7 +335,7 @@ export const PROJECTS = [
     foodValue: 2298952,
     cashValue: 1691320,
     activities: { food: true, cash: true, nutrition: true, school: false, livelihood: false },
-    progress: { foodActualTons: 1025.7, foodPct: 63.2, cashActualKRW: 431489240, cashPct: 25.5, cashActualUSD: 324428, foodActualUSD: 834107, nutritionKg: 16000 },
+    progress: { foodActualTons: 1025.7, foodPct: 63.2, cashActualKRW: 431490000, cashPct: 25.5, cashActualUSD: 324429, foodActualUSD: 1010325, nutritionKg: 16000 },
     photos: [],
   },
   {
@@ -455,7 +455,7 @@ export const GLOBAL_KPIS = {
   result: {
     foodActualTons: 10235.1, // 식량 배분 실적 (톤, WV 기여분)
     foodPct: 48.4, // 계획 21,133톤 대비
-    foodActualUSD: 15862351, // 식량 상품가치 (USD, 3개 사업 재무보고 반영)
+    foodActualUSD: 16038579, // 식량 상품가치 (USD, 결과보고 PIVOT 기준)
     cashActualKRW: 6790954000, // 현금/교환권 실적 (원)
     cashPct: 63.4, // 계획 대비
     cashActualUSD: 5105981, // 현금/교환권 실적 (USD)

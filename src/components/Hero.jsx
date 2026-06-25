@@ -170,7 +170,7 @@ export default function Hero() {
             <div style={{ height: 1, background: 'var(--field-200)' }} />
             <LedgerRow label="현금 · 교환권 (USD)" value={5.11} decimals={2} prefix="$" unit="M" unitEn krw="≈ 68억원" delay={0.34} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
-            <LedgerRow label="식량 가액 (USD)" value={15.86} decimals={2} prefix="$" unit="M" unitEn krw="≈ 211억원" delay={0.46} start={started} />
+            <LedgerRow label="식량 가액 (USD)" value={16.04} decimals={2} prefix="$" unit="M" unitEn krw="≈ 213억원" delay={0.46} start={started} />
 
             {/* Orange footer box */}
             <div style={{
