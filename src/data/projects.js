@@ -60,7 +60,7 @@ export const PROJECTS = [
     foodTons: 1.72,
     foodValue: 1838,
     cashValue: 2696474,
-    activities: { food: true, cash: true, nutrition: true, school: false, livelihood: false },
+    activities: { food: false, cash: true, nutrition: false, school: false, livelihood: false },
     progress: { foodActualTons: 0.02, foodPct: 1.0, cashActualKRW: 2508328000, cashPct: 93.0, cashActualUSD: 1885961, foodActualUSD: 17, nutritionKg: 17.5 },
     note: '2025년 USAID 폐지로 사업 규모 축소 및 진행 차질',
     photos: [],
@@ -100,7 +100,7 @@ export const PROJECTS = [
     foodTons: 347,
     foodValue: 321449,
     cashValue: 22067,
-    activities: { food: true, cash: true, nutrition: false, school: true, livelihood: true },
+    activities: { food: true, cash: true, nutrition: false, school: true, livelihood: false },
     progress: { foodActualTons: 198.5, foodPct: 57.2, cashActualKRW: 21202000, cashPct: 96.1, cashActualUSD: 15941, foodActualUSD: 278368 },
     photos: [],
   },
@@ -119,7 +119,7 @@ export const PROJECTS = [
     foodTons: 0,
     foodValue: 0,
     cashValue: 1189182,
-    activities: { food: false, cash: true, nutrition: false, school: false, livelihood: true },
+    activities: { food: false, cash: true, nutrition: false, school: false, livelihood: false },
     progress: { cashActualKRW: 1937397000, cashPct: 162.9, cashActualUSD: 1456689 },
     note: '계획 대비 현금지원 162.9% — 대상 확대로 초과 달성',
     photos: [],
@@ -159,7 +159,7 @@ export const PROJECTS = [
     foodValue: 8050918,
     cashValue: 0,
     activities: { food: true, cash: false, nutrition: true, school: false, livelihood: false },
-    progress: { foodActualTons: 3088.2, foodPct: 88.5, foodActualUSD: 5050526, nutritionKg: 74866.7 },
+    progress: { foodActualTons: 3088.2, foodPct: 88.5, foodActualUSD: 5050516, nutritionKg: 74866.7 },
     photos: [],
   },
   {
@@ -188,7 +188,7 @@ export const PROJECTS = [
     pbasNum: 223707,
     country: '에티오피아',
     countryEn: 'Ethiopia',
-    region: '티그레이, 아파, 암하라',
+    region: '티그라이, 아파르, 암하라',
     regionEn: 'Tigray, Afar, Amhara',
     coords: [13.0, 39.0],
     beneficiaries: 28556,
@@ -248,7 +248,7 @@ export const PROJECTS = [
     pbasNum: 223756,
     country: '남수단',
     countryEn: 'South Sudan',
-    region: '파쇼다, 파니이캉',
+    region: '파쇼다, 파니캉',
     regionEn: 'Fashoda, Panyikang',
     coords: [9.9, 32.0],
     beneficiaries: 21065,
@@ -267,7 +267,7 @@ export const PROJECTS = [
     pbasNum: 223758,
     country: '남수단',
     countryEn: 'South Sudan',
-    region: '렝크, 만요',
+    region: '렌크, 마뇨',
     regionEn: 'Renk, Manyo',
     coords: [11.7, 32.7],
     beneficiaries: 4620,
@@ -277,7 +277,7 @@ export const PROJECTS = [
     foodValue: 269973,
     cashValue: 464155,
     activities: { food: true, cash: true, nutrition: false, school: false, livelihood: false },
-    progress: { foodActualTons: 81.2, foodPct: 78.8, cashActualKRW: 0, cashPct: 0.0, foodActualUSD: 136515 },
+    progress: { foodActualTons: 81.2, foodPct: 78.8, cashActualKRW: 0, cashPct: 0.0, foodActualUSD: 136514 },
     note: 'USAID 폐지·자금 삭감으로 현금(CBT) 미진행, 식량배분 누적 78.8% 달성',
     photos: [],
   },
@@ -335,7 +335,7 @@ export const PROJECTS = [
     foodValue: 2298952,
     cashValue: 1691320,
     activities: { food: true, cash: true, nutrition: true, school: false, livelihood: false },
-    progress: { foodActualTons: 1025.7, foodPct: 63.2, cashActualKRW: 431490000, cashPct: 25.5, cashActualUSD: 324429, foodActualUSD: 1010325, nutritionKg: 16000 },
+    progress: { foodActualTons: 1025.7, foodPct: 63.2, cashActualKRW: 431489240, cashPct: 25.5, cashActualUSD: 324428, foodActualUSD: 834107, nutritionKg: 16000 },
     photos: [],
   },
   {
@@ -412,7 +412,7 @@ export const PROJECTS = [
     foodTons: 1355,
     foodValue: 3139663,
     cashValue: 0,
-    activities: { food: true, cash: false, nutrition: false, school: true, livelihood: true },
+    activities: { food: true, cash: false, nutrition: false, school: true, livelihood: false },
     progress: { foodActualTons: 475.5, foodPct: 35.1, foodActualUSD: 605800 },
     photos: [],
   },
@@ -453,9 +453,9 @@ export const GLOBAL_KPIS = {
   // ── 결과보고 누적 실적 (2026.06 기준, 출처: 결과보고 누적 시트) ──
   // 월드비전 기여분 기준. 환율 1,330원/USD.
   result: {
-    foodActualTons: 10235, // 식량 배분 실적 (톤, WV 기여분)
+    foodActualTons: 10235.1, // 식량 배분 실적 (톤, WV 기여분)
     foodPct: 48.4, // 계획 21,133톤 대비
-    foodActualUSD: 16038579, // 식량 상품가치 (USD)
+    foodActualUSD: 15862351, // 식량 상품가치 (USD, 3개 사업 재무보고 반영)
     cashActualKRW: 6790954000, // 현금/교환권 실적 (원)
     cashPct: 63.4, // 계획 대비
     cashActualUSD: 5105981, // 현금/교환권 실적 (USD)

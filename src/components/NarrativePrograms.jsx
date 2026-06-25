@@ -116,7 +116,7 @@ export default function NarrativePrograms() {
                 자립형 학교급식(Home-Grown School Feeding)은 끼니를 주는 데서 멈추지 않습니다. 학교가 직접 작물을
                 기르고, 학생이 그 기술을 집으로 가져갑니다. 남수단 <strong style={{ color: 'var(--midnight)' }}>주바·얌비오 자립형 학교급식 사업</strong>은
                 중앙적도주 21개 초등학교의 13,000여 명에게 급식을 제공하면서, 학교 텃밭을 통한 농업 교육을 결합했습니다.
-                2025년 한 해 동안 총 75,550명이 수혜를 받았습니다.
+                2025년 한 해 동안 사업 총 47,468명이 수혜를 받았습니다.
               </p>
               <div style={{
                 background: AMBER_BG,
@@ -126,7 +126,7 @@ export default function NarrativePrograms() {
                 gap: 20,
               }}>
                 <StatChip value="21" unit="개교" label="중앙적도주 초등학교" accent={AMBER} />
-                <StatChip value="75,550" unit="명" label="2025년 누적 수혜자" accent={AMBER} />
+                <StatChip value="47,468" unit="명" label="사업 총 수혜자" accent={AMBER} />
               </div>
             </div>
 

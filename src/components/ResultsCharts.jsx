@@ -4,7 +4,7 @@ const C = 301.6 // circle circumference at r=48
 
 const FOOD_PCT = 48.4   // 10,235 / 21,133
 const CASH_PCT = 63.4   // $5.1M / $8.05M (계획 현금 107억원, 실적/계획 KRW 기준)
-const NUT_PCT  = 59.5
+const NUT_PCT  = 100   // 영양은 계획 대비 % 분모(영양 계획량)가 데이터에 없어, 링은 누계 달성 표시(가득)로 둠. value/dialLabel은 절대량(998.1톤) 표기.
 
 export default function ResultsCharts() {
   const isMobile = useIsMobile()
@@ -20,7 +20,7 @@ export default function ResultsCharts() {
           </div>
           <div>
             <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '34ch' }}>
-              월드비전의 10,000원이 약 256,000원의 식량이 되어<br />식탁 위에 올라갔습니다.
+              월드비전의 10,000원이 약 240,000원의 식량이 되어<br />식탁 위에 올라갔습니다.
             </h2>
           </div>
         </div>
@@ -56,7 +56,7 @@ export default function ResultsCharts() {
             title="영양 치료식"
             value="998.1"
             valueUnit="톤"
-            sub="급성 영양실조 치료식 누계"
+            sub="영양실조치료 보충식 누계"
             dialLabel="998.1t"
           />
         </div>

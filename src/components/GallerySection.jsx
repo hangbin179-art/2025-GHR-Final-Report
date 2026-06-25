@@ -87,12 +87,10 @@ const PHOTOS = [
   P('223982', '미얀마', 'Myanmar', '북부 샨', '긴급 현금 지원', TEAL, 1, '현금 지원 등록·배분 현장'),
 ]
 
-/* 사진 없는 사업(콜롬비아·미얀마·차드)은 자리표시자로 노출 */
-const PH = (country, site, activity, color) => ({ placeholder: true, country, site, activity, color, src: null })
 const feat = (pbas) => PHOTOS.find((p) => p.pbas === pbas)
 const pick = (src) => PHOTOS.find((p) => p.src === src)
 
-/* 캐러셀 = 국가별 대표 1컷(+자리표시자) · 13개국 순서 */
+/* 캐러셀 = 국가별 대표 1컷 · 13개국 순서 (13개국 전부 실사진) */
 const CAROUSEL = [
   feat('223847'),                              // 콩고민주공화국
   feat('223711'),                              // 수단

@@ -90,7 +90,7 @@ export default function Hero() {
             margin: 0,
             wordBreak: 'keep-all',
           }}>
-            10,235톤의 식량이<br />
+            10,235.1톤의 식량이<br />
             <span style={{ color: 'var(--orange)' }}>식탁으로 갔습니다.</span>
           </h1>
           <p lang="ko" style={{
@@ -102,7 +102,7 @@ export default function Hero() {
             maxWidth: '50ch',
           }}>
             2025년, 월드비전과 유엔세계식량계획(WFP)은 13개국 20개 사업 현장에서
-            식량 10,235.1톤, 영양실조 치료식 998.1톤, 현금·교환권 510만 달러(약 68억원)를
+            식량 10,235.1톤, 영양실조치료 보충식 998.1톤, 현금·교환권 510만 달러(약 68억원)를
             직접 배분했습니다.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
@@ -166,11 +166,11 @@ export default function Hero() {
           <div style={{ display: 'grid', gap: 18 }}>
             <LedgerRow label="일반식량 배분" value={10235.1} decimals={1} unit="톤" delay={0.1} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
-            <LedgerRow label="영양실조 치료식" value={998.1} decimals={1} unit="톤" delay={0.22} start={started} />
+            <LedgerRow label="영양실조치료 보충식" value={998.1} decimals={1} unit="톤" delay={0.22} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
             <LedgerRow label="현금 · 교환권 (USD)" value={5.11} decimals={2} prefix="$" unit="M" unitEn krw="≈ 68억원" delay={0.34} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
-            <LedgerRow label="식량 가액 (USD)" value={16.04} decimals={2} prefix="$" unit="M" unitEn krw="≈ 213억원" delay={0.46} start={started} />
+            <LedgerRow label="식량 가액 (USD)" value={15.86} decimals={2} prefix="$" unit="M" unitEn krw="≈ 211억원" delay={0.46} start={started} />
 
             {/* Orange footer box */}
             <div style={{

@@ -112,7 +112,7 @@ Final Report · 2025
                   식량 배분량
                   <span style={{ display: 'block', fontFamily: 'var(--font-en)', fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>Food distributed</span>
                 </dt>
-                <dd style={{ margin: 0, color: '#fff', whiteSpace: 'nowrap' }}>{num(GLOBAL_KPIS.result.foodActualTons)}톤</dd>
+                <dd style={{ margin: 0, color: '#fff', whiteSpace: 'nowrap' }}>{GLOBAL_KPIS.result.foodActualTons.toLocaleString('ko-KR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}톤</dd>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 12 }}>
                 <dt lang="ko" style={{ fontFamily: 'var(--font-kr)', color: 'rgba(255,255,255,0.55)', lineHeight: 1.3 }}>

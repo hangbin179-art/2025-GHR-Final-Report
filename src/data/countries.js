@@ -189,4 +189,4 @@ export const ALL_PROJECTS = COUNTRIES.flatMap((c) =>
 )
 
 // 배분 실적 공식 합계 (그랜드 토탈 — 보고서 확정 수치)
-export const TOTALS = { food: 10235.1, foodVal: 16038579, cash: 5105981, ther: 998.1 }
+export const TOTALS = { food: 10235.1, foodVal: 15862351, cash: 5105980, ther: 998.1 }

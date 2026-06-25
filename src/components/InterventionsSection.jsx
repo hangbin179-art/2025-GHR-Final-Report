@@ -91,20 +91,20 @@ export default function InterventionsSection() {
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>In-kind Food Distribution</p>
                 <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
                   분쟁·기후·경제 충격으로 식량을 잃은 가정에 수수·콩·옥수수·식용유 등 현물 식량을
-                  정기 배분합니다. 1인 최소 2,100kcal 기준으로 구성하며, 14개 사업에 걸쳐 총
+                  정기 배분합니다. 1인 최소 2,100kcal 기준으로 구성하며, 14개 사업(8개국)에 걸쳐 총
                   10,235.1톤이 배분되었습니다.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
                 <p className="num tnum" style={{ fontSize: isMobile ? 44 : 72, color: 'var(--orange)', margin: 0, lineHeight: 0.85 }}>
-                  10,235<span style={{ fontSize: 28, color: 'var(--grey-500)', marginLeft: 4, fontWeight: 500, letterSpacing: 0 }}>톤</span>
+                  10,235.1<span style={{ fontSize: 28, color: 'var(--grey-500)', marginLeft: 4, fontWeight: 500, letterSpacing: 0 }}>톤</span>
                 </p>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 12, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '10px 0 0' }}>
                   tonnes distributed
                 </p>
                 <div style={{ marginTop: 20, paddingTop: 16, borderTop: '1px solid var(--field-200)' }}>
-                  <p className="num tnum" style={{ fontSize: 32, color: 'var(--grey-700)', margin: 0 }}>$16.0M</p>
-                  <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-500)', margin: '4px 0 0' }}>≈ 213억원</p>
+                  <p className="num tnum" style={{ fontSize: 32, color: 'var(--grey-700)', margin: 0 }}>$15.9M</p>
+                  <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-500)', margin: '4px 0 0' }}>≈ 211억원</p>
                   <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '6px 0 0' }}>
                     commodity value (USD)
                   </p>
@@ -116,7 +116,7 @@ export default function InterventionsSection() {
               accent="var(--orange)"
               eyebrow="Field Story · 수단"
               photo="/gallery/223711-3.jpg"
-              caption="수단 남다르푸르 식량 배분 현장 — 트럭으로 반입된 식량이 분배소에서 배분을 기다립니다."
+              caption="수단 식량 배분 현장 — 트럭으로 반입된 식량이 분배소에서 배분을 기다립니다."
               quote="아이들이 더는 굶지 않게 되자, 비로소 내일을 계획할 수 있었습니다."
               quoteSource="하와 이스마일 · 아부주바이하 캠프, 네 자녀의 어머니"
             >
@@ -140,7 +140,7 @@ export default function InterventionsSection() {
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Cash &amp; Voucher Assistance</p>
                 <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
                   시장이 작동하는 지역에서 현금이나 교환권을 지급해 수혜 가정이 직접 식량을 구매합니다.
-                  운송·보관 비용을 줄이고 수혜자에게 선택권을 돌려주는 방식으로, 10개 사업이 현금
+                  운송·보관 비용을 줄이고 수혜자에게 선택권을 돌려주는 방식으로, 10개 사업(9개국)이 현금
                   또는 교환권 요소를 포함합니다.
                 </p>
               </div>
@@ -181,7 +181,7 @@ export default function InterventionsSection() {
             <div style={row}>
               <p className="num" style={{ fontSize: isMobile ? 48 : 88, lineHeight: 0.85, color: RED, margin: 0, letterSpacing: '-0.04em' }}>03</p>
               <div>
-                <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>영양실조 치료식 배분</h3>
+                <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>영양실조치료 보충식 배분</h3>
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Therapeutic &amp; Supplementary Food</p>
                 <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
                   5세 미만 아동·임산부·수유부에게 플럼피넛 등 영양실조치료 보충식을 배분합니다.
@@ -200,7 +200,7 @@ export default function InterventionsSection() {
                   <p className="num" style={{ fontSize: 32, color: RED, margin: 0 }}>
                     9<span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 16, marginLeft: 4 }}>개 사업</span>
                   </p>
-                  <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, fontWeight: 600, color: 'var(--grey-600)', margin: '6px 0 0' }}>영양 치료식 배분 포함</p>
+                  <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, fontWeight: 600, color: 'var(--grey-600)', margin: '6px 0 0' }}>영양실조치료 보충식 배분 포함</p>
                 </div>
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function InterventionsSection() {
               accent={RED}
               eyebrow="Field Story · 에티오피아 티그라이"
               photo="/gallery/223707-1.jpg"
-              caption="티그라이 표적보충영양사업(TSFP) — 어머니들에게 영양보충식을 배분하는 현장."
+              caption="티그라이 표적보충영양사업(TSFP) — 어머니들에게 영양실조치료 보충식을 배분하는 현장."
               quote="제대로 먹지 못해 아기 건강이 늘 걱정이었어요. 이제는 더 건강해졌고, 아이를 돌보는 데 자신감이 생겼습니다."
               quoteSource="티르하스 체가이 · 티그라이 아디하위 국내 실향민 캠프, 수유모"
             >
