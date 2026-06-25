@@ -9,7 +9,7 @@ const NAV = [
 import { useState, useEffect } from 'react'
 import useIsMobile from '../lib/useIsMobile.js'
 
-function NavLink({ item, active }) {
+function NavLink({ item, active, isMobile }) {
   return (
     <a
       href={item.href}
@@ -17,18 +17,19 @@ function NavLink({ item, active }) {
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: 5,
+        gap: isMobile ? 0 : 5,
         textDecoration: 'none',
-        padding: '6px 10px',
+        padding: isMobile ? '6px 7px' : '6px 10px',
         borderRadius: 6,
         background: active ? 'var(--orange-100)' : 'transparent',
         transition: 'background 0.15s ease',
+        whiteSpace: 'nowrap',
       }}
       onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = 'var(--field-50)' }}
       onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = 'transparent' }}
     >
-      <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'var(--orange)' }}>{item.num}</span>
-      <span style={{ fontFamily: 'var(--font-kr)', fontSize: 13, fontWeight: active ? 700 : 600, color: active ? 'var(--orange-900)' : 'var(--grey-700)' }}>{item.label}</span>
+      {!isMobile && <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'var(--orange)' }}>{item.num}</span>}
+      <span style={{ fontFamily: 'var(--font-kr)', fontSize: isMobile ? 12 : 13, fontWeight: active ? 700 : 600, color: active ? 'var(--orange-900)' : 'var(--grey-700)', whiteSpace: 'nowrap' }}>{item.label}</span>
     </a>
   )
 }
@@ -65,14 +66,14 @@ export default function StickyNav() {
       <div style={{
         maxWidth: 1400,
         margin: '0 auto',
-        padding: isMobile ? '8px 14px' : '10px 32px',
+        padding: isMobile ? '8px 10px' : '10px 32px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        gap: 24,
+        gap: isMobile ? 6 : 24,
       }}>
         {/* Left — logos + title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12, minWidth: 0 }}>
           <a href="https://www.worldvision.or.kr/" target="_blank" rel="noopener noreferrer" aria-label="월드비전 한국 홈페이지" style={{ display: 'flex' }}>
             <img src="/WorldVision-Logo-Primary.svg" alt="World Vision" style={{ height: 24, display: 'block' }} />
           </a>
@@ -96,7 +97,7 @@ export default function StickyNav() {
 
         {/* Right — section navigation */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          {NAV.map((item) => <NavLink key={item.href} item={item} active={active === item.href.slice(1)} />)}
+          {NAV.map((item) => <NavLink key={item.href} item={item} active={active === item.href.slice(1)} isMobile={isMobile} />)}
         </div>
       </div>
     </nav>

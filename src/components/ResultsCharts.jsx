@@ -89,11 +89,11 @@ function LeverageFlow() {
       </p>
 
       {/* Proportional source blocks */}
-      <div style={{ display: 'flex', alignItems: 'stretch', gap: 8, height: 88, marginBottom: 28 }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'stretch', gap: isMobile ? 10 : 8, height: isMobile ? 'auto' : 88, marginBottom: 28 }}>
 
         {/* WV Korea — 1 unit (small block, but legible label) */}
         <div style={{
-          flex: '0 0 132px',
+          flex: isMobile ? '0 0 auto' : '0 0 132px',
           background: 'var(--midnight)',
           borderRadius: 8,
           padding: '14px 16px',
@@ -108,14 +108,14 @@ function LeverageFlow() {
         {/* Multiplier arrow */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2, padding: '0 2px', flexShrink: 0 }}>
           <span className="num" style={{ fontSize: 22, color: 'var(--orange)', lineHeight: 1, letterSpacing: '-0.03em' }}>24×</span>
-          <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
+          <svg width="20" height="10" viewBox="0 0 20 10" fill="none" style={{ transform: isMobile ? 'rotate(90deg)' : 'none' }}>
             <path d="M0 5 H16 M11 1 L17 5 L11 9" stroke="var(--orange)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
 
         {/* WFP Grant — 41 units (large) */}
         <div style={{
-          flex: 1,
+          flex: isMobile ? '0 0 auto' : 1,
           background: 'var(--orange)',
           borderRadius: 8,
           padding: '16px 24px',

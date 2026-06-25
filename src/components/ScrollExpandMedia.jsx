@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 // 스크롤 확장 히어로 — 닫힌 상태에서는 배경 이미지만 보이다가, 스크롤을
 // 시작하면 그 시점부터 영상이 재생되며 가운데 박스가 확장되어 드러난다.
 // 원본(next/image + framer-motion + TSX)을 이 프로젝트(Vite/JSX)에 맞춰
-// img + 인라인 CSS 트랜지션으로 어댑트.
+// img + 인라인 CSS 트랜지션으로 어댑트. (이 프로젝트는 Tailwind 유틸리티를
+// 빌드하지 않으므로 레이아웃은 전부 인라인 스타일로 둔다.)
 export default function ScrollExpandMedia({
   mediaType = 'video',
   mediaSrc,
@@ -204,33 +205,36 @@ export default function ScrollExpandMedia({
   const textOpacity = Math.max(1 - scrollProgress * 1.3, 0)
 
   return (
-    <div ref={sectionRef} className="cg-hero-cinematic transition-colors duration-700 ease-in-out overflow-x-hidden">
-      <section className="relative flex flex-col items-center justify-start min-h-[100dvh]">
-        <div className="relative w-full flex flex-col items-center min-h-[100dvh]">
+    <div ref={sectionRef} className="cg-hero-cinematic" style={{ overflowX: 'hidden', transition: 'background-color 0.7s ease-in-out' }}>
+      <section style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', minHeight: '100dvh' }}>
+        <div style={{ position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100dvh' }}>
           {/* Background image — 스크롤할수록 서서히 사라짐 */}
           <div
-            className="absolute inset-0 z-0 h-full"
-            style={{ opacity: 1 - scrollProgress, transition: 'opacity 0.1s ease-out' }}
+            style={{ position: 'absolute', inset: 0, zIndex: 0, height: '100%', opacity: 1 - scrollProgress, transition: 'opacity 0.1s ease-out' }}
           >
             <img
               src={bgImageSrc}
               alt="Background"
-              className="w-screen h-screen"
-              style={{ objectFit: 'cover', objectPosition: 'center' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
-            <div className="absolute inset-0" style={{ background: 'rgba(17,18,34,0.32)' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,18,34,0.32)' }} />
             {/* 사진 크레딧 — 메인 이미지 좌측 하단 */}
             <p style={{ position: 'absolute', left: 18, bottom: 16, margin: 0, zIndex: 1, fontFamily: 'var(--font-en)', fontSize: 11, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.72)', textShadow: '0 1px 4px rgba(0,0,0,0.55)' }}>
               © World Vision / Jon Warren · Ethiopia 2025
             </p>
           </div>
 
-          <div className="container mx-auto flex flex-col items-center justify-start relative z-10">
-            <div className="flex flex-col items-center justify-center w-full h-[100dvh] relative">
+          <div style={{ width: '100%', marginLeft: 'auto', marginRight: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', position: 'relative', zIndex: 10 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100dvh', position: 'relative' }}>
               {/* 확장되는 미디어 박스 */}
               <div
-                className="absolute z-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-none rounded-2xl"
                 style={{
+                  position: 'absolute',
+                  zIndex: 0,
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  borderRadius: 16,
                   width: `${mediaWidth}px`,
                   height: `${mediaHeight}px`,
                   maxWidth: '95vw',
@@ -239,7 +243,7 @@ export default function ScrollExpandMedia({
                 }}
               >
                 {mediaType === 'video' ? (
-                  <div className="relative w-full h-full pointer-events-none">
+                  <div style={{ position: 'relative', width: '100%', height: '100%', pointerEvents: 'none' }}>
                     <video
                       ref={videoRef}
                       src={mediaSrc}
@@ -248,7 +252,7 @@ export default function ScrollExpandMedia({
                       playsInline
                       preload="auto"
                       onEnded={() => setVideoEnded(true)}
-                      className="w-full h-full object-cover rounded-xl"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 12, display: 'block' }}
                       controls={false}
                       disablePictureInPicture
                     />
@@ -256,14 +260,12 @@ export default function ScrollExpandMedia({
                     <img
                       src={posterSrc}
                       alt=""
-                      className="absolute inset-0 w-full h-full object-cover rounded-xl"
-                      style={{ opacity: scrollProgress > 0 ? 0 : 1, transition: 'opacity 0.3s ease-out', pointerEvents: 'none' }}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', borderRadius: 12, opacity: scrollProgress > 0 ? 0 : 1, transition: 'opacity 0.3s ease-out', pointerEvents: 'none' }}
                     />
                     <div
-                      className="absolute inset-0 rounded-xl"
-                      style={{ background: 'rgba(0,0,0,1)', opacity: 0.5 - scrollProgress * 0.3, transition: 'opacity 0.2s' }}
+                      style={{ position: 'absolute', inset: 0, borderRadius: 12, background: 'rgba(0,0,0,1)', opacity: 0.5 - scrollProgress * 0.3, transition: 'opacity 0.2s' }}
                     />
-                    {/* 영상 종료 후 '다시 보기' 버튼 (래퍼가 pointer-events-none 이라 버튼만 auto) */}
+                    {/* 영상 종료 후 '다시 보기' 버튼 (래퍼가 pointer-events:none 이라 버튼만 auto) */}
                     {videoEnded && scrollProgress > 0 && (
                       <button
                         onClick={replayVideo}
@@ -298,15 +300,14 @@ export default function ScrollExpandMedia({
                     )}
                   </div>
                 ) : (
-                  <div className="relative w-full h-full">
+                  <div style={{ position: 'relative', width: '100%', height: '100%' }}>
                     <img
                       src={mediaSrc}
                       alt={title || 'Media content'}
-                      className="w-full h-full object-cover rounded-xl"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 12, display: 'block' }}
                     />
                     <div
-                      className="absolute inset-0 rounded-xl"
-                      style={{ background: 'rgba(0,0,0,1)', opacity: 0.7 - scrollProgress * 0.3, transition: 'opacity 0.2s' }}
+                      style={{ position: 'absolute', inset: 0, borderRadius: 12, background: 'rgba(0,0,0,1)', opacity: 0.7 - scrollProgress * 0.3, transition: 'opacity 0.2s' }}
                     />
                   </div>
                 )}
@@ -314,8 +315,7 @@ export default function ScrollExpandMedia({
 
               {/* 제목 오버레이 — 한 줄 고정, 스크롤 시작하면 서서히 사라짐 */}
               <div
-                className="flex flex-col items-center justify-center text-center w-full relative z-10 px-4"
-                style={{ gap: 10, opacity: textOpacity, transition: 'opacity 0.15s ease-out' }}
+                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', width: '100%', position: 'relative', zIndex: 10, paddingLeft: 16, paddingRight: 16, gap: 10, opacity: textOpacity, transition: 'opacity 0.15s ease-out' }}
               >
                 {title && (
                   <h2
@@ -413,8 +413,7 @@ export default function ScrollExpandMedia({
 
             {/* 확장 완료 후 나타나는 콘텐츠 슬롯 */}
             <section
-              className="flex flex-col w-full px-8 py-10 md:px-16 lg:py-20"
-              style={{ opacity: showContent ? 1 : 0, transition: 'opacity 0.7s ease-out' }}
+              style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '40px 32px', opacity: showContent ? 1 : 0, transition: 'opacity 0.7s ease-out' }}
             >
               {children}
             </section>
