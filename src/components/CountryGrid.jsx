@@ -143,35 +143,15 @@ export default function CountryGrid() {
     if (selected) window.dispatchEvent(new CustomEvent('cg-zoom-country', { detail: selected }))
   }, [selected])
 
-  // 상세 드로어가 열려 있는 동안: 배경 스크롤 잠금(이전 값 복원) + Esc 닫기 + 포커스 이동/트랩/복원
+  // 비모달 드로어: 배경(지도·카드)을 계속 이용할 수 있게 스크롤 잠금/포커스 트랩 없음.
+  // 다른 국가를 클릭하면 드로어 내용과 지도 줌이 즉시 전환된다. Esc로 닫고, 전환 시 내용 스크롤을 맨 위로.
   useEffect(() => {
     if (!selected) return
-    const prevFocus = document.activeElement
-    const prevOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    const drawer = drawerRef.current
-    const getFocusables = () => (drawer
-      ? Array.from(drawer.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])')).filter((el) => !el.hasAttribute('disabled'))
-      : [])
-    // 포커스를 드로어 안으로 이동 (닫기 버튼 우선)
-    const f = getFocusables()
-    ;(f[0] || drawer)?.focus()
-    const onKey = (e) => {
-      if (e.key === 'Escape') { setSelected(null); return }
-      if (e.key !== 'Tab' || !drawer) return
-      const items = getFocusables()
-      if (!items.length) { e.preventDefault(); drawer.focus(); return }
-      const first = items[0], last = items[items.length - 1]
-      const active = document.activeElement
-      if (e.shiftKey && (active === first || active === drawer)) { e.preventDefault(); last.focus() }
-      else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus() }
-    }
+    const onKey = (e) => { if (e.key === 'Escape') setSelected(null) }
     window.addEventListener('keydown', onKey)
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.body.style.overflow = prevOverflow
-      if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus()
-    }
+    const sc = drawerRef.current && drawerRef.current.querySelector('.panel-scroll')
+    if (sc) sc.scrollTop = 0
+    return () => window.removeEventListener('keydown', onKey)
   }, [selected])
 
   // 지도 마커 클릭 → 해당 국가 상세 열기 (ImpactMap에서 발생시키는 이벤트 수신)
@@ -270,31 +250,19 @@ export default function CountryGrid() {
         </div>
       </div>
 
-      {/* 선택된 국가 상세 — 우측 사이드 드로어 (createPortal로 body 최상위에 오버레이) */}
+      {/* 선택된 국가 상세 — 우측 사이드 드로어 (비모달: body에 고정 오버레이, 배경 지도·카드 계속 이용/전환 가능) */}
       {country && createPortal(
-        <div
-          className="cg-scrim"
-          onClick={() => setSelected(null)}
-          style={{
-            position: 'fixed', inset: 0, zIndex: 3000,
-            background: 'rgba(17,18,34,0.42)',
-            display: 'flex', justifyContent: 'flex-end',
-            animation: 'cgScrimIn 0.25s ease-out',
-          }}
-        >
           <div
             className="cg-drawer"
-            key={country.name}
             ref={drawerRef}
             tabIndex={-1}
             role="dialog"
-            aria-modal="true"
             aria-label={`${country.name} 사업 개요`}
-            onClick={(e) => e.stopPropagation()}
             style={{
+              position: 'fixed', top: 0, right: 0, zIndex: 3000,
               width: 'min(500px, 93vw)', background: '#fff', outline: 'none',
               boxShadow: '-14px 0 44px rgba(17,18,34,0.24)',
-              display: 'flex', flexDirection: 'column', position: 'relative',
+              display: 'flex', flexDirection: 'column',
               animation: 'cgDrawerIn 0.32s cubic-bezier(0.4, 0, 0.2, 1)',
             }}
           >
@@ -365,8 +333,7 @@ export default function CountryGrid() {
                 ))}
               </div>
             </div>
-          </div>
-        </div>,
+          </div>,
         document.body
       )}
     </div>
