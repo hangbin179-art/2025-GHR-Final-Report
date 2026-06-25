@@ -496,32 +496,41 @@ ACTIVITIES.forEach((a, idx) => {
 {
   const s = pres.addSlide(); s.background = { color: WHITE }
   header(s, '05  ·  GALLERY', '현장의 기록', ORANGE)
-  s.addText('10개국 현장 사진 — 식량·현금·영양·학교·생계 전 활동의 기록', { x: ML + 0.26, y: 1.34, w: 11.6, h: 0.3, fontFace: KR, fontSize: 12, color: G6 })
-  // 사진 + 오버레이 캡션
-  const cap = (x, y, w, h, tag, place, credit) => {
-    const strip = 0.56
-    s.addShape(RECT, { x, y: y + h - strip, w, h: strip, fill: { color: MID, transparency: 12 } })
-    s.addText([
-      { text: tag + '   ', options: { color: ORANGE, bold: true, fontSize: 10 } },
-      { text: place, options: { color: WHITE, bold: true, fontSize: 11.5 } },
-    ], { x: x + 0.16, y: y + h - strip + 0.06, w: w - 0.3, h: 0.26, fontFace: KR, valign: 'middle' })
-    s.addText(credit, { x: x + 0.16, y: y + h - 0.2, w: w - 0.3, h: 0.16, fontFace: EN, fontSize: 7, color: 'D9D9D9' })
-  }
-  const galleryPhotos = [
-    ['223756-1', '생계 역량 강화', '남수단 · 파쇼다', 'South Sudan'],
-    ['223999-1', '현금 배분', '중앙아프리카 · 부아르', 'CAR'],
-    ['223255-1', '일반식량 배분', '아프가니스탄 · 고르', 'Afghanistan'],
-    ['223766-1', '일반식량 배분', '우간다 · 비디비디', 'Uganda'],
-    ['223745-2', '영양 치료식', '수단 · 남다르푸르', 'Sudan'],
-    ['223806-2', '학교 급식', '베네수엘라 · 줄리아', 'Venezuela'],
+  s.addText('13개국 대표 현장 사진 — 식량·현금·영양·학교급식·생계 전 활동의 기록 (웹 결과보고 갤러리와 동일)', { x: ML + 0.26, y: 1.32, w: 11.8, h: 0.3, fontFace: KR, fontSize: 11.5, color: G6 })
+  // 13개국 대표컷 (웹 갤러리 대표 사진과 동일)
+  const gp = [
+    ['223847-1', '일반식량 배분', '콩고민주공화국', ORANGE],
+    ['223711-1', '일반식량 배분', '수단', ORANGE],
+    ['223255-1', '일반식량 배분', '아프가니스탄', ORANGE],
+    ['223707-1', '영양 치료식', '에티오피아', RED],
+    ['223766-1', '일반식량 배분', '우간다', ORANGE],
+    ['223806-1', '학교 급식', '베네수엘라', AMBER],
+    ['223753-2', '학교 급식', '남수단', AMBER],
+    ['223850-1', '긴급 학교급식', '차드', AMBER],
+    ['223748-1', '식량 지원', '방글라데시', ORANGE],
+    ['223799-1', '현금·바우처', '콜롬비아', TEAL],
+    ['223999-1', '현금 배분', '중앙아프리카공화국', TEAL],
+    ['223982-1', '긴급 현금 지원', '미얀마', TEAL],
+    ['223864-1', '생계 역량 강화', '케냐', GREEN],
   ]
-  const cols = 3, gpx = 0.3, gpy = 0.32, gy0 = 1.72, gph = 2.3
-  const gpw = (CW - gpx * (cols - 1)) / cols
-  galleryPhotos.forEach((p, i) => {
-    const x = ML + (i % cols) * (gpw + gpx), y = gy0 + Math.floor(i / cols) * (gph + gpy)
+  const gap = 0.2, cols = 5, gpw = (CW - gap * (cols - 1)) / cols, gph = 1.5, gpy = 0.22, gy0 = 1.66
+  const gcap = (x, y, w, h, tag, place, color) => {
+    const strip = 0.44
+    s.addShape(RECT, { x, y: y + h - strip, w, h: strip, fill: { color: MID, transparency: 12 } })
+    s.addShape(OVAL, { x: x + 0.12, y: y + h - strip + 0.13, w: 0.1, h: 0.1, fill: { color } })
+    s.addText(place, { x: x + 0.28, y: y + h - strip + 0.03, w: w - 0.38, h: 0.2, fontFace: KR, fontSize: 9.5, bold: true, color: WHITE, valign: 'middle' })
+    s.addText(tag, { x: x + 0.28, y: y + h - 0.21, w: w - 0.38, h: 0.16, fontFace: KR, fontSize: 7.5, color: 'D9D9D9', valign: 'middle' })
+  }
+  gp.forEach((p, i) => {
+    const r3 = i >= 10
+    const col = r3 ? i - 10 : i % 5
+    const rowN = r3 ? 2 : Math.floor(i / 5)
+    const sx = r3 ? ML + (CW - 3 * gpw - 2 * gap) / 2 : ML
+    const x = sx + col * (gpw + gap), y = gy0 + rowN * (gph + gpy)
     s.addImage({ path: `${PUB}/gallery/${p[0]}.jpg`, x, y, w: gpw, h: gph, sizing: { type: 'cover', w: gpw, h: gph }, shadow: shadow() })
-    cap(x, y, gpw, gph, p[1], p[2], `© World Vision · ${p[3]} 2025`)
+    gcap(x, y, gpw, gph, p[1], p[2], p[3])
   })
+  s.addText('© World Vision 2025 · 13개국 사업 현장. 웹 결과보고 갤러리에서 국가별 전체 사진을 볼 수 있습니다.', { x: ML, y: 6.74, w: CW, h: 0.3, fontFace: KR, fontSize: 9, color: G6 })
   footer(s, 13)
 }
 
