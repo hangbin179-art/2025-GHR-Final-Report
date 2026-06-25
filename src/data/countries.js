@@ -125,7 +125,7 @@ export const COUNTRIES = [
 
 // ─── 사업 재무보고 (USD) ──────────────────────────────────────
 // match = 한국(WV) 매칭금(자기부담) · wfpIncome = WFP 실제 수입 인식액(Actual Income to WVK)
-// 표기 '총 사업비'는 WFP 기여분(wfpIncome) 기준(전체 약 330억). match는 레버리지 매칭 시드(합산하지 않음). 출처: 사업 재무보고 표(2026-06). 배분 실적(food/cash/val)과는 별개.
+// 표기 '총 사업비'는 WFP 기여분(wfpIncome) 기준(전체 약 336억). match는 레버리지 매칭 시드(합산하지 않음). 출처: 사업 재무보고 표(2026-06). 배분 실적(food/cash/val)과는 별개.
 const FINANCE = {
   '223255': { match: 29805,  wfpIncome: 1541046 },
   '223748': { match: 10000,  wfpIncome: 1908676 },
@@ -133,13 +133,13 @@ const FINANCE = {
   '223850': { match: 75000,  wfpIncome: 526717  },
   '223799': { match: 71092,  wfpIncome: 1498389 },
   '223796': { match: 20959,  wfpIncome: 1155857 },
-  '223847': { match: 152358, wfpIncome: 5216567 }, // 운송 음수 보정: 재무보고(WFP REPORT·Korea, Actual PBAS Commitment) 반영
+  '223847': { match: 152358, wfpIncome: 5216567 }, // 재무보고(WFP REPORT·Korea, Actual PBAS Commitment) 기준
   '224041': { match: 30000,  wfpIncome: 419395  },
   '223707': { match: 158468, wfpIncome: 2936901 },
   '223864': { match: 23128,  wfpIncome: 145554  },
   '223982': { match: 16248,  wfpIncome: 72795   },
   '223756': { match: 75312,  wfpIncome: 1112107 },
-  '223758': { match: 12528,  wfpIncome: 152335  }, // 운송 음수 보정: 재무보고(WFP REPORT·Korea, Actual PBAS Commitment) 반영
+  '223758': { match: 12528,  wfpIncome: 152335  }, // 재무보고(WFP REPORT·Korea, Actual PBAS Commitment) 기준
   '223753': { match: 38715,  wfpIncome: 482356  },
   '223745': { match: 18496,  wfpIncome: 151245  },
   '223710': { match: 27362,  wfpIncome: 1210048 },

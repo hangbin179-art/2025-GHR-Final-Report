@@ -102,12 +102,12 @@ function LeverageFlow() {
           justifyContent: 'flex-end',
         }}>
           <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.7)', margin: 0, lineHeight: 1.3, whiteSpace: 'nowrap' }}>월드비전</p>
-          <p className="num tnum" style={{ fontSize: 26, color: '#fff', margin: '3px 0 0', lineHeight: 0.95, whiteSpace: 'nowrap', letterSpacing: '-0.01em' }}>12.9억원</p>
+          <p className="num tnum" style={{ fontSize: 26, color: '#fff', margin: '3px 0 0', lineHeight: 0.95, whiteSpace: 'nowrap', letterSpacing: '-0.01em' }}>14.0억원</p>
         </div>
 
         {/* Multiplier arrow */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 2, padding: '0 2px', flexShrink: 0 }}>
-          <span className="num" style={{ fontSize: 22, color: 'var(--orange)', lineHeight: 1, letterSpacing: '-0.03em' }}>25.6×</span>
+          <span className="num" style={{ fontSize: 22, color: 'var(--orange)', lineHeight: 1, letterSpacing: '-0.03em' }}>24×</span>
           <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
             <path d="M0 5 H16 M11 1 L17 5 L11 9" stroke="var(--orange)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
@@ -137,15 +137,15 @@ function LeverageFlow() {
             letterSpacing: '-0.04em',
             userSelect: 'none',
             pointerEvents: 'none',
-          }}>25.6×</span>
+          }}>24×</span>
 
           <div style={{ position: 'relative' }}>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>
               WFP 다자협력 총 사업비
             </p>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, marginTop: 4 }}>
-              <p className="num tnum" style={{ fontSize: 44, color: '#fff', margin: 0, lineHeight: 0.9 }}>$24.8M</p>
-              <p style={{ fontFamily: 'var(--font-en)', fontSize: 13, color: 'rgba(255,255,255,0.7)', margin: 0 }}>≈ 330억원</p>
+              <p className="num tnum" style={{ fontSize: 44, color: '#fff', margin: 0, lineHeight: 0.9 }}>$25.3M</p>
+              <p style={{ fontFamily: 'var(--font-en)', fontSize: 13, color: 'rgba(255,255,255,0.7)', margin: 0 }}>≈ 336억원</p>
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ function LeverageFlow() {
 
       <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, lineHeight: 1.7, color: 'var(--grey-600)', margin: 0, paddingTop: 20, borderTop: '1px solid var(--field-200)', maxWidth: '82ch' }}>
         유엔세계식량계획(WFP) 다자기구협력사업은 회원국이 출연하는 자기부담금(매치)을 마중물로 WFP 보충 예산을 끌어와 대규모 사업으로 확장하는 구조입니다.
-        월드비전이 매칭으로 투입한 12.9억원은 실제 약 330억원 규모의 총 사업비로 집행되어, 한국 기여 대비 <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>평균 약 25.6배</strong>의 증대 효과를 거뒀습니다.
+        월드비전이 매칭으로 투입한 14.0억원은 실제 약 336억원 규모의 총 사업비로 집행되어, 한국 기여 대비 <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>평균 약 24배</strong>의 증대 효과를 거뒀습니다.
       </p>
     </div>
   )
