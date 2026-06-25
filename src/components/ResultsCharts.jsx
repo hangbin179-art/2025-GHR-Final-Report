@@ -91,18 +91,18 @@ function LeverageFlow() {
       {/* Proportional source blocks */}
       <div style={{ display: 'flex', alignItems: 'stretch', gap: 8, height: 88, marginBottom: 28 }}>
 
-        {/* WV Korea — 1 unit (small) */}
+        {/* WV Korea — 1 unit (small block, but legible label) */}
         <div style={{
-          flex: '0 0 84px',
+          flex: '0 0 132px',
           background: 'var(--midnight)',
           borderRadius: 8,
-          padding: '12px 10px',
+          padding: '14px 16px',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'flex-end',
         }}>
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 9.5, fontWeight: 700, color: 'rgba(255,255,255,0.6)', margin: 0, lineHeight: 1.3, whiteSpace: 'nowrap' }}>월드비전</p>
-          <p className="num" style={{ fontSize: 13, color: '#fff', margin: '4px 0 0', lineHeight: 1, whiteSpace: 'nowrap' }}>12.9억원</p>
+          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.7)', margin: 0, lineHeight: 1.3, whiteSpace: 'nowrap' }}>월드비전</p>
+          <p className="num tnum" style={{ fontSize: 26, color: '#fff', margin: '3px 0 0', lineHeight: 0.95, whiteSpace: 'nowrap', letterSpacing: '-0.01em' }}>12.9억원</p>
         </div>
 
         {/* Multiplier arrow */}
@@ -154,7 +154,6 @@ function LeverageFlow() {
       <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, lineHeight: 1.7, color: 'var(--grey-600)', margin: 0, paddingTop: 20, borderTop: '1px solid var(--field-200)', maxWidth: '82ch' }}>
         유엔세계식량계획(WFP) 다자기구협력사업은 회원국이 출연하는 자기부담금(매치)을 마중물로 WFP 보충 예산을 끌어와 대규모 사업으로 확장하는 구조입니다.
         월드비전이 매칭으로 투입한 12.9억원은 실제 약 330억원 규모의 총 사업비로 집행되어, 한국 기여 대비 <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>평균 약 25.6배</strong>의 증대 효과를 거뒀습니다.
-        <span style={{ display: 'block', marginTop: 6, color: 'var(--grey-500)' }}>* 전체 총 사업비(약 330억원) ÷ 전체 매칭금(12.9억원) 기준. 계획 대비로는 약 41배.</span>
       </p>
     </div>
   )

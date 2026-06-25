@@ -75,6 +75,7 @@ const PHOTOS = [
 /* 사진 없는 사업(콜롬비아·미얀마·차드)은 자리표시자로 노출 */
 const PH = (country, site, activity, color) => ({ placeholder: true, country, site, activity, color, src: null })
 const feat = (pbas) => PHOTOS.find((p) => p.pbas === pbas)
+const pick = (src) => PHOTOS.find((p) => p.src === src)
 
 /* 캐러셀 = 국가별 대표 1컷(+자리표시자) · 13개국 순서 */
 const CAROUSEL = [
@@ -84,7 +85,7 @@ const CAROUSEL = [
   feat('223707'),                              // 에티오피아
   feat('223766'),                              // 우간다
   feat('223806'),                              // 베네수엘라
-  feat('223756'),                              // 남수단
+  pick('/gallery/223753-2.jpg'),               // 남수단 — 학생들의 텃밭 가꾸기
   PH('차드', '파르차나 외', '긴급 학교급식', AMBER),
   feat('223748'),                              // 방글라데시
   PH('콜롬비아', '바예델카우카', '현금·바우처', TEAL),
