@@ -1,9 +1,9 @@
 const NAV = [
-  { href: '#sec-causes',  num: '01', label: '원인·영향' },
-  { href: '#sec-where',   num: '02', label: '현장' },
-  { href: '#sec-what',    num: '03', label: '활동' },
-  { href: '#sec-result',  num: '04', label: '성과' },
-  { href: '#sec-gallery', num: '05', label: '갤러리' },
+  { href: '#sec-causes',  num: '01', label: 'Causes & Impact' },
+  { href: '#sec-where',   num: '02', label: 'Field' },
+  { href: '#sec-what',    num: '03', label: 'Activities' },
+  { href: '#sec-result',  num: '04', label: 'Results' },
+  { href: '#sec-gallery', num: '05', label: 'Gallery' },
 ]
 
 import { useState, useEffect } from 'react'
@@ -13,7 +13,7 @@ function NavLink({ item, active, isMobile }) {
   return (
     <a
       href={item.href}
-      lang="ko"
+      lang="en"
       style={{
         display: 'flex',
         alignItems: 'center',
@@ -38,7 +38,7 @@ export default function StickyNav() {
   const isMobile = useIsMobile()
   const [active, setActive] = useState('')
 
-  // 스크롤 스파이 — 현재 화면의 섹션을 상단 메뉴에서 강조
+  // Scroll spy — highlight the section currently in view in the top menu
   useEffect(() => {
     if (typeof IntersectionObserver === 'undefined') return
     const ids = NAV.map((n) => n.href.slice(1))
@@ -74,15 +74,15 @@ export default function StickyNav() {
       }}>
         {/* Left — logos + title */}
         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12, minWidth: 0 }}>
-          <a href="https://www.worldvision.or.kr/" target="_blank" rel="noopener noreferrer" aria-label="월드비전 한국 홈페이지" style={{ display: 'flex' }}>
+          <a href="https://www.worldvision.or.kr/" target="_blank" rel="noopener noreferrer" aria-label="World Vision Korea homepage" style={{ display: 'flex' }}>
             <img src="/WorldVision-Logo-Primary.svg" alt="World Vision" style={{ height: 24, display: 'block' }} />
           </a>
           <span style={{ fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 400, color: 'var(--field-300)' }}>×</span>
-          <a href="https://ko.wfp.org/" target="_blank" rel="noopener noreferrer" aria-label="유엔세계식량계획 WFP 홈페이지" style={{ display: 'flex' }}>
+          <a href="https://ko.wfp.org/" target="_blank" rel="noopener noreferrer" aria-label="UN World Food Programme (WFP) homepage" style={{ display: 'flex' }}>
             <img src="/wfp-logo.svg" alt="World Food Programme" style={{ height: 24, display: 'block' }} />
           </a>
           <span style={{ width: 1, height: 18, background: 'var(--field-300)', margin: '0 4px', display: isMobile ? 'none' : 'block' }} />
-          <a href="#sec-hero" lang="ko" style={{
+          <a href="#sec-hero" lang="en" style={{
             fontFamily: 'var(--font-kr)',
             fontSize: 13,
             fontWeight: 600,
@@ -91,7 +91,7 @@ export default function StickyNav() {
             textDecoration: 'none',
             display: isMobile ? 'none' : 'inline',
           }}>
-            2025 글로벌 식량위기 대응 · 결과보고
+            2025 Global Food Crisis Response · Final Report
           </a>
         </div>
 

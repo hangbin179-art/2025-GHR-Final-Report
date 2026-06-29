@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 
-// 스크롤 확장 히어로 — 닫힌 상태에서는 배경 이미지만 보이다가, 스크롤을
-// 시작하면 그 시점부터 영상이 재생되며 가운데 박스가 확장되어 드러난다.
-// 원본(next/image + framer-motion + TSX)을 이 프로젝트(Vite/JSX)에 맞춰
-// img + 인라인 CSS 트랜지션으로 어댑트. (이 프로젝트는 Tailwind 유틸리티를
-// 빌드하지 않으므로 레이아웃은 전부 인라인 스타일로 둔다.)
+// Scroll-expand hero — in the closed state only the background image is visible; once the
+// user starts scrolling, the video begins playing from that point and the centre box
+// expands to reveal it.
+// Original (next/image + framer-motion + TSX) adapted to this project (Vite/JSX) using
+// img + inline CSS transitions. (This project does not build Tailwind utilities, so the
+// layout is handled entirely with inline styles.)
 export default function ScrollExpandMedia({
   mediaType = 'video',
   mediaSrc,
@@ -29,7 +30,7 @@ export default function ScrollExpandMedia({
   const [videoEnded, setVideoEnded] = useState(false)
   const [reduceMotion, setReduceMotion] = useState(false)
 
-  // 모션 최소화 설정 감지 — 켜져 있으면 스크롤 하이재킹/확장을 비활성화하고 정적 히어로로 표시
+  // Detect the reduced-motion setting — when enabled, disable scroll hijacking/expansion and show a static hero
   useEffect(() => {
     if (!window.matchMedia) return
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -39,7 +40,7 @@ export default function ScrollExpandMedia({
     return () => mq.removeEventListener('change', update)
   }, [])
 
-  // 스크롤 시작(사용자 제스처) 시 소리 켜기 시도. 브라우저가 막으면 음소거로 되돌림(버튼으로 켤 수 있음).
+  // Try to turn the sound on when scrolling starts (a user gesture). If the browser blocks it, fall back to muted (can be enabled with the button).
   const tryAutoUnmute = () => {
     if (autoUnmuteTried.current) return
     autoUnmuteTried.current = true
@@ -53,7 +54,7 @@ export default function ScrollExpandMedia({
     })
   }
 
-  // 영상이 끝난 뒤 '다시 보기' — 처음으로 되감아 다시 재생(현재 소리 설정 유지)
+  // 'Replay' after the video ends — rewind to the start and play again (keeping the current sound setting)
   const replayVideo = () => {
     const v = videoRef.current
     if (!v) return
@@ -63,7 +64,7 @@ export default function ScrollExpandMedia({
     v.play().catch(() => {})
   }
 
-  // 사운드 토글 버튼 (확실한 사용자 클릭 → 소리 재생 보장)
+  // Sound toggle button (an explicit user click guarantees sound playback)
   const toggleSound = () => {
     const v = videoRef.current
     if (!v) return
@@ -80,8 +81,8 @@ export default function ScrollExpandMedia({
     setMediaFullyExpanded(false)
   }, [mediaType])
 
-  // 영상 재생 제어: 스크롤을 시작(progress>0)하면 그때 재생, 최상단으로
-  // 완전히 돌아오면 정지하고 처음으로 되감아 다시 '이미지' 상태로.
+  // Video playback control: play once scrolling starts (progress>0); when fully scrolled
+  // back to the top, stop and rewind to the start, returning to the 'image' state.
   useEffect(() => {
     const v = videoRef.current
     if (!v) return
@@ -98,7 +99,7 @@ export default function ScrollExpandMedia({
   }, [scrollProgress])
 
   useEffect(() => {
-    if (reduceMotion) return // 모션 최소화: 스크롤 하이재킹 비활성화 (페이지 정상 스크롤)
+    if (reduceMotion) return // Reduced motion: disable scroll hijacking (normal page scrolling)
     const handleWheel = (e) => {
       if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
         setMediaFullyExpanded(false)
@@ -181,7 +182,7 @@ export default function ScrollExpandMedia({
     return () => window.removeEventListener('resize', checkIfMobile)
   }, [])
 
-  // 외부에서 'resetSection' 이벤트가 오면 처음 상태로 되돌린다.
+  // When a 'resetSection' event arrives from outside, return to the initial state.
   useEffect(() => {
     const onReset = () => {
       setScrollProgress(0)
@@ -192,7 +193,7 @@ export default function ScrollExpandMedia({
     return () => window.removeEventListener('resetSection', onReset)
   }, [])
 
-  // 마운트 시 항상 최상단(닫힌 상태)에서 시작 — 브라우저 스크롤 복원 방지.
+  // Always start at the very top (closed state) on mount — prevent browser scroll restoration.
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
@@ -208,7 +209,7 @@ export default function ScrollExpandMedia({
     <div ref={sectionRef} className="cg-hero-cinematic" style={{ overflowX: 'hidden', transition: 'background-color 0.7s ease-in-out' }}>
       <section style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', minHeight: '100dvh' }}>
         <div style={{ position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: '100dvh' }}>
-          {/* Background image — 스크롤할수록 서서히 사라짐 */}
+          {/* Background image — gradually fades out as you scroll */}
           <div
             style={{ position: 'absolute', inset: 0, zIndex: 0, height: '100%', opacity: 1 - scrollProgress, transition: 'opacity 0.1s ease-out' }}
           >
@@ -218,7 +219,7 @@ export default function ScrollExpandMedia({
               style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
             />
             <div style={{ position: 'absolute', inset: 0, background: 'rgba(17,18,34,0.32)' }} />
-            {/* 사진 크레딧 — 메인 이미지 좌측 하단 */}
+            {/* Photo credit — bottom left of the main image */}
             <p style={{ position: 'absolute', left: 18, bottom: 16, margin: 0, zIndex: 1, fontFamily: 'var(--font-en)', fontSize: 11, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.72)', textShadow: '0 1px 4px rgba(0,0,0,0.55)' }}>
               © World Vision / Jon Warren · Ethiopia 2025
             </p>
@@ -226,7 +227,7 @@ export default function ScrollExpandMedia({
 
           <div style={{ width: '100%', marginLeft: 'auto', marginRight: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', position: 'relative', zIndex: 10 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100dvh', position: 'relative' }}>
-              {/* 확장되는 미디어 박스 */}
+              {/* Expanding media box */}
               <div
                 style={{
                   position: 'absolute',
@@ -256,7 +257,7 @@ export default function ScrollExpandMedia({
                       controls={false}
                       disablePictureInPicture
                     />
-                    {/* 정지 상태에서는 이미지로 보이도록 poster 오버레이 — 스크롤 시작 시 사라짐 */}
+                    {/* Poster overlay so it looks like an image while paused — disappears once scrolling starts */}
                     <img
                       src={posterSrc}
                       alt=""
@@ -265,11 +266,11 @@ export default function ScrollExpandMedia({
                     <div
                       style={{ position: 'absolute', inset: 0, borderRadius: 12, background: 'rgba(0,0,0,1)', opacity: 0.5 - scrollProgress * 0.3, transition: 'opacity 0.2s' }}
                     />
-                    {/* 영상 종료 후 '다시 보기' 버튼 (래퍼가 pointer-events:none 이라 버튼만 auto) */}
+                    {/* 'Replay' button after the video ends (the wrapper is pointer-events:none, so only the button is auto) */}
                     {videoEnded && scrollProgress > 0 && (
                       <button
                         onClick={replayVideo}
-                        aria-label="영상 다시 보기"
+                        aria-label="Replay video"
                         style={{
                           position: 'absolute',
                           top: '50%',
@@ -295,7 +296,7 @@ export default function ScrollExpandMedia({
                         }}
                       >
                         <span style={{ fontSize: 18, lineHeight: 1 }}>↻</span>
-                        다시 보기
+                        Replay
                       </button>
                     )}
                   </div>
@@ -313,7 +314,7 @@ export default function ScrollExpandMedia({
                 )}
               </div>
 
-              {/* 제목 오버레이 — 한 줄 고정, 스크롤 시작하면 서서히 사라짐 */}
+              {/* Title overlay — fixed to one line, fades out gradually once scrolling starts */}
               <div
                 style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', width: '100%', position: 'relative', zIndex: 10, paddingLeft: 16, paddingRight: 16, gap: 10, opacity: textOpacity, transition: 'opacity 0.15s ease-out' }}
               >
@@ -381,10 +382,10 @@ export default function ScrollExpandMedia({
                 )}
               </div>
 
-              {/* 사운드 토글 — 브라우저 자동재생 정책상 소리는 클릭으로 켜는 게 안정적 */}
+              {/* Sound toggle — given browser autoplay policies, enabling sound on click is the reliable approach */}
               <button
                 onClick={toggleSound}
-                aria-label={soundOn ? '소리 끄기' : '소리 켜기'}
+                aria-label={soundOn ? 'Mute' : 'Sound on'}
                 style={{
                   position: 'absolute',
                   bottom: 28,
@@ -407,11 +408,11 @@ export default function ScrollExpandMedia({
                 }}
               >
                 <span style={{ fontSize: 15, lineHeight: 1 }}>{soundOn ? '🔊' : '🔇'}</span>
-                {soundOn ? '소리 켜짐' : '소리 켜기'}
+                {soundOn ? 'Mute' : 'Sound on'}
               </button>
             </div>
 
-            {/* 확장 완료 후 나타나는 콘텐츠 슬롯 */}
+            {/* Content slot that appears after the box is fully expanded */}
             <section
               style={{ display: 'flex', flexDirection: 'column', width: '100%', padding: '40px 32px', opacity: showContent ? 1 : 0, transition: 'opacity 0.7s ease-out' }}
             >

@@ -42,7 +42,7 @@ export function PhotoSlot({ caption, ratio = '4/3', accent, src }) {
       </div>
       )}
       {caption && (
-        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-600)', margin: '10px 0 0', lineHeight: 1.6 }}>
+        <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-600)', margin: '10px 0 0', lineHeight: 1.6 }}>
           {caption}
         </p>
       )}
@@ -58,7 +58,7 @@ export function Quote({ text, source, accent }) {
       paddingLeft: 20,
       borderLeft: `3px solid ${accent}`,
     }}>
-      <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 17, lineHeight: 1.7, color: 'var(--midnight)', fontWeight: 500, margin: 0, wordBreak: 'keep-all' }}>
+      <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 17, lineHeight: 1.7, color: 'var(--midnight)', fontWeight: 500, margin: 0, wordBreak: 'keep-all' }}>
         “{text}”
       </p>
       <footer style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 600, color: 'var(--grey-600)', marginTop: 10 }}>
@@ -74,9 +74,9 @@ function StatChip({ value, unit, label, accent }) {
     <div style={{ flex: 1, minWidth: 0 }}>
       <p className="num tnum" style={{ fontSize: 30, color: accent, margin: 0, lineHeight: 1 }}>
         {value}
-        {unit && <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 600, fontSize: 13, color: 'var(--grey-600)', marginLeft: 3 }}>{unit}</span>}
+        {unit && <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 600, fontSize: 13, color: 'var(--grey-600)', marginLeft: 3 }}>{unit}</span>}
       </p>
-      <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, fontWeight: 600, color: 'var(--grey-600)', margin: '8px 0 0', lineHeight: 1.4 }}>
+      <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, fontWeight: 600, color: 'var(--grey-600)', margin: '8px 0 0', lineHeight: 1.4 }}>
         {label}
       </p>
     </div>
@@ -90,7 +90,7 @@ function PartHeader({ num, title, titleEn, accent }) {
     <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '120px 1fr', gap: isMobile ? 8 : 48, alignItems: 'start', marginBottom: isMobile ? 20 : 36 }}>
       <p className="num" style={{ fontSize: 88, lineHeight: 0.85, color: accent, margin: 0, letterSpacing: '-0.04em' }}>{num}</p>
       <div>
-        <h3 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>{title}</h3>
+        <h3 lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>{title}</h3>
         <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>{titleEn}</p>
       </div>
     </div>
@@ -102,21 +102,21 @@ export default function NarrativePrograms() {
   return (
     <div style={{ marginTop: 24 }}>
 
-      {/* ════════ 04 — 학교 급식 ════════ */}
+      {/* ════════ 04 — School Feeding ════════ */}
       <ScrollReveal from="right">
       <article style={{ padding: '40px 0', borderBottom: '1px solid var(--field-200)' }}>
-        <PartHeader num="04" title="학교 급식" titleEn="Home-Grown School Feeding" accent={AMBER} />
+        <PartHeader num="04" title="School Feeding" titleEn="Home-Grown School Feeding" accent={AMBER} />
 
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '120px 1fr', gap: isMobile ? 0 : 48 }}>
           <div />
           <div>
             {/* Intro + lead stats */}
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
-              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                자립형 학교급식(Home-Grown School Feeding)은 끼니를 주는 데서 멈추지 않습니다. 학교가 직접 작물을
-                기르고, 학생이 그 기술을 집으로 가져갑니다. 남수단 <strong style={{ color: 'var(--midnight)' }}>주바·얌비오 자립형 학교급식 사업</strong>은
-                중앙적도주 21개 초등학교의 13,000여 명에게 급식을 제공하면서, 학교 텃밭을 통한 농업 교육을 결합했습니다.
-                2025년 한 해 동안 사업 총 47,468명이 수혜를 받았습니다.
+              <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
+                Home-Grown School Feeding does not stop at providing a meal. Schools grow their own crops, and
+                students carry those skills back home. In South Sudan, the <strong style={{ color: 'var(--midnight)' }}>Juba & Yambio Home-Grown School Feeding programme</strong> served
+                meals to more than 13,000 children across 21 primary schools in Central Equatoria, combining agricultural
+                education through school gardens. Over the course of 2025, the programme reached 47,468 people in total.
               </p>
               <div style={{
                 background: AMBER_BG,
@@ -125,30 +125,30 @@ export default function NarrativePrograms() {
                 display: 'flex',
                 gap: 20,
               }}>
-                <StatChip value="21" unit="개교" label="중앙적도주 초등학교" accent={AMBER} />
-                <StatChip value="47,468" unit="명" label="사업 총 수혜자" accent={AMBER} />
+                <StatChip value="21" unit="schools" label="Primary schools in Central Equatoria" accent={AMBER} />
+                <StatChip value="47,468" unit="people" label="Total programme beneficiaries" accent={AMBER} />
               </div>
             </div>
 
             {/* Field story — Kapuri */}
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '0.85fr 1fr', gap: isMobile ? 20 : 40, marginTop: 36, alignItems: 'start' }}>
-              <PhotoSlot accent={AMBER} src="/gallery/223753-1.jpg" caption="남수단 주바 자립형 학교급식 사업 — 학생들이 교사와 함께 학교 텃밭을 일구는 모습." />
+              <PhotoSlot accent={AMBER} src="/gallery/223753-1.jpg" caption="Juba Home-Grown School Feeding programme, South Sudan — students tending the school garden alongside their teacher." />
               <div>
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: AMBER, margin: '0 0 12px' }}>
-                  Field Story · 카푸리 초등학교
+                  Field Story · Kapuri Primary School
                 </p>
-                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 15, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                  4학년 <strong style={{ color: 'var(--midnight)' }}>키덴(13세)</strong>과 <strong style={{ color: 'var(--midnight)' }}>야와(12세)</strong>는
-                  학교 텃밭에서 토지 준비·묘판 만들기·이식·작물 윤작·잡초 제거·관개법을 배웠습니다. 두 학생은 배운 기술을
-                  집으로 가져가 부모와 함께 <strong style={{ color: AMBER }}>동부콩·오크라·토마토</strong>를 심었습니다.
-                  가족은 3~4일마다 수확물을 거뒀고, 일부는 직접 먹고 일부는 시장에 내다 팔았습니다. 하루 판매 수익은
-                  3만~3만 5천 남수단파운드(약 5~6 USD). 아버지 마이클 수바 씨는 이 돈으로 아이들의 학용품을 사고 학교
-                  발전기금을 냈습니다.
+                <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 15, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
+                  Fourth-graders <strong style={{ color: 'var(--midnight)' }}>Kiden (13)</strong> and <strong style={{ color: 'var(--midnight)' }}>Yawa (12)</strong> learned
+                  land preparation, seedbed making, transplanting, crop rotation, weeding, and irrigation in the school garden. The two
+                  students brought those skills home and, together with their parents, planted <strong style={{ color: AMBER }}>cowpeas, okra, and tomatoes</strong>.
+                  The family harvested every three to four days, eating some of the produce and selling the rest at the market. Daily sales earned
+                  30,000–35,000 South Sudanese pounds (about USD 5–6). Their father, Michael Suba, used this income to buy his children's
+                  school supplies and contribute to the school development fund.
                 </p>
                 <Quote
                   accent={AMBER}
-                  text="일자리가 없는 제게, 시장에서 채소를 팔아 버는 돈이 아이들 책을 사고 학교에 내는 돈의 전부입니다."
-                  source="마이클 수바 · 카푸리 마을, 두 학생의 아버지"
+                  text="I have no job, so the money I earn selling vegetables at the market is all I have to buy my children's books and pay their school fees."
+                  source="Michael Suba · Kapuri village, father of two students"
                 />
               </div>
             </div>
@@ -156,18 +156,19 @@ export default function NarrativePrograms() {
             {/* School gardens — aggregate harvest & income */}
             <div style={{ marginTop: 36, paddingTop: 32, borderTop: '1px solid var(--field-200)' }}>
               <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: AMBER, margin: '0 0 16px' }}>
-                School Gardens · 학교 텃밭의 결실
+                School Gardens · Harvest from the school plots
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
-                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                  WFP 배급에 학교가 직접 기른 채소를 더했습니다. 주바 카운티 <strong style={{ color: 'var(--midnight)' }}>목표 21개교 중 20개교</strong>에
-                  텃밭을 조성하고 종자·농기구를 지원해 토마토·가지·오크라·옥수수 등을 재배했습니다. 수확물 대부분은 학생
-                  급식으로 돌아갔고, 그중 <strong style={{ color: AMBER }}>316kg을 시장에 팔아 약 40만 남수단파운드(약 70 USD)</strong>를
-                  학교 운영비에 보탰습니다. 일례로 나바구 초등학교는 옥수수 750kg을 거둬 550kg은 급식에, 200kg은 판매에 썼습니다.
+                <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
+                  Vegetables grown by the schools themselves were added to the WFP ration. In Juba County, gardens were
+                  established in <strong style={{ color: 'var(--midnight)' }}>20 of the 21 targeted schools</strong>, supported with seeds and farming
+                  tools to grow tomatoes, eggplant, okra, maize, and more. Most of the harvest went back into student
+                  meals, and of the rest <strong style={{ color: AMBER }}>316 kg was sold at market for about 400,000 South Sudanese pounds (about USD 70)</strong>,
+                  contributing to school running costs. Nabagu Primary School, for example, harvested 750 kg of maize — 550 kg for meals and 200 kg for sale.
                 </p>
                 <div style={{ background: AMBER_BG, borderRadius: 12, padding: 24, display: 'flex', gap: 20 }}>
-                  <StatChip value="2,269" unit="kg" label="학교 텃밭 총 수확량" accent={AMBER} />
-                  <StatChip value="1,403" unit="kg" label="교내 급식으로 소비" accent={AMBER} />
+                  <StatChip value="2,269" unit="kg" label="Total school-garden harvest" accent={AMBER} />
+                  <StatChip value="1,403" unit="kg" label="Consumed in school meals" accent={AMBER} />
                 </div>
               </div>
             </div>
@@ -175,12 +176,12 @@ export default function NarrativePrograms() {
             {/* Secondary — Chad */}
             <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--field-200)', display: 'grid', gridTemplateColumns: 'auto 1fr', gap: 20, alignItems: 'baseline' }}>
               <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--grey-600)', border: '1px solid var(--field-200)', padding: '4px 8px', borderRadius: 4, whiteSpace: 'nowrap' }}>
-                차드 · 파르차나 외
+                Chad · Farchana &amp; more
               </span>
-              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, wordBreak: 'keep-all' }}>
-                차드 동부(아베셰·파르차나·게레다·고즈베이다·이리바)에서는 <strong style={{ color: 'var(--midnight)' }}>긴급 학교급식(Emergency School Feeding)</strong>을
-                현금 배분 방식으로 운영했습니다. 식량 보관 창고를 건립해 우기에도 안정적으로 급식을 공급할 수 있는
-                공급망을 구축했습니다.
+              <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, wordBreak: 'keep-all' }}>
+                In eastern Chad (Abéché, Farchana, Guéréda, Goz Beïda, and Iriba), <strong style={{ color: 'var(--midnight)' }}>Emergency School Feeding</strong> was
+                delivered through cash distribution. Food storage warehouses were built to establish a supply chain capable of
+                providing meals reliably even during the rainy season.
               </p>
             </div>
           </div>
@@ -188,21 +189,22 @@ export default function NarrativePrograms() {
       </article>
       </ScrollReveal>
 
-      {/* ════════ 05 — 생계 역량 강화 ════════ */}
+      {/* ════════ 05 — Livelihood & Resilience ════════ */}
       <ScrollReveal from="left">
       <article style={{ padding: '40px 0 8px' }}>
-        <PartHeader num="05" title="생계 역량 강화" titleEn="Livelihoods & Resilience" accent={GREEN} />
+        <PartHeader num="05" title="Livelihood & Resilience" titleEn="Livelihoods & Resilience" accent={GREEN} />
 
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '120px 1fr', gap: isMobile ? 0 : 48 }}>
           <div />
           <div>
             {/* Intro + lead stats */}
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
-              <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                식량을 나눠주는 것을 넘어, 스스로 벌 수 있게 합니다. 케냐 <strong style={{ color: 'var(--midnight)' }}>마쿠에니·키투이
-                지속가능 식량체계 사업</strong>은 가뭄이 잦은 건조·반건조 지역에서 식량을 직접 배분하지 않는
-                ‘비식량’ 사업으로 설계되었습니다. 빈곤율이 각각 64.1%, 63.1%에 달하는 두 카운티에서 11,306명이
-                마을저축그룹(VSLA)에 참여해 저축·소액대출·소득창출 기회를 얻었습니다.
+              <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
+                Beyond handing out food, the goal is to help people earn for themselves. In Kenya, the <strong style={{ color: 'var(--midnight)' }}>Makueni & Kitui
+                Sustainable Food Systems programme</strong> was designed as a "non-food" project that distributes no food directly,
+                operating in arid and semi-arid regions prone to frequent drought. In the two counties — where poverty rates reach
+                64.1% and 63.1% respectively — 11,306 people joined Village Savings and Loan Associations (VSLAs), gaining access to
+                savings, microloans, and income-generating opportunities.
               </p>
               <div style={{
                 background: GREEN_BG,
@@ -211,8 +213,8 @@ export default function NarrativePrograms() {
                 display: 'flex',
                 gap: 20,
               }}>
-                <StatChip value="11,306" unit="명" label="마을저축그룹 참여 주민 (케냐)" accent={GREEN} />
-                <StatChip value="0.5→3" unit="ha" label="경작지 확대 (중앙아프리카 자루아)" accent={GREEN} />
+                <StatChip value="11,306" unit="people" label="VSLA participants (Kenya)" accent={GREEN} />
+                <StatChip value="0.5→3" unit="ha" label="Farmland expansion (Zaroua, Central African Republic)" accent={GREEN} />
               </div>
             </div>
 
@@ -221,33 +223,33 @@ export default function NarrativePrograms() {
 
               {/* Kenya SFSP */}
               <div>
-                <PhotoSlot ratio="16/10" accent={GREEN} src="/gallery/223864-2.jpg" caption="마쿠에니·키투이 회복력 사업 — 염소 사육으로 자산을 형성한 수혜자." />
+                <PhotoSlot ratio="16/10" accent={GREEN} src="/gallery/223864-2.jpg" caption="Makueni & Kitui resilience programme — a beneficiary building assets through goat rearing." />
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: GREEN, margin: '16px 0 10px' }}>
-                  Kenya · 마쿠에니 · 키투이
+                  Kenya · Makueni · Kitui
                 </p>
-                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                  주민들은 <strong style={{ color: GREEN }}>녹두·동부콩·기장·수수</strong> 같은 가뭄 저항성 작물을 재배하고,
-                  기후스마트 농업과 가금류·염소 사육 기술을 익혔습니다. <strong style={{ color: 'var(--midnight)' }}>R4 회복력 강화 프로그램(R4 Rural Resilience Initiative)</strong>을 통해 작물 보험에 가입해 가뭄·홍수·병충해 손실을 보상받게 되었습니다. 이 경제적 완충장치는
-                  가정의 구매력을 높여 아이들의 영양·교육·의료 지출을 안정적으로 감당하게 했습니다.
+                <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
+                  Community members grew drought-resistant crops such as <strong style={{ color: GREEN }}>green grams, cowpeas, millet, and sorghum</strong>,
+                  and learned climate-smart agriculture and poultry- and goat-rearing skills. Through the <strong style={{ color: 'var(--midnight)' }}>R4 Rural Resilience Initiative</strong> they took out crop insurance to be compensated for losses from drought, flooding, and pests. This economic buffer
+                  raised households' purchasing power, allowing them to cover their children's nutrition, education, and healthcare costs more steadily.
                 </p>
               </div>
 
               {/* CAR FFA */}
               <div>
-                <PhotoSlot ratio="16/10" accent={GREEN} src="/gallery/223999-2.jpg" caption="방가수 — 현금근로(Cash for Work)로 농업 접근로를 복구하며 작업 자재를 전달받는 주민들." />
+                <PhotoSlot ratio="16/10" accent={GREEN} src="/gallery/223999-2.jpg" caption="Bangassou — community members receiving work materials while restoring farm access roads through Cash for Work." />
                 <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: GREEN, margin: '16px 0 10px' }}>
-                  Central African Rep. · 부아르 · 방가수 · 생계 역량 강화 및 자산 조성 기회 제공
+                  Central African Rep. · Bouar · Bangassou · Livelihood &amp; asset-building support
                 </p>
-                <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                  중앙아프리카공화국 음보무·우아카 주에서는 <strong style={{ color: 'var(--midnight)' }}>조건부 현금</strong>을 통한
-                  생계 역량 강화 및 자산 조성 기회 제공을 운영했습니다. 자루아 마을 농업그룹의 피에르 파리 씨는 경작지를 0.5헥타르에서 3헥타르로
-                  넓혀 땅콩과 벼를 심었습니다. 바지코 마을 주민들은 현금근로(Cash for Work)로 농업용 도로를 보수하고
-                  농기구·장비를 지원받아, 농산물 운반과 시장 접근이 한결 수월해졌습니다.
+                <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
+                  In the Mbomou and Ouaka prefectures of the Central African Republic, livelihood strengthening and asset-building
+                  opportunities were delivered through <strong style={{ color: 'var(--midnight)' }}>conditional cash</strong>. Pierre Pari, of the Zaroua village
+                  farming group, expanded his plot from 0.5 hectares to 3 hectares to plant groundnuts and rice. Residents of Baziko village repaired
+                  agricultural roads through Cash for Work and received farming tools and equipment, making it far easier to transport produce and reach markets.
                 </p>
                 <Quote
                   accent={GREEN}
-                  text="조건부 현금 지원이 우리를 움직이게 했습니다. 경작지를 3헥타르까지 넓혀 땅콩과 벼, 두 작물을 심었습니다."
-                  source="피에르 파리 · 자루아 농업그룹 대표"
+                  text="The conditional cash support got us moving. I expanded my plot to three hectares and planted two crops — groundnuts and rice."
+                  source="Pierre Pari · leader of the Zaroua farming group"
                 />
               </div>
             </div>

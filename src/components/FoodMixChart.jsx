@@ -1,23 +1,23 @@
 import { useState } from 'react'
 import useIsMobile from '../lib/useIsMobile.js'
 
-// 2025년 배분 식량 종류(톤). 출처: 사업 식량 배분 실적표(영양치료식 포함).
+// 2025 food commodities distributed (tonnes). Source: project food distribution results (incl. therapeutic food).
 const FOOD = [
-  { name: '옥수수',         t: 2947.3, color: '#FF5515', note: '주식 탄수화물·열량원. 가뭄에 강해 수단·DR콩고 등 아프리카 현장에서 주력으로 배분.' },
-  { name: '수수',           t: 2808.5, color: '#C2410C', note: '글루텐프리 곡물·철분원. 건조지대에서 현지 조달이 쉬워 전년 대비 약 4배 늘었습니다.' },
-  { name: '콩 (렌틸 등)',   t: 1278.6, color: '#2F7D4F', note: '단백질·철분·식이섬유 공급원. 곡물과 함께 배분해 부족한 단백질을 보충.' },
-  { name: '영양실조치료 보충식', t: 998.1,  color: '#C8102E', note: '5세 미만·임산부용 고열량 치료식(플럼피넛·영양강화식). 에티오피아·DR콩고 영양사업에 집중.' },
-  { name: '밀',             t: 828.0,  color: '#E0A92E', note: '탄수화물 주식. 수입 의존이 커 전년 대비 절반 수준으로 줄었습니다.' },
-  { name: '식용유',         t: 461.7,  color: '#F4C430' },
-  { name: '쌀',             t: 357.1,  color: '#B6A98F' },
-  { name: '식량 키트',      t: 349.9,  color: '#6B7280' },
-  { name: '기타',           t: 125.6,  color: '#A8A29E' },
-  { name: '소금',           t: 80.3,   color: '#D6D3CD' },
+  { name: 'Maize',          t: 2947.3, color: '#FF5515', note: 'Staple carbohydrate and energy source. Drought-resistant, it was the mainstay distributed across African field sites such as Sudan and DR Congo.' },
+  { name: 'Sorghum',        t: 2808.5, color: '#C2410C', note: 'A gluten-free grain and source of iron. Easy to source locally in arid zones, it grew roughly fourfold year on year.' },
+  { name: 'Pulses (lentils, etc.)', t: 1278.6, color: '#2F7D4F', note: 'A source of protein, iron and dietary fibre. Distributed alongside grains to make up protein shortfalls.' },
+  { name: 'Therapeutic food', t: 998.1,  color: '#C8102E', note: 'High-energy treatment food for children under 5 and pregnant women (Plumpy’Nut, fortified foods). Concentrated in nutrition programmes in Ethiopia and DR Congo.' },
+  { name: 'Wheat',          t: 828.0,  color: '#E0A92E', note: 'A staple carbohydrate. Heavily reliant on imports, it was cut to about half of the prior year.' },
+  { name: 'Vegetable oil',  t: 461.7,  color: '#F4C430' },
+  { name: 'Rice',           t: 357.1,  color: '#B6A98F' },
+  { name: 'Food kits',      t: 349.9,  color: '#6B7280' },
+  { name: 'Other',          t: 125.6,  color: '#A8A29E' },
+  { name: 'Salt',           t: 80.3,   color: '#D6D3CD' },
 ]
-const TOTAL = FOOD.reduce((s, d) => s + d.t, 0) // = 10,235.1톤
+const TOTAL = FOOD.reduce((s, d) => s + d.t, 0) // = 10,235.1 tonnes
 const MAJOR = FOOD.slice(0, 5)
 
-// 도넛 세그먼트 path — 12시 방향(-90°)에서 시계방향
+// Donut segment path — clockwise from 12 o'clock (-90°)
 function polar(c, r, deg) {
   const a = ((deg - 90) * Math.PI) / 180
   return [c + r * Math.cos(a), c + r * Math.sin(a)]
@@ -71,18 +71,18 @@ export default function FoodMixChart() {
                 />
               ))}
             </svg>
-            {/* 가운데 표시 — 호버 시 해당 품목 톤·%, 평소엔 2025 */}
+            {/* Center label — on hover shows the item's tonnage and %, otherwise 2025 */}
             <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', textAlign: 'center', padding: '0 20%' }}>
               {active === null ? (
                 <>
                   <span className="num" style={{ fontSize: 34, color: 'var(--midnight)', lineHeight: 1 }}>2025</span>
-                  <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', marginTop: 4 }}>배분 식량 구성</span>
+                  <span style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', marginTop: 4 }}>Food mix distributed</span>
                 </>
               ) : (
                 <>
-                  <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12.5, fontWeight: 700, color: 'var(--grey-700)', lineHeight: 1.15 }}>{segs[active].name}</span>
+                  <span style={{ fontFamily: 'var(--font-kr)', fontSize: 12.5, fontWeight: 700, color: 'var(--grey-700)', lineHeight: 1.15 }}>{segs[active].name}</span>
                   <span className="num tnum" style={{ fontSize: 24, color: segs[active].color, lineHeight: 1.05, marginTop: 3 }}>
-                    {segs[active].t.toLocaleString()}<span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-500)', marginLeft: 2 }}>톤</span>
+                    {segs[active].t.toLocaleString()}<span style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-500)', marginLeft: 2 }}>t</span>
                   </span>
                   <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 14, fontWeight: 800, color: segs[active].color, marginTop: 3 }}>{segs[active].pct.toFixed(1)}%</span>
                 </>
@@ -90,11 +90,11 @@ export default function FoodMixChart() {
             </div>
           </div>
 
-          {/* Legend — 이름 · 무게 · 비율 */}
+          {/* Legend — name · weight · share */}
           <div style={{ marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--midnight)' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 10 }}>
-              <span style={{ fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)' }}>Legend · 종류별 배분량</span>
-              <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 10, color: 'var(--grey-500)' }}>톤 · 비율</span>
+              <span style={{ fontFamily: 'var(--font-en)', fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)' }}>Legend · Distribution by type</span>
+              <span style={{ fontFamily: 'var(--font-kr)', fontSize: 10, color: 'var(--grey-500)' }}>tonnes · share</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '5px 22px' }}>
               {segs.map((d, i) => (
@@ -105,8 +105,8 @@ export default function FoodMixChart() {
                   style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', padding: '2px 6px', margin: '0 -6px', borderRadius: 5, background: active === i ? 'var(--field-50)' : 'transparent', transition: 'background 0.15s ease' }}
                 >
                   <span style={{ width: 10, height: 10, borderRadius: 2, background: d.color, flexShrink: 0, boxShadow: active === i ? `0 0 0 3px ${d.color}33` : 'none', transition: 'box-shadow 0.15s' }} />
-                  <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: active === i ? 'var(--midnight)' : 'var(--grey-700)', fontWeight: active === i ? 700 : 400, flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{d.name}</span>
-                  <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 11.5, fontWeight: 700, color: 'var(--grey-600)', textAlign: 'right', flexShrink: 0 }}>{d.t.toLocaleString()}<span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 400, color: 'var(--grey-500)', fontSize: 10 }}>톤</span></span>
+                  <span style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: active === i ? 'var(--midnight)' : 'var(--grey-700)', fontWeight: active === i ? 700 : 400, flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{d.name}</span>
+                  <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 11.5, fontWeight: 700, color: 'var(--grey-600)', textAlign: 'right', flexShrink: 0 }}>{d.t.toLocaleString()}<span style={{ fontFamily: 'var(--font-kr)', fontWeight: 400, color: 'var(--grey-500)', fontSize: 10 }}>t</span></span>
                   <span className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 11.5, fontWeight: 700, color: d.color, width: 42, textAlign: 'right', flexShrink: 0 }}>{d.pct.toFixed(1)}%</span>
                 </div>
               ))}
@@ -114,28 +114,28 @@ export default function FoodMixChart() {
           </div>
         </div>
 
-        {/* Info panel — 별도 설명(열량·영양소·주요 배분국) */}
+        {/* Info panel — separate notes (calories · nutrients · main distribution countries) */}
         <div>
           <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--orange)', margin: '0 0 14px' }}>
-            What was on the plate · 식탁에 오른 것들
+            What was on the plate
           </p>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {MAJOR.map((d) => (
               <li key={d.name} style={{ display: 'flex', gap: 9, marginBottom: 11 }}>
                 <span style={{ width: 9, height: 9, borderRadius: 2, background: d.color, flexShrink: 0, marginTop: 6 }} />
-                <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.55, color: 'var(--grey-700)' }}>
+                <span style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.55, color: 'var(--grey-700)' }}>
                   <strong style={{ color: 'var(--midnight)' }}>{d.name}</strong> — {d.note}
                 </span>
               </li>
             ))}
           </ul>
 
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.55, color: 'var(--grey-700)', margin: '2px 0 0' }}>
-            <strong style={{ color: 'var(--midnight)' }}>식용유 · 쌀 · 식량키트 · 소금 · 기타</strong> — 식용유는 100g당 약 880kcal의 농축 열량과 비타민A를, 요오드 강화 소금은 미량영양소 결핍을 보완합니다.
+          <p style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.55, color: 'var(--grey-700)', margin: '2px 0 0' }}>
+            <strong style={{ color: 'var(--midnight)' }}>Vegetable oil · Rice · Food kits · Salt · Other</strong> — vegetable oil delivers about 880 kcal of concentrated energy per 100 g plus vitamin A, while iodised salt helps offset micronutrient deficiencies.
           </p>
 
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12.5, lineHeight: 1.65, color: 'var(--grey-700)', margin: '16px 0 0', padding: '12px 14px', background: 'var(--field-50)', borderRadius: 8, borderLeft: '3px solid var(--orange)' }}>
-            <strong style={{ color: 'var(--midnight)' }}>전년 대비 식량 배분량 약 70% 증가</strong> (2024년 6,018톤 → 2025년 10,235.1톤). 수입 밀 비중을 줄이고, 가뭄에 강하고 역내 조달이 쉬운 <strong style={{ color: 'var(--orange)' }}>수수·옥수수</strong> 중심으로 전환됐습니다.
+          <p style={{ fontFamily: 'var(--font-kr)', fontSize: 12.5, lineHeight: 1.65, color: 'var(--grey-700)', margin: '16px 0 0', padding: '12px 14px', background: 'var(--field-50)', borderRadius: 8, borderLeft: '3px solid var(--orange)' }}>
+            <strong style={{ color: 'var(--midnight)' }}>Food distribution rose about 70% year on year</strong> (6,018 tonnes in 2024 → 10,235.1 tonnes in 2025). The mix shifted away from imported wheat toward <strong style={{ color: 'var(--orange)' }}>sorghum and maize</strong>, which are drought-resistant and easier to source within the region.
           </p>
         </div>
       </div>

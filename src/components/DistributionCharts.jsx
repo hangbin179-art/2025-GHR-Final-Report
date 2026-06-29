@@ -1,8 +1,8 @@
 import useIsMobile from '../lib/useIsMobile.js'
 import { COUNTRIES, countryTotals } from '../data/countries.js'
 
-// 단일 소스(countries.js)에서 국가별 합계를 구해 식량가액·현금 내림차순 정렬
-const _BY = COUNTRIES.map((c) => ({ name: c.chartName || c.ko, ...countryTotals(c) }))
+// Derive per-country totals from the single source (countries.js), sorted by commodity value and cash descending
+const _BY = COUNTRIES.map((c) => ({ name: c.countryEn, ...countryTotals(c) }))
 const FOOD_COUNTRIES = _BY.filter((c) => c.food > 0).sort((a, b) => b.foodVal - a.foodVal).map((c) => ({ name: c.name, val: c.foodVal, tons: Math.round(c.food) }))
 const CASH_COUNTRIES = _BY.filter((c) => c.cash > 0).sort((a, b) => b.cash - a.cash).map((c) => ({ name: c.name, val: c.cash }))
 
@@ -26,7 +26,7 @@ function HBarChart({ title, subtitle, data, color, maxKey = 'val', note }) {
           margin: 0,
         }}>{title}</p>
         {subtitle && (
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '4px 0 0' }}>{subtitle}</p>
+          <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '4px 0 0' }}>{subtitle}</p>
         )}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -35,7 +35,7 @@ function HBarChart({ title, subtitle, data, color, maxKey = 'val', note }) {
           const isFirst = i === 0
           return (
             <div key={d.name} style={{ display: 'grid', gridTemplateColumns: '80px 1fr 72px', alignItems: 'center', gap: 10 }}>
-              <span lang="ko" style={{
+              <span lang="en" style={{
                 fontFamily: 'var(--font-kr)',
                 fontSize: 12,
                 fontWeight: isFirst ? 700 : 600,
@@ -79,7 +79,7 @@ function HBarChart({ title, subtitle, data, color, maxKey = 'val', note }) {
         })}
       </div>
       {note && (
-        <p lang="ko" style={{
+        <p lang="en" style={{
           fontFamily: 'var(--font-kr)',
           fontSize: 11,
           color: 'var(--grey-500)',
@@ -105,28 +105,28 @@ export default function DistributionCharts() {
           textTransform: 'uppercase',
           color: 'var(--midnight)',
           margin: 0,
-        }}>국가별 배분 규모 비교 · DISTRIBUTION BY COUNTRY</p>
-        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: 0 }}>
-          식량 8개국 · 현금 9개국 · USD 기준
+        }}>Distribution by Country</p>
+        <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: 0 }}>
+          Food: 8 countries · Cash: 9 countries · USD
         </p>
       </div>
 
       {/* Two charts side by side */}
       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1px 1fr', gap: isMobile ? '40px 0' : '0 32px', alignItems: 'start' }}>
         <HBarChart
-          title="국가별 식량 배분 가치 (USD)"
-          subtitle="식량 배분 실적이 있는 8개국 — 현물 식량 가액 합산"
+          title="Food Distribution Value by Country (USD)"
+          subtitle="8 countries with food distribution results — total in-kind commodity value"
           data={FOOD_COUNTRIES}
           color="var(--orange)"
-          note="DR 콩고 남부 키부 단일 사업($5.05M)이 전체 식량 가액의 약 31%를 점유합니다."
+          note="A single project in South Kivu, DR Congo ($5.05M) accounts for about 31% of total commodity value."
         />
         {!isMobile && <div style={{ background: 'var(--field-200)', alignSelf: 'stretch' }} />}
         <HBarChart
-          title="국가별 현금 · 교환권 배분 (USD)"
-          subtitle="현금 또는 교환권 배분 실적이 있는 9개국"
+          title="Cash & Voucher Assistance by Country (USD)"
+          subtitle="9 countries with cash or voucher distribution results"
           data={CASH_COUNTRIES}
           color="#0E7C7B"
-          note="방글라데시·콜롬비아는 현금 전용 사업으로, 식량 현물 배분은 포함되지 않습니다."
+          note="Bangladesh and Colombia are cash-only programmes and do not include in-kind food distribution."
         />
       </div>
     </div>

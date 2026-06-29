@@ -3,8 +3,8 @@ import useIsMobile from '../lib/useIsMobile.js'
 const C = 301.6 // circle circumference at r=48
 
 const FOOD_PCT = 48.4   // 10,235 / 21,133
-const CASH_PCT = 63.4   // $5.1M / $8.05M (계획 현금 107억원, 실적/계획 KRW 기준)
-const NUT_PCT  = 100   // 영양은 계획 대비 % 분모(영양 계획량)가 데이터에 없어, 링은 누계 달성 표시(가득)로 둠. value/dialLabel은 절대량(998.1톤) 표기.
+const CASH_PCT = 63.4   // $5.1M / $8.05M (planned cash, actual/planned basis)
+const NUT_PCT  = 100   // No planned-volume denominator for nutrition in the data, so the ring shows cumulative achievement (full). value/dialLabel show the absolute volume (998.1 tonnes).
 
 export default function ResultsCharts() {
   const isMobile = useIsMobile()
@@ -16,11 +16,11 @@ export default function ResultsCharts() {
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '240px 1fr', gap: isMobile ? 16 : 48, marginBottom: isMobile ? 32 : 48 }}>
           <div>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--orange)', margin: 0 }}>04 — Result</p>
-            <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--grey-600)', margin: '4px 0 0' }}>최종 성과</p>
+            <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, fontWeight: 700, color: 'var(--grey-600)', margin: '4px 0 0' }}>Final Results</p>
           </div>
           <div>
-            <h2 lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '34ch' }}>
-              월드비전의 10,000원이 약 240,000원의 식량이 되어<br />식탁 위에 올라갔습니다.
+            <h2 lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '34ch' }}>
+              Every $1 from World Vision delivered about $24<br />of food to families’ tables.
             </h2>
           </div>
         </div>
@@ -34,45 +34,44 @@ export default function ResultsCharts() {
             color="var(--orange)"
             pct={FOOD_PCT}
             label="FOOD"
-            title="식량 배분"
+            title="Food distribution"
             value="10,235.1"
-            valueUnit="톤"
-            sub={`계획 21,133톤 中 ${FOOD_PCT}% **`}
+            valueUnit="tonnes"
+            sub={`${FOOD_PCT}% of the planned 21,133 tonnes **`}
           />
           <DialCard
             color="#0E7C7B"
             pct={CASH_PCT}
             label="CASH"
-            title="현금 배분"
+            title="Cash distribution"
             value="$5.1"
             valueUnit="M"
-            krw="≈ 68억원"
-            sub={`계획 $8.05M (≈107억원) 中 ${CASH_PCT}% **`}
+            sub={`${CASH_PCT}% of the planned $8.05M **`}
           />
           <DialCard
             color="#C8102E"
             pct={NUT_PCT}
             label="NUTRITION"
-            title="영양 치료식"
+            title="Nutrition treatment food"
             value="998.1"
-            valueUnit="톤"
-            sub="영양실조치료 보충식 누계"
+            valueUnit="tonnes"
+            sub="Cumulative therapeutic & supplementary food for malnutrition treatment"
             dialLabel="998.1t"
           />
         </div>
 
-        {/* 집행률 각주 — 식량·현금이 목표 대비 약 50% 수준인 사유 */}
+        {/* Execution-rate footnotes — why food & cash reached about 50% of target */}
         <div style={{ margin: '24px 0 0', paddingTop: 18, borderTop: '1px solid var(--field-200)' }}>
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: 0, wordBreak: 'keep-all' }}>
+          <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: 0, wordBreak: 'keep-all' }}>
             <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>*</span>
-            다자기구협력사업 특성상 사업 규모 및 일정이 글로벌 인도적지원 필요 상황, 도너(WFP) 자금 상황 및 식량 수급 상황에 따라 변경될 수 있습니다.
+            Given the nature of multilateral partnership programmes, the scale and timeline of the project may change in line with global humanitarian needs, the donor’s (WFP) funding situation, and food supply conditions.
           </p>
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: '8px 0 0', wordBreak: 'keep-all' }}>
+          <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: '8px 0 0', wordBreak: 'keep-all' }}>
             <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>**</span>
-            식량·현금 배분 집행률이 계획 목표에 미치지 못한 주요 사유 —{' '}
-            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>① 미국 USAID(국제개발처) 폐지</strong>에 따른 다수 사업의 축소 및 중단,{' '}
-            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② 수단·콩고민주공화국 등 분쟁 심화</strong>로 인한 현장 접근·물자 반입 제약,{' '}
-            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ 수단 화이트나일(White Nile) 사업</strong>의 현지 정부 승인 지연에 따른 사업 미진행 등 외부 요인으로 인한 배분 실적 하락 발생.
+            Key reasons food and cash distribution fell short of planned targets —{' '}
+            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>① the dissolution of USAID</strong>, which scaled back or suspended numerous programmes;{' '}
+            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② intensifying conflict in Sudan, DR Congo and elsewhere</strong>, constraining field access and the movement of supplies;{' '}
+            <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ the White Nile programme in Sudan</strong>, which stalled amid delays in host-government approval — external factors that lowered distribution results.
           </p>
         </div>
       </div>
@@ -85,7 +84,7 @@ function LeverageFlow() {
   return (
     <div style={{ background: '#fff', border: '1px solid var(--field-200)', borderRadius: 12, padding: isMobile ? 18 : 32, marginBottom: 24 }}>
       <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '0 0 24px' }}>
-        Leverage flow · 자금 흐름
+        Leverage flow · Funding flow
       </p>
 
       {/* Proportional source blocks */}
@@ -101,8 +100,8 @@ function LeverageFlow() {
           flexDirection: 'column',
           justifyContent: 'flex-end',
         }}>
-          <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.7)', margin: 0, lineHeight: 1.3, whiteSpace: 'nowrap' }}>월드비전</p>
-          <p className="num tnum" style={{ fontSize: 26, color: '#fff', margin: '3px 0 0', lineHeight: 0.95, whiteSpace: 'nowrap', letterSpacing: '-0.01em' }}>14.0억원</p>
+          <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'rgba(255,255,255,0.7)', margin: 0, lineHeight: 1.3, whiteSpace: 'nowrap' }}>World Vision</p>
+          <p className="num tnum" style={{ fontSize: 26, color: '#fff', margin: '3px 0 0', lineHeight: 0.95, whiteSpace: 'nowrap', letterSpacing: '-0.01em' }}>$1.05M</p>
         </div>
 
         {/* Multiplier arrow */}
@@ -141,19 +140,18 @@ function LeverageFlow() {
 
           <div style={{ position: 'relative' }}>
             <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.75)', textTransform: 'uppercase', letterSpacing: '0.08em', margin: 0 }}>
-              WFP 다자협력 총 사업비
+              WFP multilateral total project cost
             </p>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 14, marginTop: 4 }}>
               <p className="num tnum" style={{ fontSize: 44, color: '#fff', margin: 0, lineHeight: 0.9 }}>$25.3M</p>
-              <p style={{ fontFamily: 'var(--font-en)', fontSize: 13, color: 'rgba(255,255,255,0.7)', margin: 0 }}>≈ 336억원</p>
             </div>
           </div>
         </div>
       </div>
 
-      <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, lineHeight: 1.7, color: 'var(--grey-600)', margin: 0, paddingTop: 20, borderTop: '1px solid var(--field-200)', maxWidth: '82ch' }}>
-        유엔세계식량계획(WFP) 다자기구협력사업은 회원국이 출연하는 자기부담금(매치)을 마중물로 WFP 보충 예산을 끌어와 대규모 사업으로 확장하는 구조입니다.
-        월드비전이 매칭으로 투입한 14.0억원은 실제 약 336억원 규모의 총 사업비로 집행되어, 한국 기여 대비 <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>평균 약 24배</strong>의 증대 효과를 거뒀습니다.
+      <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, lineHeight: 1.7, color: 'var(--grey-600)', margin: 0, paddingTop: 20, borderTop: '1px solid var(--field-200)', maxWidth: '82ch' }}>
+        The WFP multilateral partnership programme is structured so that a member state’s own matching contribution acts as seed funding to draw in WFP’s supplementary budget and scale up into a large programme.
+        World Vision’s matching contribution of $1.05M was executed as a total project cost of about $25.3M, achieving an average increase of <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>roughly 24×</strong> relative to Korea’s contribution.
       </p>
     </div>
   )
@@ -191,13 +189,13 @@ function DialCard({ color, pct, label, title, value, valueUnit, sub, dialLabel, 
         </text>
       </svg>
       <div style={{ minWidth: 0 }}>
-        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', margin: '0 0 8px' }}>{title}</p>
+        <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', margin: '0 0 8px' }}>{title}</p>
         <p className="num tnum" style={{ fontSize: 28, color: 'var(--midnight)', margin: 0, lineHeight: 1 }}>
           {value}
-          <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 500, fontSize: 14, color: 'var(--grey-600)', marginLeft: 4 }}>{valueUnit}</span>
+          <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 500, fontSize: 14, color: 'var(--grey-600)', marginLeft: 4 }}>{valueUnit}</span>
         </p>
-        {krw && <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 600, color: 'var(--grey-500)', margin: '4px 0 0' }}>{krw}</p>}
-        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-600)', margin: '6px 0 0', lineHeight: 1.5 }}>{sub}</p>
+        {krw && <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 600, color: 'var(--grey-500)', margin: '4px 0 0' }}>{krw}</p>}
+        <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-600)', margin: '6px 0 0', lineHeight: 1.5 }}>{sub}</p>
       </div>
     </div>
   )

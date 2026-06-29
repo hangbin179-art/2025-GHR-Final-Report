@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import useIsMobile from '../lib/useIsMobile.js'
 
-/* ── Count-up 애니메이션 (의존성 없음) ───────────────────────
-   0에서 목표값까지 easeOutCubic 으로 증가. 디자인은 건드리지 않고
-   숫자 텍스트만 바꿉니다. prefers-reduced-motion 존중. */
+/* ── Count-up animation (no dependencies) ───────────────────────
+   Counts from 0 to the target value with easeOutCubic. Only the
+   number text changes; the design is untouched. Respects
+   prefers-reduced-motion. */
 function useCountUp(target, { duration = 1.5, delay = 0, start = true } = {}) {
   const [value, setValue] = useState(0)
   useEffect(() => {
-    if (!start) return // 화면에 보이기 전에는 시작하지 않음
+    if (!start) return // do not start before it is visible on screen
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reduce) { setValue(target); return }
 
@@ -40,8 +41,8 @@ export default function Hero() {
   const [started, setStarted] = useState(false)
   const isMobile = useIsMobile()
 
-  // Hero가 화면에 들어올 때 비로소 카운트업 시작 (스크롤 히어로 뒤에 있으므로
-  // 마운트 즉시 시작하면 보기 전에 끝나버림).
+  // Only start the count-up when the Hero enters the viewport (it sits behind
+  // the scroll hero, so starting on mount would finish before it is seen).
   useEffect(() => {
     const el = ref.current
     if (!el) return
@@ -78,9 +79,9 @@ export default function Hero() {
             color: 'var(--orange)',
             margin: '0 0 20px',
           }}>
-            Result Report · 2025 · 결과보고
+            Result Report · 2025 · Final Report
           </p>
-          <h1 lang="ko" style={{
+          <h1 lang="en" style={{
             fontFamily: 'var(--font-kr)',
             fontWeight: 700,
             fontSize: isMobile ? 40 : 64,
@@ -90,10 +91,10 @@ export default function Hero() {
             margin: 0,
             wordBreak: 'keep-all',
           }}>
-            10,235.1톤의 식량이<br />
-            <span style={{ color: 'var(--orange)' }}>식탁으로 갔습니다.</span>
+            10,235.1 tonnes of food<br />
+            <span style={{ color: 'var(--orange)' }}>reached the table.</span>
           </h1>
-          <p lang="ko" style={{
+          <p lang="en" style={{
             fontFamily: 'var(--font-kr)',
             fontSize: 19,
             lineHeight: 1.7,
@@ -101,14 +102,14 @@ export default function Hero() {
             margin: '28px 0 0',
             maxWidth: '50ch',
           }}>
-            2025년, 월드비전과 유엔세계식량계획(WFP)은 13개국 20개 사업 현장에서
-            식량 10,235.1톤, 영양실조치료 보충식 998.1톤, 현금·교환권 510만 달러(약 68억원)를
-            직접 배분했습니다.
+            In 2025, World Vision and the World Food Programme (WFP) directly distributed
+            10,235.1 tonnes of food, 998.1 tonnes of therapeutic and supplementary food, and
+            $5.1M in cash and vouchers across 20 projects in 13 countries.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
             <a
               href="#sec-where"
-              lang="ko"
+              lang="en"
               style={{
                 background: 'var(--midnight)',
                 color: '#fff',
@@ -120,11 +121,11 @@ export default function Hero() {
                 textDecoration: 'none',
               }}
             >
-              지도에서 사업 보기 →
+              View projects on the map →
             </a>
             <a
               href="#sec-result"
-              lang="ko"
+              lang="en"
               style={{
                 background: 'transparent',
                 color: 'var(--midnight)',
@@ -137,7 +138,7 @@ export default function Hero() {
                 textDecoration: 'none',
               }}
             >
-              최종 성과 보기
+              View final results
             </a>
           </div>
         </div>
@@ -161,16 +162,16 @@ export default function Hero() {
             paddingBottom: 12,
             borderBottom: '1px solid var(--field-200)',
           }}>
-            Distribution ledger · 배분 실적
+            Distribution ledger · Distribution results
           </p>
           <div style={{ display: 'grid', gap: 18 }}>
-            <LedgerRow label="일반식량 배분" value={10235.1} decimals={1} unit="톤" delay={0.1} start={started} />
+            <LedgerRow label="Food distributed" value={10235.1} decimals={1} unit="tonnes" delay={0.1} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
-            <LedgerRow label="영양실조치료 보충식" value={998.1} decimals={1} unit="톤" delay={0.22} start={started} />
+            <LedgerRow label="Therapeutic & supplementary food" value={998.1} decimals={1} unit="t" delay={0.22} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
-            <LedgerRow label="현금 · 교환권 (USD)" value={5.11} decimals={2} prefix="$" unit="M" unitEn krw="≈ 68억원" delay={0.34} start={started} />
+            <LedgerRow label="Cash & vouchers (USD)" value={5.11} decimals={2} prefix="$" unit="M" unitEn delay={0.34} start={started} />
             <div style={{ height: 1, background: 'var(--field-200)' }} />
-            <LedgerRow label="식량 가액 (USD)" value={16.04} decimals={2} prefix="$" unit="M" unitEn krw="≈ 213억원" delay={0.46} start={started} />
+            <LedgerRow label="Commodity value (USD)" value={16.04} decimals={2} prefix="$" unit="M" unitEn delay={0.46} start={started} />
 
             {/* Orange footer box */}
             <div style={{
@@ -192,24 +193,24 @@ export default function Hero() {
                   }}>
                     20 Projects · 13 Countries
                   </p>
-                  <p lang="ko" style={{
+                  <p lang="en" style={{
                     fontFamily: 'var(--font-kr)',
                     fontSize: 12,
                     color: 'var(--grey-700)',
                     margin: '4px 0 0',
                   }}>
-                    20개 사업 · 13개국 현장
+                    20 projects · field sites in 13 countries
                   </p>
                 </div>
                 <span className="num" style={{ fontSize: 60, color: 'var(--orange-900)' }}>
-                  <CountUp value={20} delay={0.58} duration={1.2} start={started} /><span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 18, marginLeft: 4 }}>개</span>
+                  <CountUp value={20} delay={0.58} duration={1.2} start={started} />
                 </span>
               </div>
             </div>
           </div>
         </div>
-        <p lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, lineHeight: 1.6, color: 'var(--grey-500)', margin: '12px 2px 0' }}>
-          * 2025년 1월~12월 시행된 WFP 사업 내 한국 기여분 비율로 계산하여 산정
+        <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, lineHeight: 1.6, color: 'var(--grey-500)', margin: '12px 2px 0' }}>
+          * Calculated based on Korea's contribution share within WFP projects implemented from January to December 2025
         </p>
         </div>
       </div>
@@ -220,7 +221,7 @@ export default function Hero() {
 function LedgerRow({ label, value, decimals = 0, prefix = '', unit, unitEn, delay = 0, start = true, krw }) {
   return (
     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-      <span lang="ko" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, color: 'var(--grey-600)' }}>
+      <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, color: 'var(--grey-600)' }}>
         {label}
       </span>
       <span style={{ display: 'inline-block', textAlign: 'right' }}>
@@ -237,7 +238,7 @@ function LedgerRow({ label, value, decimals = 0, prefix = '', unit, unitEn, dela
           </span>
         </span>
         {krw && (
-          <span lang="ko" style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', marginTop: 2 }}>
+          <span lang="en" style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', marginTop: 2 }}>
             {krw}
           </span>
         )}
