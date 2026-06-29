@@ -301,7 +301,7 @@ export default function CountryGrid() {
                     <FinanceCell isMobile={isMobile} label="WFP multilateral total project cost" usd={fmtCash(country.wfpIncome)} emphasize />
                   </div>
                   <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '12px 0 0', lineHeight: 1.6, textAlign: 'center' }}>
-                    Korea's matching contribution unlocked the wider WFP multilateral budget. This WFP-basis total spans nutrition, school feeding, livelihoods, logistics and operating costs — well beyond food and cash — so it runs higher than the distribution results below.
+                    <strong style={{ color: 'var(--orange)' }}>Korea's matching contribution</strong> unlocked the wider WFP multilateral budget. This <strong style={{ color: 'var(--midnight)' }}>WFP-basis total</strong> spans nutrition, school feeding, livelihoods, logistics and operating costs — well beyond food and cash — so it runs higher than the distribution results below.
                   </p>
                 </div>
               )}

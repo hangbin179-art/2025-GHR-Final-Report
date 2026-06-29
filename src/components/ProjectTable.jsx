@@ -117,7 +117,7 @@ export default function ProjectTable() {
       </div>
 
       <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '14px 0 0', lineHeight: 1.6 }}>
-        Commodity value is the market value (USD) of the food distributed. Kenya ran no in-kind or cash distribution — delivering instead through Livelihood &amp; Resilience activities such as village savings groups (VSLAs) and crop insurance.
+        Commodity value is the market value (USD) of the food distributed. <strong style={{ color: 'var(--midnight)' }}>Kenya</strong> ran <strong style={{ color: '#2F7D4F' }}>no in-kind or cash distribution</strong> — delivering instead through Livelihood &amp; Resilience activities such as village savings groups (VSLAs) and crop insurance.
       </p>
     </div>
   )

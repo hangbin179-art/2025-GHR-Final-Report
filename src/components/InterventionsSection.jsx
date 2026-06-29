@@ -72,7 +72,7 @@ export default function InterventionsSection() {
             <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 18, lineHeight: 1.85, color: 'var(--grey-800)', margin: '36px 0 0', wordBreak: 'keep-all', maxWidth: '46ch' }}>
               Beyond beneficiary counts — the tonnes that reached the field, the cash in families' hands,
               the therapeutic food that treated a child.
-              Cumulative across 20 projects in 13 countries.
+              Cumulative across <strong style={{ color: 'var(--midnight)' }}>20 projects in 13 countries</strong>.
             </p>
           </div>
           <div />
@@ -91,8 +91,8 @@ export default function InterventionsSection() {
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>In-kind Food Distribution</p>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
                   When conflict, climate, and economic shocks strip families of food, we distribute staples — sorghum, beans, maize,
-                  cooking oil — on a regular cycle, each ration built to a 2,100 kcal-per-day minimum.
-                  Across 14 projects in 8 countries: 10,235.1 tonnes delivered.
+                  cooking oil — on a regular cycle, each ration built to a <strong style={{ color: 'var(--midnight)' }}>2,100 kcal-per-day minimum</strong>.
+                  Across 14 projects in 8 countries: <strong style={{ color: 'var(--orange)', fontSize: '1.12em' }}>10,235.1 tonnes</strong> delivered.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -140,7 +140,7 @@ export default function InterventionsSection() {
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
                   Where markets work, families receive cash or vouchers to buy their own food directly.
                   It cuts transport and storage costs and puts choice back in beneficiaries' hands.
-                  10 projects in 9 countries include a cash or voucher component.
+                  <strong style={{ color: TEAL }}>10 projects in 9 countries</strong> include a cash or voucher component.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -184,7 +184,7 @@ export default function InterventionsSection() {
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
                   Children under five and pregnant and breastfeeding women receive therapeutic and supplementary food such as Plumpy'Nut.
                   Mid-upper-arm circumference screening flags severe and moderate acute malnutrition; village mothers' self-help groups follow up.
-                  Across 9 projects: 998.1 tonnes delivered.
+                  Across 9 projects: <strong style={{ color: RED, fontSize: '1.12em' }}>998.1 tonnes</strong> delivered.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>

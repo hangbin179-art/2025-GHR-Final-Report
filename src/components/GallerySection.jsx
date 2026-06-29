@@ -259,7 +259,7 @@ export default function GallerySection() {
           </div>
           <div>
             <h2 style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '24ch' }}>
-              The people behind the numbers.<br />See the work, site by site.
+              The people behind <strong style={{ color: 'var(--orange)' }}>the numbers</strong>.<br />See the work, <strong style={{ color: 'var(--midnight)' }}>site by site</strong>.
             </h2>
           </div>
         </div>

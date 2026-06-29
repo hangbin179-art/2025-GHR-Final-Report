@@ -74,7 +74,7 @@ html { scroll-behavior: smooth; }
 
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-en:      "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-kr:      "Noto Sans KR", "Inter", system-ui, sans-serif;
+  --font-kr:      "Plus Jakarta Sans", "Inter", system-ui, sans-serif; /* en 브랜치: 영어 본문·헤딩용 기하학적 산세리프 (원본 Noto Sans KR 대체) */
   --font-mono:    "IBM Plex Mono", ui-monospace, monospace;
 
   --shadow-md: 0 4px 20px rgba(17, 18, 34, 0.08);

@@ -64,11 +64,11 @@ export default function ResultsCharts() {
         <div style={{ margin: '24px 0 0', paddingTop: 18, borderTop: '1px solid var(--field-200)' }}>
           <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: 0, wordBreak: 'keep-all' }}>
             <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>*</span>
-            In multilateral partnership programmes, scale and timeline shift with global humanitarian needs, the donor’s (WFP) funding, and food supply conditions.
+            In <strong style={{ color: 'var(--midnight)' }}>multilateral partnership programmes</strong>, scale and timeline shift with global humanitarian needs, the donor’s (WFP) funding, and food supply conditions.
           </p>
           <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.8, color: 'var(--grey-700)', margin: '8px 0 0', wordBreak: 'keep-all' }}>
             <span style={{ color: 'var(--orange)', fontWeight: 800, marginRight: 3 }}>**</span>
-            Three external shocks held food and cash below target —{' '}
+            <strong style={{ color: 'var(--orange)' }}>Three external shocks</strong> held food and cash below target —{' '}
             <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>① the dissolution of USAID</strong>, which cut or suspended programmes;{' '}
             <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>② intensifying conflict in Sudan, DR Congo and elsewhere</strong>, blocking field access and supply movement; and{' '}
             <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>③ the White Nile programme in Sudan</strong>, stalled by delays in host-government approval.
@@ -151,7 +151,7 @@ function LeverageFlow() {
 
       <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, lineHeight: 1.7, color: 'var(--grey-600)', margin: 0, paddingTop: 20, borderTop: '1px solid var(--field-200)', maxWidth: '82ch' }}>
         In the WFP multilateral partnership model, a member state’s matching contribution is seed funding — it draws in WFP’s supplementary budget and scales into a large programme.
-        World Vision’s $1.05M matching contribution delivered a total project cost of about $25.3M — <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>roughly 24×</strong> Korea’s contribution.
+        World Vision’s <strong style={{ color: 'var(--midnight)' }}>$1.05M</strong> matching contribution delivered a total project cost of about <strong style={{ color: 'var(--orange)', fontSize: '1.12em' }}>$25.3M</strong> — <strong style={{ color: 'var(--midnight)', fontWeight: 700 }}>roughly 24×</strong> Korea’s contribution.
       </p>
     </div>
   )

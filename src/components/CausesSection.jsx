@@ -94,9 +94,9 @@ export default function CausesSection() {
               Conflict & Instability
             </h3>
             <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, flex: 1 }}>
-              In countries such as DR Congo and Sudan, prolonged civil war drives<br />mass displacement.
+              In countries such as <strong style={{ color: 'var(--red-800)' }}>DR Congo and Sudan</strong>, prolonged civil war drives<br />mass displacement.
               Then the cycle turns: displacement &rarr; broken markets and infrastructure &rarr; disrupted aid
-              &rarr; deeper hunger.
+              &rarr; <strong style={{ color: 'var(--midnight)' }}>deeper hunger</strong>.
             </p>
             <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span className="num" style={{ fontSize: 42, color: 'var(--red-800)' }}>
@@ -142,7 +142,7 @@ export default function CausesSection() {
               Climate Change
             </h3>
             <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, flex: 1 }}>
-              Droughts, floods, and erratic weather wipe out harvests.
+              <strong style={{ color: 'var(--blue-900)' }}>Droughts, floods, and erratic weather</strong> wipe out harvests.
               Climate shocks strike hardest where families can least afford to lose a crop.
             </p>
             <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -189,9 +189,9 @@ export default function CausesSection() {
               Economic Shocks
             </h3>
             <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, flex: 1 }}>
-              Inflation and soaring food prices gut the buying power of the poorest.
+              Inflation and <strong style={{ color: 'var(--orange-900)' }}>soaring food prices</strong> gut the buying power of the poorest.
               As needs climb and funding falls, rations shrink to under
-              50% of the recommended daily calories.
+              <strong style={{ color: 'var(--orange)', fontSize: '1.12em' }}>50%</strong> of the recommended daily calories.
             </p>
             <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span className="num" style={{ fontSize: 42, color: 'var(--orange-900)' }}>
@@ -221,8 +221,8 @@ export default function CausesSection() {
                 As the crisis deepens, it falls first and hardest on children.
               </h3>
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.7, color: 'var(--grey-600)', margin: '12px 0 0' }}>
-                &ldquo;In the Shadow of Hunger&rdquo; (2026) — a joint WFP and World Vision study across eight food-crisis countries —
-                measures what food insecurity and ration cuts cost children.
+                &ldquo;In the Shadow of Hunger&rdquo; (2026) — a joint WFP and World Vision study across <strong style={{ color: 'var(--midnight)' }}>eight food-crisis countries</strong> —
+                measures what <strong style={{ color: 'var(--orange)' }}>food insecurity and ration cuts cost children</strong>.
               </p>
             </div>
           </div>

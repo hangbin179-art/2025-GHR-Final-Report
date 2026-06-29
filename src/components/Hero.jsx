@@ -102,9 +102,9 @@ export default function Hero() {
             margin: '28px 0 0',
             maxWidth: '50ch',
           }}>
-            In 2025, World Vision and the World Food Programme (WFP) delivered 10,235.1 tonnes
+            In 2025, World Vision and the World Food Programme (WFP) delivered <strong style={{ color: 'var(--orange)', fontSize: '1.12em' }}>10,235.1 tonnes</strong>
             of food, 998.1 tonnes of therapeutic and supplementary food, and $5.1M in cash and
-            vouchers — direct to families across 20 projects in 13 countries.
+            vouchers — <strong style={{ color: 'var(--midnight)' }}>direct to families</strong> across 20 projects in 13 countries.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
             <a

@@ -114,7 +114,7 @@ export default function NarrativePrograms() {
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                 A meal is only the start. Schools grow their own crops, and students carry the skills home. In South Sudan, the <strong style={{ color: 'var(--midnight)' }}>Juba & Yambio Home-Grown School Feeding programme</strong> fed
-                more than 13,000 children across 21 primary schools in Central Equatoria — and taught them to farm in the school gardens. In 2025, the programme reached 47,468 people.
+                more than <strong style={{ color: AMBER, fontSize: '1.12em' }}>13,000 children</strong> across 21 primary schools in Central Equatoria — and taught them to farm in the school gardens. In 2025, the programme reached <strong style={{ color: AMBER }}>47,468 people</strong>.
               </p>
               <div style={{
                 background: AMBER_BG,
@@ -139,7 +139,7 @@ export default function NarrativePrograms() {
                   Fourth-graders <strong style={{ color: 'var(--midnight)' }}>Kiden (13)</strong> and <strong style={{ color: 'var(--midnight)' }}>Yawa (12)</strong> learned
                   land preparation, seedbed making, transplanting, crop rotation, weeding, and irrigation in the school garden. They took it home. With their parents, they planted <strong style={{ color: AMBER }}>cowpeas, okra, and tomatoes</strong> —
                   harvesting every three to four days, eating some, selling the rest. Daily sales bring in
-                  30,000–35,000 South Sudanese pounds (about USD 5–6). Their father, Michael Suba, spends it on school supplies and the school development fund.
+                  <strong style={{ color: AMBER }}>30,000–35,000 South Sudanese pounds (about USD 5–6)</strong>. Their father, Michael Suba, spends it on school supplies and the school development fund.
                 </p>
                 <Quote
                   accent={AMBER}
@@ -157,7 +157,7 @@ export default function NarrativePrograms() {
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                   The schools' own vegetables went straight into the WFP ration. In Juba County, gardens took root in <strong style={{ color: 'var(--midnight)' }}>20 of the 21 targeted schools</strong>, stocked with seeds and farming
-                  tools for tomatoes, eggplant, okra, maize, and more. Most of the harvest fed students; of the rest, <strong style={{ color: AMBER }}>316 kg sold at market for about 400,000 South Sudanese pounds (about USD 70)</strong> toward running costs. Nabagu Primary School alone harvested 750 kg of maize — 550 kg for meals, 200 kg for sale.
+                  tools for tomatoes, eggplant, okra, maize, and more. Most of the harvest fed students; of the rest, <strong style={{ color: AMBER }}>316 kg sold at market for about 400,000 South Sudanese pounds (about USD 70)</strong> toward running costs. <strong style={{ color: 'var(--midnight)' }}>Nabagu Primary School</strong> alone harvested 750 kg of maize — 550 kg for meals, 200 kg for sale.
                 </p>
                 <div style={{ background: AMBER_BG, borderRadius: 12, padding: 24, display: 'flex', gap: 20 }}>
                   <StatChip value="2,269" unit="kg" label="Total school-garden harvest" accent={AMBER} />
@@ -194,7 +194,7 @@ export default function NarrativePrograms() {
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                 The goal isn't to hand out food — it's to help people earn their own. In Kenya, the <strong style={{ color: 'var(--midnight)' }}>Makueni & Kitui
                 Sustainable Food Systems programme</strong> distributes no food at all. It works the arid, drought-prone lands of two counties where poverty runs to
-                64.1% and 63.1%. There, 11,306 people joined Village Savings and Loan Associations (VSLAs) — opening the door to
+                <strong style={{ color: 'var(--midnight)' }}>64.1% and 63.1%</strong>. There, <strong style={{ color: GREEN, fontSize: '1.12em' }}>11,306 people</strong> joined Village Savings and Loan Associations (VSLAs) — opening the door to
                 savings, microloans, and income of their own.
               </p>
               <div style={{
@@ -233,7 +233,7 @@ export default function NarrativePrograms() {
                 </p>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                   In the Mbomou and Ouaka prefectures of the Central African Republic, <strong style={{ color: 'var(--midnight)' }}>conditional cash</strong> drove
-                  livelihood strengthening and asset-building. Pierre Pari, of the Zaroua village
+                  livelihood strengthening and asset-building. <strong style={{ color: 'var(--midnight)' }}>Pierre Pari</strong>, of the Zaroua village
                   farming group, grew his plot from 0.5 hectares to 3 and planted groundnuts and rice. In Baziko village, residents rebuilt
                   farm roads through Cash for Work and received tools and equipment — moving produce to market is far easier now.
                 </p>
