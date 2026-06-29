@@ -147,7 +147,7 @@ export default function NarrativePrograms() {
                 </p>
                 <Quote
                   accent={AMBER}
-                  text="일자리가 없는 제게, 시장에서 채소를 팔아 버는 돈이 아이들 책을 사고 학교에 내는 돈의 전부입니다."
+                  text="비록 저는 일자리가 없지만, 아이들이 학교에서 배워온 재배 기술로 채소를 팔아 아이들의 교육을 이어갈 수 있었습니다."
                   source="마이클 수바 · 카푸리 마을, 두 학생의 아버지"
                 />
               </div>
