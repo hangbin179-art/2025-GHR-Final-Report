@@ -37,10 +37,10 @@ export default function ProjectTable() {
         borderBottom: '2px solid var(--midnight)',
       }}>
         <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, fontWeight: 700, letterSpacing: '0.02em', color: 'var(--midnight)', margin: 0 }}>
-          Distribution by country <span style={{ fontFamily: 'var(--font-en)', fontWeight: 700, color: 'var(--grey-500)', fontSize: 11, letterSpacing: '0.08em' }}>· COUNTRY BREAKDOWN</span>
+          Where it landed <span style={{ fontFamily: 'var(--font-en)', fontWeight: 700, color: 'var(--grey-500)', fontSize: 11, letterSpacing: '0.08em' }}>· COUNTRY BREAKDOWN</span>
         </p>
         <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: 0 }}>
-          13 countries · 20 projects cumulative
+          13 countries · 20 projects · cumulative
         </p>
       </div>
 
@@ -49,10 +49,10 @@ export default function ProjectTable() {
       <div style={{ minWidth: isMobile ? 600 : 'auto' }}>
       <div style={{ display: 'grid', gridTemplateColumns: GRID, background: 'var(--midnight)', borderRadius: '6px 6px 0 0', overflow: 'hidden' }}>
         <div style={headCell}>Country & region</div>
-        <div style={{ ...headCell, textAlign: 'right' }}>Food (tonnes)</div>
+        <div style={{ ...headCell, textAlign: 'right' }}>Food (t)</div>
         <div style={{ ...headCell, textAlign: 'right' }}>Commodity value (USD)</div>
         <div style={{ ...headCell, textAlign: 'right' }}>Cash &amp; vouchers (USD)</div>
-        <div style={{ ...headCell, textAlign: 'right' }}>Therapeutic food (tonnes)</div>
+        <div style={{ ...headCell, textAlign: 'right' }}>Therapeutic food (t)</div>
       </div>
 
       {/* Rows */}
@@ -77,7 +77,7 @@ export default function ProjectTable() {
           {r.livelihood ? (
             <div style={{ gridColumn: '2 / 6', padding: '12px 14px', textAlign: 'right' }}>
               <span style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 600, color: '#2F7D4F' }}>
-                Livelihood &amp; resilience programme (no distribution)
+                Livelihood &amp; Resilience — no distribution
               </span>
             </div>
           ) : (
@@ -117,7 +117,7 @@ export default function ProjectTable() {
       </div>
 
       <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '14px 0 0', lineHeight: 1.6 }}>
-        Commodity value is the market value (USD) of the food distributed. Kenya operated without in-kind or cash distribution, delivering instead through livelihood and resilience activities such as village savings groups (VSLAs) and crop insurance.
+        Commodity value is the market value (USD) of the food distributed. Kenya ran no in-kind or cash distribution — delivering instead through Livelihood &amp; Resilience activities such as village savings groups (VSLAs) and crop insurance.
       </p>
     </div>
   )

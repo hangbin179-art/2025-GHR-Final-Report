@@ -79,7 +79,7 @@ export default function Hero() {
             color: 'var(--orange)',
             margin: '0 0 20px',
           }}>
-            Result Report · 2025 · Final Report
+            2025 Results · Final Report
           </p>
           <h1 lang="en" style={{
             fontFamily: 'var(--font-kr)',
@@ -102,9 +102,9 @@ export default function Hero() {
             margin: '28px 0 0',
             maxWidth: '50ch',
           }}>
-            In 2025, World Vision and the World Food Programme (WFP) directly distributed
-            10,235.1 tonnes of food, 998.1 tonnes of therapeutic and supplementary food, and
-            $5.1M in cash and vouchers across 20 projects in 13 countries.
+            In 2025, World Vision and the World Food Programme (WFP) delivered 10,235.1 tonnes
+            of food, 998.1 tonnes of therapeutic and supplementary food, and $5.1M in cash and
+            vouchers — direct to families across 20 projects in 13 countries.
           </p>
           <div style={{ display: 'flex', gap: 12, marginTop: 36 }}>
             <a
@@ -162,7 +162,7 @@ export default function Hero() {
             paddingBottom: 12,
             borderBottom: '1px solid var(--field-200)',
           }}>
-            Distribution ledger · Distribution results
+            Distribution ledger · 2025 results
           </p>
           <div style={{ display: 'grid', gap: 18 }}>
             <LedgerRow label="Food distributed" value={10235.1} decimals={1} unit="tonnes" delay={0.1} start={started} />
@@ -199,7 +199,7 @@ export default function Hero() {
                     color: 'var(--grey-700)',
                     margin: '4px 0 0',
                   }}>
-                    20 projects · field sites in 13 countries
+                    Field sites across 13 countries
                   </p>
                 </div>
                 <span className="num" style={{ fontSize: 60, color: 'var(--orange-900)' }}>
@@ -210,7 +210,7 @@ export default function Hero() {
           </div>
         </div>
         <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, lineHeight: 1.6, color: 'var(--grey-500)', margin: '12px 2px 0' }}>
-          * Calculated based on Korea's contribution share within WFP projects implemented from January to December 2025
+          * Based on Korea's contribution share of WFP projects implemented January–December 2025
         </p>
         </div>
       </div>

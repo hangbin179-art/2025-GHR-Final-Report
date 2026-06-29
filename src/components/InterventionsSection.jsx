@@ -70,8 +70,8 @@ export default function InterventionsSection() {
               What was delivered,<br />and how much.
             </h2>
             <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 18, lineHeight: 1.85, color: 'var(--grey-800)', margin: '36px 0 0', wordBreak: 'keep-all', maxWidth: '46ch' }}>
-              Not just the number of beneficiaries — but the weight of food that reached the field, the cash placed in families' hands,
-              and the amount of therapeutic food that reached a child's mouth.
+              Beyond beneficiary counts — the tonnes that reached the field, the cash in families' hands,
+              the therapeutic food that treated a child.
               Cumulative across 20 projects in 13 countries.
             </p>
           </div>
@@ -90,9 +90,9 @@ export default function InterventionsSection() {
                 <h3 lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>In-kind Food Distribution</h3>
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>In-kind Food Distribution</p>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
-                  Families who have lost their food to conflict, climate and economic shocks receive regular distributions of
-                  in-kind commodities such as sorghum, beans, maize and cooking oil. Each ration is composed to meet a minimum of
-                  2,100 kcal per person per day. Across 14 projects in 8 countries, a total of 10,235.1 tonnes was distributed.
+                  When conflict, climate, and economic shocks strip families of food, we distribute staples — sorghum, beans, maize,
+                  cooking oil — on a regular cycle, each ration built to a 2,100 kcal-per-day minimum.
+                  Across 14 projects in 8 countries: 10,235.1 tonnes delivered.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -116,13 +116,13 @@ export default function InterventionsSection() {
               eyebrow="Field Story · Sudan"
               photo="/gallery/223711-3.jpg"
               caption="Food distribution site in Sudan — commodities trucked in await distribution at the dispatch point."
-              quote="Once my children no longer went hungry, I could finally begin to plan for tomorrow."
+              quote="Once my children no longer went hungry, I could finally plan for tomorrow."
               quoteSource="Hawa Ismail · Abu Jubaiha camp, mother of four"
             >
-              Displaced by conflict to Abu Jubaiha in South Kordofan, <strong style={{ color: 'var(--midnight)' }}>Hawa Ismail (32)</strong> is
-              a mother raising four children. In August–September 2025, WFP and World Vision distributed sorghum, lentils, cooking oil and salt
-              to 9,829 people here. With the food assistance easing her worry about meals, Hawa learned <strong style={{ color: 'var(--orange)' }}>how to
-              make soap</strong> from women in the market and started a small business; today she employs other displaced women and they earn a living together.
+              Conflict drove <strong style={{ color: 'var(--midnight)' }}>Hawa Ismail (32)</strong>, a mother of four, to Abu Jubaiha in South Kordofan.
+              In August–September 2025, WFP and World Vision distributed sorghum, lentils, cooking oil and salt to 9,829 people here.
+              With meals no longer a daily worry, Hawa learned <strong style={{ color: 'var(--orange)' }}>how to make soap</strong> from women in the market
+              and launched a small business. Today she employs other displaced women, and they earn a living together.
             </FieldStory>
 
             <FoodMixChart />
@@ -138,9 +138,9 @@ export default function InterventionsSection() {
                 <h3 lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>Cash &amp; Voucher Assistance</h3>
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Cash &amp; Voucher Assistance</p>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
-                  In areas where markets are functioning, families receive cash or vouchers to buy food for themselves directly.
-                  This approach lowers transport and storage costs and gives choice back to beneficiaries; 10 projects in 9 countries
-                  include a cash or voucher component.
+                  Where markets work, families receive cash or vouchers to buy their own food directly.
+                  It cuts transport and storage costs and puts choice back in beneficiaries' hands.
+                  10 projects in 9 countries include a cash or voucher component.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -162,13 +162,13 @@ export default function InterventionsSection() {
               eyebrow="Field Story · Cox's Bazar, Bangladesh"
               photo="/gallery/223748-3.jpg"
               caption="Cox's Bazar camp — a Rohingya beneficiary receives a food e-voucher token."
-              quote="I was always worried about how to feed my children. But WFP gave us hope again."
+              quote="I once feared every day how to feed my children. WFP gave us hope again."
               quoteSource="Dil Bahar · Cox's Bazar camp, mother of three"
             >
-              <strong style={{ color: 'var(--midnight)' }}>Dil Bahar (30)</strong>, a Rohingya refugee who fled violence in Myanmar to Bangladesh,
-              lost her husband in the camp and raises three children alone. As in-kind rations shifted to an <strong style={{ color: TEAL }}>e-voucher</strong>,
-              she can now choose and buy the foods she wants herself, within a set monthly limit. With a fresh-food voucher for women heads of household,
-              she buys vegetables, fish and even chicken to set a balanced table.
+              <strong style={{ color: 'var(--midnight)' }}>Dil Bahar (30)</strong>, a Rohingya refugee who fled violence in Myanmar,
+              lost her husband in the camp and raises three children alone. When in-kind rations shifted to an <strong style={{ color: TEAL }}>e-voucher</strong>,
+              she gained the power to choose her own food, within a set monthly limit. A fresh-food voucher for women heads of household now lets her
+              buy vegetables, fish, even chicken — a balanced table.
             </FieldStory>
           </article>
           </ScrollReveal>
@@ -182,9 +182,9 @@ export default function InterventionsSection() {
                 <h3 lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 32, color: 'var(--midnight)', margin: 0 }}>Therapeutic &amp; Supplementary Food</h3>
                 <p style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: 18, color: 'var(--grey-600)', margin: '6px 0 0' }}>Therapeutic &amp; Supplementary Food</p>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.8, color: 'var(--grey-800)', margin: '20px 0 0', wordBreak: 'keep-all' }}>
-                  Children under five, pregnant and breastfeeding women receive therapeutic and supplementary food such as Plumpy'Nut.
-                  It is provided after screening for severe and moderate acute malnutrition using mid-upper-arm circumference measurement,
-                  with village mothers' self-help groups following up. Across 9 projects, 998.1 tonnes was distributed.
+                  Children under five and pregnant and breastfeeding women receive therapeutic and supplementary food such as Plumpy'Nut.
+                  Mid-upper-arm circumference screening flags severe and moderate acute malnutrition; village mothers' self-help groups follow up.
+                  Across 9 projects: 998.1 tonnes delivered.
                 </p>
               </div>
               <div style={{ textAlign: 'right' }}>
@@ -208,14 +208,14 @@ export default function InterventionsSection() {
               eyebrow="Field Story · Tigray, Ethiopia"
               photo="/gallery/223707-1.jpg"
               caption="Tigray Targeted Supplementary Feeding Programme (TSFP) — distributing therapeutic & supplementary food to mothers."
-              quote="My baby's health was a constant worry because we couldn't eat properly. Now she is healthier, and I feel confident caring for her."
+              quote="When we couldn't eat properly, my baby's health terrified me. Now she is healthier, and I know how to care for her."
               quoteSource="Tirhas Tsegay · Adi Hawi IDP camp, Tigray, breastfeeding mother"
             >
-              In Tigray, Ethiopia, left in nutritional crisis by two years of blockade, WFP's <strong style={{ color: 'var(--midnight)' }}>Targeted Supplementary Feeding Programme (TSFP)</strong> reached
-              19,122 people — 12,906 children under five and 6,216 pregnant and breastfeeding women — through 76 distribution points.
+              Two years of blockade pushed Tigray, Ethiopia into nutritional crisis. WFP's <strong style={{ color: 'var(--midnight)' }}>Targeted Supplementary Feeding Programme (TSFP)</strong> reached
+              19,122 people — 12,906 children under five and 6,216 pregnant and breastfeeding women — across 76 distribution points.
               Breastfeeding mother <strong style={{ color: 'var(--midnight)' }}>Tirhas Tsegay (20)</strong> was admitted with moderate malnutrition (mid-upper-arm circumference 22.7 cm).
-              Through the <strong style={{ color: RED }}>fortified blended food (CSB++)</strong> she received every two weeks, together with breastfeeding and hygiene counselling, she recovered to
-              23.3 cm within a month and was discharged.
+              On <strong style={{ color: RED }}>fortified blended food (CSB++)</strong> every two weeks, plus breastfeeding and hygiene counselling, she recovered to
+              23.3 cm in a month and was discharged.
             </FieldStory>
           </article>
           </ScrollReveal>

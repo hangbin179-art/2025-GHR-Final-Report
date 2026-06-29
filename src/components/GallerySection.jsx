@@ -25,66 +25,66 @@ const P = (pbas, country, countryEn, site, activity, color, n, scene = '') => ({
 
 const PHOTOS = [
   // DR Congo (South Kivu · Tanganyika)
-  P('223847', '콩고민주공화국', 'DR Congo', 'South Kivu', 'In-kind Food Distribution', ORANGE, 1, 'Woman beneficiary collecting her food ration'),
-  P('223847', '콩고민주공화국', 'DR Congo', 'South Kivu, Kamanyola', 'In-kind Food Distribution', ORANGE, 2, 'Carrying a sack of food'),
-  P('223847', '콩고민주공화국', 'DR Congo', 'South Kivu', 'Nutrition Counselling', RED, 3, 'Nutrition-sensitive counselling session'),
-  P('223796', '콩고민주공화국', 'DR Congo', 'Tanganyika', 'In-kind Food Distribution', ORANGE, 1, 'Woman who received food assistance'),
+  P('223847', '콩고민주공화국', 'DR Congo', 'South Kivu', 'In-kind Food Distribution', ORANGE, 1, 'Collecting her food ration'),
+  P('223847', '콩고민주공화국', 'DR Congo', 'South Kivu, Kamanyola', 'In-kind Food Distribution', ORANGE, 2, 'Carrying a sack of food home'),
+  P('223847', '콩고민주공화국', 'DR Congo', 'South Kivu', 'Nutrition Counselling', RED, 3, 'A nutrition counselling session'),
+  P('223796', '콩고민주공화국', 'DR Congo', 'Tanganyika', 'In-kind Food Distribution', ORANGE, 1, 'After receiving food assistance'),
   // Sudan (South Darfur · South Kordofan)
-  P('223711', '수단', 'Sudan', 'South Darfur', 'In-kind Food Distribution', ORANGE, 1, 'Measuring and distributing grain'),
+  P('223711', '수단', 'Sudan', 'South Darfur', 'In-kind Food Distribution', ORANGE, 1, 'Measuring out grain rations'),
   P('223711', '수단', 'Sudan', 'South Darfur, Otash', 'In-kind Food Distribution', ORANGE, 2, 'Distribution at the Otash IDP camp'),
-  P('223711', '수단', 'Sudan', 'South Darfur', 'In-kind Food Distribution', ORANGE, 3, 'Food distribution from truck delivery (South Darfur)'),
-  P('223745', '수단', 'Sudan', 'South Darfur', 'Therapeutic Food', RED, 1, 'Twin brothers recovered with therapeutic food'),
-  P('223745', '수단', 'Sudan', 'South Darfur', 'Nutrition Screening', RED, 2, 'MUAC measurement for an infant'),
+  P('223711', '수단', 'Sudan', 'South Darfur', 'In-kind Food Distribution', ORANGE, 3, 'Unloading food straight from the truck'),
+  P('223745', '수단', 'Sudan', 'South Darfur', 'Therapeutic Food', RED, 1, 'Twin brothers, recovered on therapeutic food'),
+  P('223745', '수단', 'Sudan', 'South Darfur', 'Nutrition Screening', RED, 2, 'A MUAC reading for an infant'),
   P('223710', '수단', 'Sudan', 'South Kordofan', 'In-kind Food Distribution', ORANGE, 1, 'Al-Abassiya Food Distribution Point (FDP)'),
   // Afghanistan (Ghor · Badghis)
-  P('223255', '아프가니스탄', 'Afghanistan', 'Ghor · Badghis', 'In-kind Food Distribution', ORANGE, 1, 'Distributing flour and cooking oil'),
-  P('223255', '아프가니스탄', 'Afghanistan', 'Ghor · Badghis', 'Food Distribution', ORANGE, 2, 'Overview of a large-scale distribution site'),
-  P('223255', '아프가니스탄', 'Afghanistan', 'Ghor · Badghis', 'Food Distribution', ORANGE, 3, 'Distributing food commodities'),
-  P('223255', '아프가니스탄', 'Afghanistan', 'Ghor · Badghis', 'Cash for Work', TEAL, 4, 'Asset creation through Cash for Work'),
+  P('223255', '아프가니스탄', 'Afghanistan', 'Ghor · Badghis', 'In-kind Food Distribution', ORANGE, 1, 'Handing out flour and cooking oil'),
+  P('223255', '아프가니스탄', 'Afghanistan', 'Ghor · Badghis', 'Food Distribution', ORANGE, 2, 'A large-scale distribution site'),
+  P('223255', '아프가니스탄', 'Afghanistan', 'Ghor · Badghis', 'Food Distribution', ORANGE, 3, 'Handing out food commodities'),
+  P('223255', '아프가니스탄', 'Afghanistan', 'Ghor · Badghis', 'Cash for Work', TEAL, 4, 'Building assets through Cash for Work'),
   // Ethiopia (Tigray · Afar · Amhara)
-  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Therapeutic Food', RED, 1, 'Supplementary food distribution site'),
-  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Therapeutic Food', RED, 2, 'RUTF therapeutic food distribution'),
-  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Nutrition Screening', RED, 3, 'Measuring a child’s nutritional status (MUAC)'),
-  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'In-kind Food Distribution', ORANGE, 4, 'Waiting for food distribution'),
-  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Food Storage', ORANGE, 5, 'Food storage warehouse'),
+  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Therapeutic Food', RED, 1, 'A supplementary food distribution site'),
+  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Therapeutic Food', RED, 2, 'Distributing RUTF therapeutic food'),
+  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Nutrition Screening', RED, 3, 'A child’s MUAC measurement'),
+  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'In-kind Food Distribution', ORANGE, 4, 'Waiting for the distribution'),
+  P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Food Storage', ORANGE, 5, 'Inside the food warehouse'),
   P('223707', '에티오피아', 'Ethiopia', 'Tigray · Afar', 'Participant Feedback', RED, 6, 'Listening to nutrition programme participants'),
   // Uganda (Bidibidi · Lobule)
-  P('223766', '우간다', 'Uganda', 'Bidibidi · Lobule', 'In-kind Food Distribution', ORANGE, 1, 'Measuring and distributing grain'),
-  P('223766', '우간다', 'Uganda', 'Bidibidi · Lobule', 'Food Distribution', ORANGE, 2, 'Women waiting for distribution'),
-  P('223766', '우간다', 'Uganda', 'Lobule', 'Food Distribution', ORANGE, 3, 'Indoor food distribution point'),
+  P('223766', '우간다', 'Uganda', 'Bidibidi · Lobule', 'In-kind Food Distribution', ORANGE, 1, 'Measuring out grain rations'),
+  P('223766', '우간다', 'Uganda', 'Bidibidi · Lobule', 'Food Distribution', ORANGE, 2, 'Women waiting for the distribution'),
+  P('223766', '우간다', 'Uganda', 'Lobule', 'Food Distribution', ORANGE, 3, 'An indoor distribution point'),
   // Venezuela (Zulia · Falcón) — School Feeding
-  P('223806', '베네수엘라', 'Venezuela', 'Zulia · Falcón', 'School Feeding', AMBER, 1, 'School feeding site'),
+  P('223806', '베네수엘라', 'Venezuela', 'Zulia · Falcón', 'School Feeding', AMBER, 1, 'A school feeding site'),
   P('223806', '베네수엘라', 'Venezuela', 'Zulia · Falcón', 'School Feeding', AMBER, 2, 'Children eating their school meal'),
-  P('223806', '베네수엘라', 'Venezuela', 'Zulia · Falcón', 'School Feeding', AMBER, 3, 'Preparing the school meal'),
+  P('223806', '베네수엘라', 'Venezuela', 'Zulia · Falcón', 'School Feeding', AMBER, 3, 'Cooking the school meal'),
   // South Sudan (Fashoda · Juba)
-  P('223756', '남수단', 'South Sudan', 'Fashoda · Panyikang', 'Livelihood & Resilience', GREEN, 1, 'Woman farmer in a maize field'),
-  P('223756', '남수단', 'South Sudan', 'Fashoda', 'Livelihood & Resilience', GREEN, 2, 'Support for sorghum farming'),
-  P('223753', '남수단', 'South Sudan', 'Juba · Yambio', 'School Feeding', AMBER, 1, 'Hands-on school garden cultivation'),
+  P('223756', '남수단', 'South Sudan', 'Fashoda · Panyikang', 'Livelihood & Resilience', GREEN, 1, 'A woman farmer in her maize field'),
+  P('223756', '남수단', 'South Sudan', 'Fashoda', 'Livelihood & Resilience', GREEN, 2, 'Backing sorghum farmers'),
+  P('223753', '남수단', 'South Sudan', 'Juba · Yambio', 'School Feeding', AMBER, 1, 'Working the school garden'),
   P('223753', '남수단', 'South Sudan', 'Juba · Yambio', 'School Feeding', AMBER, 2, 'Students tending the school garden'),
   // Bangladesh (Cox's Bazar) — Rohingya refugees, E-Voucher-only programme (not in-kind distribution; direct purchase via voucher)
   P('223748', '방글라데시', 'Bangladesh', 'Cox’s Bazar', 'E-voucher', TEAL, 1, 'Issuing and explaining the E-Voucher'),
-  P('223748', '방글라데시', 'Bangladesh', 'Cox’s Bazar', 'E-voucher', TEAL, 2, 'Carrying food bought with vouchers during the rainy season'),
-  P('223748', '방글라데시', 'Bangladesh', 'Cox’s Bazar', 'E-voucher', TEAL, 3, 'Distributing E-Voucher tokens'),
-  P('223748', '방글라데시', 'Bangladesh', 'Cox’s Bazar', 'E-voucher', TEAL, 4, 'Buying fresh food directly with the E-Voucher'),
+  P('223748', '방글라데시', 'Bangladesh', 'Cox’s Bazar', 'E-voucher', TEAL, 2, 'Carrying voucher-bought food through the rains'),
+  P('223748', '방글라데시', 'Bangladesh', 'Cox’s Bazar', 'E-voucher', TEAL, 3, 'Handing out E-Voucher tokens'),
+  P('223748', '방글라데시', 'Bangladesh', 'Cox’s Bazar', 'E-voucher', TEAL, 4, 'Buying fresh food with the E-Voucher'),
   // Central African Republic (Bouar · Bangassou)
-  P('223999', '중앙아프리카공화국', 'CAR', 'Bouar · Bangassou', 'Cash Assistance', TEAL, 1, 'Cash assistance distribution in Gotchélé'),
-  P('223999', '중앙아프리카공화국', 'CAR', 'Bouar · Bangassou', 'Livelihood & Resilience', GREEN, 2, 'Delivering materials for farm-road rehabilitation'),
+  P('223999', '중앙아프리카공화국', 'CAR', 'Bouar · Bangassou', 'Cash Assistance', TEAL, 1, 'Cash distribution in Gotchélé'),
+  P('223999', '중앙아프리카공화국', 'CAR', 'Bouar · Bangassou', 'Livelihood & Resilience', GREEN, 2, 'Delivering materials to rebuild a farm road'),
   P('223999', '중앙아프리카공화국', 'CAR', 'Nguyali', 'Livelihood & Resilience', GREEN, 3, 'Harvesting and drying maize'),
-  P('223999', '중앙아프리카공화국', 'CAR', 'Bouar · Bangassou', 'Cash Assistance', TEAL, 4, 'Workers receiving their cash payment'),
+  P('223999', '중앙아프리카공화국', 'CAR', 'Bouar · Bangassou', 'Cash Assistance', TEAL, 4, 'Workers collecting their cash payment'),
   // Kenya (Makueni · Kitui) — Livelihood resilience
-  P('223864', '케냐', 'Kenya', 'Makueni · Kitui', 'Livelihood & Resilience', GREEN, 1, 'Harvest from a fruit-growing household'),
+  P('223864', '케냐', 'Kenya', 'Makueni · Kitui', 'Livelihood & Resilience', GREEN, 1, 'A fruit-growing household’s harvest'),
   P('223864', '케냐', 'Kenya', 'Makueni · Kitui', 'Livelihood & Resilience', GREEN, 2, 'Building assets through goat rearing'),
-  P('223864', '케냐', 'Kenya', 'Makueni · Kitui', 'Livelihood & Resilience', GREEN, 3, 'Village savings group meeting'),
-  P('223864', '케냐', 'Kenya', 'Makueni · Kitui', 'Livelihood & Resilience', GREEN, 4, 'Irrigated orchard farming'),
+  P('223864', '케냐', 'Kenya', 'Makueni · Kitui', 'Livelihood & Resilience', GREEN, 3, 'A village savings group meets'),
+  P('223864', '케냐', 'Kenya', 'Makueni · Kitui', 'Livelihood & Resilience', GREEN, 4, 'An irrigated orchard'),
   // Chad (Farchana and 5 others · Emergency School Feeding)
-  P('223850', '차드', 'Chad', 'Farchana and others', 'Emergency School Feeding', AMBER, 1, 'School feeding site'),
+  P('223850', '차드', 'Chad', 'Farchana and others', 'Emergency School Feeding', AMBER, 1, 'A school feeding site'),
   P('223850', '차드', 'Chad', 'Farchana and others', 'Emergency School Feeding', AMBER, 2, 'Cooking the school meal'),
-  P('223850', '차드', 'Chad', 'Farchana and others', 'Emergency School Feeding', AMBER, 3, 'Serving meals to students'),
+  P('223850', '차드', 'Chad', 'Farchana and others', 'Emergency School Feeding', AMBER, 3, 'Serving students their meal'),
   // Colombia (Valle del Cauca · Cash & Voucher)
-  P('223799', '콜롬비아', 'Colombia', 'Valle del Cauca', 'Cash & Voucher', TEAL, 1, 'Cash and voucher distribution site'),
+  P('223799', '콜롬비아', 'Colombia', 'Valle del Cauca', 'Cash & Voucher', TEAL, 1, 'A cash and voucher distribution site'),
   P('223799', '콜롬비아', 'Colombia', 'Valle del Cauca', 'Participant Verification', TEAL, 2, 'Registering and verifying beneficiaries'),
   // Myanmar (Northern Shan · Emergency Cash)
-  P('223982', '미얀마', 'Myanmar', 'Northern Shan', 'Emergency Cash Assistance', TEAL, 1, 'Cash assistance registration and distribution site'),
+  P('223982', '미얀마', 'Myanmar', 'Northern Shan', 'Emergency Cash Assistance', TEAL, 1, 'Cash registration and distribution'),
 ]
 
 const feat = (pbas) => PHOTOS.find((p) => p.pbas === pbas)
@@ -233,7 +233,7 @@ function Lightbox({ slides, idx, setIdx, onClose }) {
           {s.credit && <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, color: 'rgba(255,255,255,0.5)', margin: '6px 0 0' }}>{s.credit}</p>}
           <p className="tnum" style={{ fontFamily: 'var(--font-en)', fontSize: 12, color: 'rgba(255,255,255,0.6)', margin: '8px 0 0' }}>{idx + 1} / {n}</p>
           <p style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'rgba(255,255,255,0.45)', margin: '6px 0 0' }}>
-            {zoom ? 'Click the photo to zoom out · scroll to pan around' : 'Click the photo to enlarge and see the detail'}
+            {zoom ? 'Click to zoom out · scroll to pan' : 'Click to enlarge'}
           </p>
         </figcaption>
       </figure>
@@ -259,7 +259,7 @@ export default function GallerySection() {
           </div>
           <div>
             <h2 style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '24ch' }}>
-              The people behind the numbers.<br />Meet our project sites through photographs.
+              The people behind the numbers.<br />See the work, site by site.
             </h2>
           </div>
         </div>
@@ -273,7 +273,7 @@ export default function GallerySection() {
 
         {/* Hint — full gallery guidance */}
         <p style={{ fontFamily: 'var(--font-kr)', fontSize: 13, color: 'var(--grey-600)', margin: '20px 0 0', lineHeight: 1.6 }}>
-          These are <strong style={{ color: 'var(--midnight)' }}>{photoCount} representative shots</strong>, one per country. Tap any photo to enlarge it, and use the left/right arrows or your keyboard to page through all <strong style={{ color: 'var(--orange)' }}>{PHOTOS.length} photos</strong> along with their site and activity. While zoomed in, scroll to explore the detail.
+          <strong style={{ color: 'var(--midnight)' }}>{photoCount} representative shots</strong>, one per country. Tap any photo to enlarge it. Use the arrows or your keyboard to page through all <strong style={{ color: 'var(--orange)' }}>{PHOTOS.length} photos</strong>, each with its site and activity. Zoom in and scroll for the detail.
         </p>
       </div>
 

@@ -164,9 +164,9 @@ export default function CountryGrid() {
   return (
     <div style={{ marginTop: 40, borderTop: '1px solid var(--field-200)', paddingTop: 24 }}>
       <p style={{ fontFamily: 'var(--font-en)', fontSize: 11, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--grey-600)', margin: '0 0 16px' }}>
-        Country Grid · 13 countries side by side
+        Country Grid · 13 countries at a glance
         <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 600, textTransform: 'none', letterSpacing: 0, color: 'var(--orange)', marginLeft: 8 }}>
-          · Click a card to zoom the map and open the project overview alongside
+          · Tap a card to zoom the map and open its project detail
         </span>
       </p>
       <div style={{ position: 'relative', border: '1px solid var(--field-200)', borderRadius: 8, overflow: 'hidden' }}>
@@ -230,7 +230,7 @@ export default function CountryGrid() {
               </span>
               {c.livelihood ? (
                 <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: GREEN, fontWeight: 600, marginTop: 4 }}>
-                  Livelihood &amp; resilience project (no distribution)
+                  Livelihood &amp; resilience — no distribution
                 </span>
               ) : (
                 <div style={{ height: 3, background: 'var(--field-200)', borderRadius: 2, marginTop: 6 }}>
@@ -301,14 +301,14 @@ export default function CountryGrid() {
                     <FinanceCell isMobile={isMobile} label="WFP multilateral total project cost" usd={fmtCash(country.wfpIncome)} emphasize />
                   </div>
                   <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-500)', margin: '12px 0 0', lineHeight: 1.6, textAlign: 'center' }}>
-                    Korea's matching contribution leveraged the wider WFP multilateral project budget. The total project cost reflects WFP's contribution and includes nutrition, school feeding, livelihoods, logistics and operating costs beyond food and cash distribution, so it differs from the distribution results below.
+                    Korea's matching contribution unlocked the wider WFP multilateral budget. This WFP-basis total spans nutrition, school feeding, livelihoods, logistics and operating costs — well beyond food and cash — so it runs higher than the distribution results below.
                   </p>
                 </div>
               )}
 
               {/* 5 core activities */}
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, fontWeight: 700, color: 'var(--grey-600)', margin: '24px 0 14px' }}>
-                Activities <span style={{ fontWeight: 400, color: 'var(--grey-500)' }}>· activities shown in colour are delivered here</span>
+                Activities <span style={{ fontWeight: 400, color: 'var(--grey-500)' }}>· those in colour are delivered here</span>
               </p>
               <div style={{ display: 'flex', gap: 8 }}>
                 {ACTIVITY_DEFS.map((def) => (

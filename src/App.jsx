@@ -125,8 +125,8 @@ Final Report · 2025
               Sources &amp; Notice
             </p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', margin: 0 }}>
-              Plan figures are from the proposal (Mar 2025); distribution results are cumulative (Jan–Dec 2025).
-              Monetary figures shown in USD (converted at ₩1,330 / USD).
+              Plan figures: proposal, Mar 2025. Results: cumulative Jan–Dec 2025.
+              Amounts in USD (converted at ₩1,330/USD).
             </p>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.7, color: 'rgba(255,255,255,0.5)', margin: '8px 0 0' }}>
               Sources: Hunger Hotspots (WFP &amp; FAO, 2025)<br />
@@ -138,7 +138,7 @@ Final Report · 2025
 
         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 20 }}>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: 0 }}>
-            © 2025 World Vision Korea · 2025 Global Food Crisis Response — Final Report · This dashboard was produced to report results transparently to our supporters.
+            © 2025 World Vision Korea · 2025 Global Food Crisis Response — Final Report · Built to report our results transparently to supporters.
           </p>
           <p style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'rgba(255,255,255,0.3)', margin: '6px 0 0', lineHeight: 1.6 }}>
             © World Vision · All photographs and video in this report are copyright World Vision; unauthorized use or distribution is prohibited.

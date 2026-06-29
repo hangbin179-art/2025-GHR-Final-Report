@@ -132,7 +132,7 @@ export default function ImpactMap() {
           </div>
           <div>
             <h2 lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 36, lineHeight: 1.25, letterSpacing: '-0.015em', color: 'var(--midnight)', margin: 0, maxWidth: '24ch' }}>
-              20 sites across 13 countries,<br />at a single glance.
+              20 sites, 13 countries,<br />one map.
             </h2>
           </div>
         </div>
@@ -180,7 +180,7 @@ export default function ImpactMap() {
                 <span style={{ fontFamily: 'var(--font-en)', fontSize: 11, color: 'var(--grey-700)', fontWeight: 600 }}>20t → 3,200t</span>
               </div>
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 11, color: 'var(--grey-600)', margin: '10px 0 0', lineHeight: 1.5 }}>
-                Hover over a marker to see detailed results; click to open the country's project overview alongside.
+                Hover a marker for results. Click to open the country's project overview.
               </p>
             </div>
           </div>

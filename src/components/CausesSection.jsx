@@ -50,8 +50,8 @@ export default function CausesSection() {
               maxWidth: 'none',
               whiteSpace: isMobile ? 'normal' : 'nowrap',
             }}>
-              Why does the world still go hungry?<br />
-              Not one cause, but three colliding forces.
+              Why is the world still hungry?<br />
+              Three forces, colliding.
             </h2>
           </div>
         </div>
@@ -94,16 +94,16 @@ export default function CausesSection() {
               Conflict & Instability
             </h3>
             <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, flex: 1 }}>
-              In countries such as DR Congo and Sudan, prolonged civil war forces<br />mass displacement.
-              Conflict drives a vicious cycle: displacement &rarr; collapse of infrastructure and markets &rarr; unstable aid
-              &rarr; deepening food crisis.
+              In countries such as DR Congo and Sudan, prolonged civil war drives<br />mass displacement.
+              Then the cycle turns: displacement &rarr; broken markets and infrastructure &rarr; disrupted aid
+              &rarr; deeper hunger.
             </p>
             <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span className="num" style={{ fontSize: 42, color: 'var(--red-800)' }}>
                 15<span style={{ fontSize: 24, color: 'var(--grey-500)' }}>/16</span>
               </span>
               <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-600)', lineHeight: 1.4 }}>
-                of the 2025 major food-crisis<br />countries are affected by conflict
+                of 2025's major food-crisis<br />countries are hit by conflict
               </span>
             </div>
           </article>
@@ -142,15 +142,15 @@ export default function CausesSection() {
               Climate Change
             </h3>
             <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, flex: 1 }}>
-              Frequent droughts and floods, along with erratic weather, lead to failed harvests and agricultural losses.
-              Climate shocks directly erode food productivity in the most vulnerable regions.
+              Droughts, floods, and erratic weather wipe out harvests.
+              Climate shocks strike hardest where families can least afford to lose a crop.
             </p>
             <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
               <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 30, color: 'var(--blue-900)', letterSpacing: '-0.02em' }}>
                 Drought & Flood
               </span>
               <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-600)', lineHeight: 1.4 }}>
-                leading causes of failed harvests<br />and agricultural losses
+                the leading drivers of<br />failed harvests and crop losses
               </span>
             </div>
           </article>
@@ -189,8 +189,8 @@ export default function CausesSection() {
               Economic Shocks
             </h3>
             <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, flex: 1 }}>
-              Soaring inflation and surging food prices destroy the purchasing power of the most vulnerable.
-              As needs rise but humanitarian funding falls, rations can shrink to less than
+              Inflation and soaring food prices gut the buying power of the poorest.
+              As needs climb and funding falls, rations shrink to under
               50% of the recommended daily calories.
             </p>
             <div style={{ borderTop: '1px solid var(--field-200)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -198,7 +198,7 @@ export default function CausesSection() {
                 &lt;50<span style={{ fontSize: 24 }}>%</span>
               </span>
               <span lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 12, color: 'var(--grey-600)', lineHeight: 1.4 }}>
-                reduced ration size<br />(vs. recommended calories)
+                of recommended calories<br />once rations are cut
               </span>
             </div>
           </article>
@@ -218,11 +218,11 @@ export default function CausesSection() {
             </div>
             <div>
               <h3 lang="en" style={{ fontFamily: 'var(--font-kr)', fontWeight: 700, fontSize: 'clamp(22px, 2.6vw, 30px)', lineHeight: 1.3, letterSpacing: '-0.02em', color: 'var(--midnight)', margin: 0 }}>
-                As the crisis deepens, its shadow falls first and hardest on children.
+                As the crisis deepens, it falls first and hardest on children.
               </h3>
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 13, lineHeight: 1.7, color: 'var(--grey-600)', margin: '12px 0 0' }}>
-                &ldquo;In the Shadow of Hunger&rdquo; (2026), a joint study by WFP and World Vision conducted across eight food-crisis countries,
-                analyses the toll that food insecurity and ration cuts take on children.
+                &ldquo;In the Shadow of Hunger&rdquo; (2026) — a joint WFP and World Vision study across eight food-crisis countries —
+                measures what food insecurity and ration cuts cost children.
               </p>
             </div>
           </div>
@@ -234,9 +234,9 @@ export default function CausesSection() {
               accent="var(--orange-900)"
               accentBg="var(--orange-100)"
               title="Disrupted Education"
-              body="When meals run short, children leave school to help support their families. Absences and dropouts rise, and some are pushed into begging and labour."
+              body="When meals run short, children leave school to help feed the family. Absences and dropouts climb; some are pushed into begging and labour."
               stat="School → Labour"
-              statLabel={<>learning lost as children<br />are drawn into earning a living</>}
+              statLabel={<>schooling traded away<br />for a child's wage</>}
               icon={<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.84l8.57 3.9a2 2 0 0 0 1.66 0z" /><path d="M22 10v6" /><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" /></svg>}
             />
             <ImpactCard
@@ -244,9 +244,9 @@ export default function CausesSection() {
               accent="var(--red-800)"
               accentBg="var(--red-100)"
               title="Child Marriage & Family Separation"
-              body="Families whose livelihoods have collapsed marry children off early to have one fewer mouth to feed, or are scattered apart. The protective net around children is the first to break."
+              body="When livelihoods collapse, families marry children off early — one fewer mouth to feed — or scatter to survive. The net that protects children is the first to tear."
               stat="~2x"
-              statLabel={<>higher risk of child marriage and<br />family separation in ration-cut households</>}
+              statLabel={<>the risk of child marriage and<br />family separation in ration-cut households</>}
               icon={<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z" /><path d="m12 5-2 6h3l-2 6" /></svg>}
             />
             <ImpactCard
@@ -254,9 +254,9 @@ export default function CausesSection() {
               accent="var(--blue-900)"
               accentBg="var(--blue-100)"
               title="Mental-Health Crisis"
-              body="Hunger and uncertainty leave deep anxiety in children's minds. As stress within the household grows, the risks of depression and abuse rise alongside it."
+              body="Hunger and uncertainty breed deep anxiety in children. As household stress mounts, so do depression and the risk of abuse."
               stat="Anxiety · Depression"
-              statLabel={<>the psychological toll and risk of abuse<br />left by hunger and instability</>}
+              statLabel={<>the mental toll and risk of abuse<br />left by hunger and instability</>}
               icon={<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M16 16s-1.5-2-4-2-4 2-4 2" /><line x1="9" y1="9" x2="9.01" y2="9" /><line x1="15" y1="9" x2="15.01" y2="9" /></svg>}
             />
           </div>

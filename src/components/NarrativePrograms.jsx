@@ -113,10 +113,8 @@ export default function NarrativePrograms() {
             {/* Intro + lead stats */}
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                Home-Grown School Feeding does not stop at providing a meal. Schools grow their own crops, and
-                students carry those skills back home. In South Sudan, the <strong style={{ color: 'var(--midnight)' }}>Juba & Yambio Home-Grown School Feeding programme</strong> served
-                meals to more than 13,000 children across 21 primary schools in Central Equatoria, combining agricultural
-                education through school gardens. Over the course of 2025, the programme reached 47,468 people in total.
+                A meal is only the start. Schools grow their own crops, and students carry the skills home. In South Sudan, the <strong style={{ color: 'var(--midnight)' }}>Juba & Yambio Home-Grown School Feeding programme</strong> fed
+                more than 13,000 children across 21 primary schools in Central Equatoria — and taught them to farm in the school gardens. In 2025, the programme reached 47,468 people.
               </p>
               <div style={{
                 background: AMBER_BG,
@@ -139,15 +137,13 @@ export default function NarrativePrograms() {
                 </p>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 15, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
                   Fourth-graders <strong style={{ color: 'var(--midnight)' }}>Kiden (13)</strong> and <strong style={{ color: 'var(--midnight)' }}>Yawa (12)</strong> learned
-                  land preparation, seedbed making, transplanting, crop rotation, weeding, and irrigation in the school garden. The two
-                  students brought those skills home and, together with their parents, planted <strong style={{ color: AMBER }}>cowpeas, okra, and tomatoes</strong>.
-                  The family harvested every three to four days, eating some of the produce and selling the rest at the market. Daily sales earned
-                  30,000–35,000 South Sudanese pounds (about USD 5–6). Their father, Michael Suba, used this income to buy his children's
-                  school supplies and contribute to the school development fund.
+                  land preparation, seedbed making, transplanting, crop rotation, weeding, and irrigation in the school garden. They took it home. With their parents, they planted <strong style={{ color: AMBER }}>cowpeas, okra, and tomatoes</strong> —
+                  harvesting every three to four days, eating some, selling the rest. Daily sales bring in
+                  30,000–35,000 South Sudanese pounds (about USD 5–6). Their father, Michael Suba, spends it on school supplies and the school development fund.
                 </p>
                 <Quote
                   accent={AMBER}
-                  text="I have no job, so the money I earn selling vegetables at the market is all I have to buy my children's books and pay their school fees."
+                  text="I have no job. The money from selling vegetables at the market is all I have to buy my children's books and pay their school fees."
                   source="Michael Suba · Kapuri village, father of two students"
                 />
               </div>
@@ -160,11 +156,8 @@ export default function NarrativePrograms() {
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                  Vegetables grown by the schools themselves were added to the WFP ration. In Juba County, gardens were
-                  established in <strong style={{ color: 'var(--midnight)' }}>20 of the 21 targeted schools</strong>, supported with seeds and farming
-                  tools to grow tomatoes, eggplant, okra, maize, and more. Most of the harvest went back into student
-                  meals, and of the rest <strong style={{ color: AMBER }}>316 kg was sold at market for about 400,000 South Sudanese pounds (about USD 70)</strong>,
-                  contributing to school running costs. Nabagu Primary School, for example, harvested 750 kg of maize — 550 kg for meals and 200 kg for sale.
+                  The schools' own vegetables went straight into the WFP ration. In Juba County, gardens took root in <strong style={{ color: 'var(--midnight)' }}>20 of the 21 targeted schools</strong>, stocked with seeds and farming
+                  tools for tomatoes, eggplant, okra, maize, and more. Most of the harvest fed students; of the rest, <strong style={{ color: AMBER }}>316 kg sold at market for about 400,000 South Sudanese pounds (about USD 70)</strong> toward running costs. Nabagu Primary School alone harvested 750 kg of maize — 550 kg for meals, 200 kg for sale.
                 </p>
                 <div style={{ background: AMBER_BG, borderRadius: 12, padding: 24, display: 'flex', gap: 20 }}>
                   <StatChip value="2,269" unit="kg" label="Total school-garden harvest" accent={AMBER} />
@@ -179,9 +172,8 @@ export default function NarrativePrograms() {
                 Chad · Farchana &amp; more
               </span>
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.7, color: 'var(--grey-700)', margin: 0, wordBreak: 'keep-all' }}>
-                In eastern Chad (Abéché, Farchana, Guéréda, Goz Beïda, and Iriba), <strong style={{ color: 'var(--midnight)' }}>Emergency School Feeding</strong> was
-                delivered through cash distribution. Food storage warehouses were built to establish a supply chain capable of
-                providing meals reliably even during the rainy season.
+                In eastern Chad (Abéché, Farchana, Guéréda, Goz Beïda, and Iriba), <strong style={{ color: 'var(--midnight)' }}>Emergency School Feeding</strong> ran
+                on cash distribution. New food storage warehouses built a supply chain strong enough to keep meals coming through the rainy season.
               </p>
             </div>
           </div>
@@ -200,11 +192,10 @@ export default function NarrativePrograms() {
             {/* Intro + lead stats */}
             <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.4fr 1fr', gap: isMobile ? 20 : 40, alignItems: 'start' }}>
               <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 16, lineHeight: 1.85, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                Beyond handing out food, the goal is to help people earn for themselves. In Kenya, the <strong style={{ color: 'var(--midnight)' }}>Makueni & Kitui
-                Sustainable Food Systems programme</strong> was designed as a "non-food" project that distributes no food directly,
-                operating in arid and semi-arid regions prone to frequent drought. In the two counties — where poverty rates reach
-                64.1% and 63.1% respectively — 11,306 people joined Village Savings and Loan Associations (VSLAs), gaining access to
-                savings, microloans, and income-generating opportunities.
+                The goal isn't to hand out food — it's to help people earn their own. In Kenya, the <strong style={{ color: 'var(--midnight)' }}>Makueni & Kitui
+                Sustainable Food Systems programme</strong> distributes no food at all. It works the arid, drought-prone lands of two counties where poverty runs to
+                64.1% and 63.1%. There, 11,306 people joined Village Savings and Loan Associations (VSLAs) — opening the door to
+                savings, microloans, and income of their own.
               </p>
               <div style={{
                 background: GREEN_BG,
@@ -228,9 +219,9 @@ export default function NarrativePrograms() {
                   Kenya · Makueni · Kitui
                 </p>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                  Community members grew drought-resistant crops such as <strong style={{ color: GREEN }}>green grams, cowpeas, millet, and sorghum</strong>,
-                  and learned climate-smart agriculture and poultry- and goat-rearing skills. Through the <strong style={{ color: 'var(--midnight)' }}>R4 Rural Resilience Initiative</strong> they took out crop insurance to be compensated for losses from drought, flooding, and pests. This economic buffer
-                  raised households' purchasing power, allowing them to cover their children's nutrition, education, and healthcare costs more steadily.
+                  Community members grew drought-resistant crops — <strong style={{ color: GREEN }}>green grams, cowpeas, millet, and sorghum</strong> —
+                  and learned climate-smart farming and poultry- and goat-rearing. Through the <strong style={{ color: 'var(--midnight)' }}>R4 Rural Resilience Initiative</strong>, crop insurance now covers losses to drought, flooding, and pests. That buffer
+                  lifts household purchasing power, steadying what families can spend on children's nutrition, education, and healthcare.
                 </p>
               </div>
 
@@ -241,10 +232,10 @@ export default function NarrativePrograms() {
                   Central African Rep. · Bouar · Bangassou · Livelihood &amp; asset-building support
                 </p>
                 <p lang="en" style={{ fontFamily: 'var(--font-kr)', fontSize: 14, lineHeight: 1.8, color: 'var(--grey-800)', margin: 0, wordBreak: 'keep-all' }}>
-                  In the Mbomou and Ouaka prefectures of the Central African Republic, livelihood strengthening and asset-building
-                  opportunities were delivered through <strong style={{ color: 'var(--midnight)' }}>conditional cash</strong>. Pierre Pari, of the Zaroua village
-                  farming group, expanded his plot from 0.5 hectares to 3 hectares to plant groundnuts and rice. Residents of Baziko village repaired
-                  agricultural roads through Cash for Work and received farming tools and equipment, making it far easier to transport produce and reach markets.
+                  In the Mbomou and Ouaka prefectures of the Central African Republic, <strong style={{ color: 'var(--midnight)' }}>conditional cash</strong> drove
+                  livelihood strengthening and asset-building. Pierre Pari, of the Zaroua village
+                  farming group, grew his plot from 0.5 hectares to 3 and planted groundnuts and rice. In Baziko village, residents rebuilt
+                  farm roads through Cash for Work and received tools and equipment — moving produce to market is far easier now.
                 </p>
                 <Quote
                   accent={GREEN}
