@@ -105,7 +105,7 @@ const CAROUSEL = [
   feat('223999'),                              // 중앙아프리카공화국
   feat('223982'),                              // 미얀마
   feat('223864'),                              // 케냐
-]
+].filter(Boolean) // PHOTOS에서 항목이 빠지거나 파일명이 바뀌어 find가 실패해도 페이지 전체가 죽지 않게
 
 function Arrow({ dir }) {
   return (

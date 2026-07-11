@@ -27,7 +27,9 @@ export function AnimatedGradient({ colors, speed = 0.08, blur = 'medium', opacit
   const { width, height } = useDimensions(containerRef)
   const circleSize = useMemo(() => Math.max(width, height), [width, height])
 
-  // 위치·이동 벡터를 마운트 시 1회 고정 (리렌더 시 깜빡임 방지)
+  // 위치·이동 벡터를 마운트 시 1회 고정 (리렌더 시 깜빡임 방지).
+  // deps는 배열 참조가 아닌 내용 기준 — 호출부가 배열 리터럴을 넘겨도 재추첨되지 않게.
+  const colorKey = colors.join('|')
   const circles = useMemo(
     () =>
       colors.map((color) => ({
@@ -40,7 +42,8 @@ export function AnimatedGradient({ colors, speed = 0.08, blur = 'medium', opacit
         tx3: Math.random() - 0.5, ty3: Math.random() - 0.5,
         tx4: Math.random() - 0.5, ty4: Math.random() - 0.5,
       })),
-    [colors]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [colorKey]
   )
 
   return (

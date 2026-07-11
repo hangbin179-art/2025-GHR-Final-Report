@@ -8,6 +8,8 @@ import { COUNTRIES as RAW_COUNTRIES, countryTotals, countryFinance } from '../da
 
 const MAX_FOOD = 3797 // DRC total (3,088+632+76)
 const GREEN = '#2F7D4F'
+// 배경 그라데이션 색 — 모듈 상수로 고정 (렌더마다 새 배열을 넘기면 AnimatedGradient가 원 위치를 재추첨해 깜빡임)
+const GRADIENT_COLORS = ['#FF5515', '#0E7C7B', '#F4B223', '#2F7D4F']
 
 // ── 5대 활동 정의 (아이콘 + 색) ─────────────────────────────
 const ACTIVITY_DEFS = [
@@ -172,7 +174,7 @@ export default function CountryGrid() {
         </span>
       </p>
       <div style={{ position: 'relative', border: '1px solid var(--field-200)', borderRadius: 8, overflow: 'hidden' }}>
-        <AnimatedGradient colors={['#FF5515', '#0E7C7B', '#F4B223', '#2F7D4F']} speed={0.08} blur="medium" />
+        <AnimatedGradient colors={GRADIENT_COLORS} speed={0.08} blur="medium" />
         <div style={{
           position: 'relative',
           zIndex: 1,

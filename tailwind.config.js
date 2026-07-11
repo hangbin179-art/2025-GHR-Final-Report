@@ -1,8 +1,16 @@
+import { fileURLToPath } from 'url'
+import { dirname } from 'path'
+
+// content 글롭을 "설정 파일 위치" 기준 절대경로(슬래시)로 고정 — dev 서버의 process cwd가
+// 프로젝트 루트가 아니어도(또는 Vercel Linux 빌드에서도) 항상 매칭되어 .wv-marker/.num 등
+// @layer 커스텀과 유틸리티가 purge되지 않게 한다. (__dirname은 플랫폼별로 올바르게 해석됨)
+const ROOT = dirname(fileURLToPath(import.meta.url)).replace(/\\/g, '/')
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './index.html',
-    './src/**/*.{js,jsx}',
+    `${ROOT}/index.html`,
+    `${ROOT}/src/**/*.{js,jsx}`,
   ],
   theme: {
     extend: {

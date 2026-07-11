@@ -6,10 +6,12 @@ import { COUNTRIES, countryTotals, TOTALS as TOTAL } from '../data/countries.js'
 const COUNTRY_ROWS = COUNTRIES.map((c) => ({ ko: c.ko, region: c.region, livelihood: c.livelihood, ...countryTotals(c) }))
 
 function fmtUsd(n) {
-  if (!n || n === 0) return null
+  // 100달러 미만은 표기하지 않음 — 현금 전용 사업의 잔여 식량가액(예: 방글라데시 $17)이
+  // 표에 노출되지 않도록 지도(ImpactMap의 val > 100 가드)와 기준을 맞춘다.
+  if (!n || n < 100) return null
   if (n >= 1000000) return '$' + (n / 1000000).toFixed(2) + 'M'
   if (n >= 1000) return '$' + Math.round(n).toLocaleString()
-  return '$' + n
+  return '$' + Math.round(n)
 }
 
 function fmtTon(n) {
@@ -88,7 +90,7 @@ export default function ProjectTable() {
               </div>
               <div className="tnum" style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'var(--font-en)', fontSize: 13, color: 'var(--grey-700)' }}>
                 {fmtUsd(r.foodVal) || dash}
-                {r.foodVal > 0 && <span style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 10, fontWeight: 400, color: 'var(--grey-500)', marginTop: 1 }}>{usdToKrwLabel(r.foodVal)}</span>}
+                {r.foodVal >= 100 && <span style={{ display: 'block', fontFamily: 'var(--font-kr)', fontSize: 10, fontWeight: 400, color: 'var(--grey-500)', marginTop: 1 }}>{usdToKrwLabel(r.foodVal)}</span>}
               </div>
               <div className="tnum" style={{ padding: '12px 14px', textAlign: 'right', fontFamily: 'var(--font-en)', fontSize: 13, fontWeight: 600, color: r.cash > 0 ? TEAL : 'var(--field-300)' }}>
                 {fmtUsd(r.cash) || dash}

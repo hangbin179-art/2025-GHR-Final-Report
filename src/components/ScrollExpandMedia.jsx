@@ -24,6 +24,7 @@ export default function ScrollExpandMedia({
 
   const sectionRef = useRef(null)
   const videoRef = useRef(null)
+  const progressRef = useRef(0) // 최신 진행률 — 빠른 연속 휠/터치 이벤트에서 stale state로 델타가 유실되지 않도록 ref로 누적
   const autoUnmuteTried = useRef(false)
   const [soundOn, setSoundOn] = useState(false)
   const [videoEnded, setVideoEnded] = useState(false)
@@ -75,6 +76,7 @@ export default function ScrollExpandMedia({
   }
 
   useEffect(() => {
+    progressRef.current = 0
     setScrollProgress(0)
     setShowContent(false)
     setMediaFullyExpanded(false)
@@ -99,6 +101,21 @@ export default function ScrollExpandMedia({
 
   useEffect(() => {
     if (reduceMotion) return // 모션 최소화: 스크롤 하이재킹 비활성화 (페이지 정상 스크롤)
+
+    // 진행률 누적 — state 대신 ref 기준으로 계산해, 렌더 사이에 몰려온
+    // 휠/터치 이벤트의 델타가 유실(stale closure)되지 않게 한다.
+    const applyDelta = (delta) => {
+      const next = Math.min(Math.max(progressRef.current + delta, 0), 1)
+      progressRef.current = next
+      setScrollProgress(next)
+      if (next >= 1) {
+        setMediaFullyExpanded(true)
+        setShowContent(true)
+      } else if (next < 0.75) {
+        setShowContent(false)
+      }
+    }
+
     const handleWheel = (e) => {
       if (mediaFullyExpanded && e.deltaY < 0 && window.scrollY <= 5) {
         setMediaFullyExpanded(false)
@@ -106,15 +123,7 @@ export default function ScrollExpandMedia({
       } else if (!mediaFullyExpanded) {
         e.preventDefault()
         tryAutoUnmute()
-        const scrollDelta = e.deltaY * 0.0009
-        const newProgress = Math.min(Math.max(scrollProgress + scrollDelta, 0), 1)
-        setScrollProgress(newProgress)
-        if (newProgress >= 1) {
-          setMediaFullyExpanded(true)
-          setShowContent(true)
-        } else if (newProgress < 0.75) {
-          setShowContent(false)
-        }
+        applyDelta(e.deltaY * 0.0009)
       }
     }
 
@@ -134,15 +143,7 @@ export default function ScrollExpandMedia({
         e.preventDefault()
         tryAutoUnmute()
         const scrollFactor = deltaY < 0 ? 0.008 : 0.005
-        const scrollDelta = deltaY * scrollFactor
-        const newProgress = Math.min(Math.max(scrollProgress + scrollDelta, 0), 1)
-        setScrollProgress(newProgress)
-        if (newProgress >= 1) {
-          setMediaFullyExpanded(true)
-          setShowContent(true)
-        } else if (newProgress < 0.75) {
-          setShowContent(false)
-        }
+        applyDelta(deltaY * scrollFactor)
         setTouchStartY(touchY)
       }
     }
@@ -151,14 +152,40 @@ export default function ScrollExpandMedia({
       setTouchStartY(0)
     }
 
+    // 키보드 스크롤(Space/PageDown/방향키/End)도 확장을 진행시킨다 —
+    // 이전에는 wheel/touch만 인식해 키보드·스크롤바 사용자가 히어로에 갇혔음.
+    const KEY_DELTAS = { ' ': 0.2, PageDown: 0.25, ArrowDown: 0.12, PageUp: -0.25, ArrowUp: -0.12 }
+    const handleKeyDown = (e) => {
+      if (mediaFullyExpanded) return
+      if (e.altKey || e.ctrlKey || e.metaKey) return
+      if (e.key === 'End') {
+        e.preventDefault()
+        tryAutoUnmute()
+        applyDelta(1)
+        return
+      }
+      const d = KEY_DELTAS[e.key]
+      if (d === undefined) return
+      e.preventDefault()
+      tryAutoUnmute()
+      applyDelta(d)
+    }
+
+    // 스크롤바 드래그 등 wheel/키보드가 아닌 스크롤: 최상단으로 되돌리는 대신
+    // 스크롤량을 진행률로 환산해 반영 — 어떤 입력으로도 지나갈 수 있게.
     const handleScroll = () => {
       if (!mediaFullyExpanded) {
-        window.scrollTo(0, 0)
+        const y = window.scrollY
+        if (y > 0) {
+          applyDelta(y * 0.0025)
+          window.scrollTo(0, 0)
+        }
       }
     }
 
     window.addEventListener('wheel', handleWheel, { passive: false })
     window.addEventListener('scroll', handleScroll)
+    window.addEventListener('keydown', handleKeyDown)
     window.addEventListener('touchstart', handleTouchStart, { passive: false })
     window.addEventListener('touchmove', handleTouchMove, { passive: false })
     window.addEventListener('touchend', handleTouchEnd)
@@ -166,11 +193,12 @@ export default function ScrollExpandMedia({
     return () => {
       window.removeEventListener('wheel', handleWheel)
       window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('keydown', handleKeyDown)
       window.removeEventListener('touchstart', handleTouchStart)
       window.removeEventListener('touchmove', handleTouchMove)
       window.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [scrollProgress, mediaFullyExpanded, touchStartY, reduceMotion])
+  }, [mediaFullyExpanded, touchStartY, reduceMotion])
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -184,6 +212,7 @@ export default function ScrollExpandMedia({
   // 외부에서 'resetSection' 이벤트가 오면 처음 상태로 되돌린다.
   useEffect(() => {
     const onReset = () => {
+      progressRef.current = 0
       setScrollProgress(0)
       setShowContent(false)
       setMediaFullyExpanded(false)
@@ -193,9 +222,18 @@ export default function ScrollExpandMedia({
   }, [])
 
   // 마운트 시 항상 최상단(닫힌 상태)에서 시작 — 브라우저 스크롤 복원 방지.
+  // 단, 앵커 해시(#sec-…)로 직접 들어온 경우엔 히어로를 건너뛰어
+  // 공유받은 섹션 링크가 최상단으로 끌려오지 않게 한다.
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
+    }
+    if (window.location.hash) {
+      progressRef.current = 1
+      setScrollProgress(1)
+      setMediaFullyExpanded(true)
+      setShowContent(true)
+      return
     }
     window.scrollTo(0, 0)
   }, [])
