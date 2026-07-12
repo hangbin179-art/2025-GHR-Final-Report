@@ -7,6 +7,7 @@ import InterventionsSection from './components/InterventionsSection.jsx'
 import ResultsCharts from './components/ResultsCharts.jsx'
 import GallerySection from './components/GallerySection.jsx'
 import FlowReveal from './components/FlowReveal.jsx'
+import ReviewFeedback from './components/ReviewFeedback.jsx'
 import useIsMobile from './lib/useIsMobile.js'
 import { GLOBAL_KPIS } from './data/projects.js'
 import { num, krwThousandToUsd, multiple } from './lib/format.js'
@@ -60,6 +61,9 @@ export default function App() {
 
       {/* Footer */}
       <Footer />
+
+      {/* 리뷰 모드(?review) 전용 — 섹션별 수정 제안 버튼 (기본 링크에서는 렌더 안 됨) */}
+      <ReviewFeedback />
     </div>
   )
 }
